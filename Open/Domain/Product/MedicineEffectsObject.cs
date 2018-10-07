@@ -1,4 +1,4 @@
-﻿using Open.Data.Product;
+﻿using Open.Data.Effect;
 using Open.Domain.Common;
 
 namespace Open.Domain.Product

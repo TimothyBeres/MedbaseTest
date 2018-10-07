@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
-using Open.Data.Product;
+using Open.Data.Effect;
 using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product

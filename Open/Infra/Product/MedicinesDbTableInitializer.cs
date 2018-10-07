@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Open.Aids;
-using Open.Data.Product;
+using Open.Data.Effect;
 
 namespace Open.Infra.Product
 {

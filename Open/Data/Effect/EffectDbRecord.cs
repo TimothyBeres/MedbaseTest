@@ -1,6 +1,6 @@
 ﻿using Open.Data.Common;
 
-namespace Open.Data.Product
+namespace Open.Data.Effect
 {
     public class EffectDbRecord : UniqueDbRecord
     {

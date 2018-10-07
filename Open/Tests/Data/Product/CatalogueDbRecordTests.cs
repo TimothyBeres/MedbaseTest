@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Data.Common;
-using Open.Data.Product;
 
 namespace Open.Tests.Data.Product
 {

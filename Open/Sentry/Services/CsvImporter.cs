@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FileHelpers;
-using Open.Data.Product;
 using Open.Domain.Product;
 using System.Linq;
 using Open.Infra;

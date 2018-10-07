@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Open.Core;
-using Open.Data.Product;
+using Open.Data.Effect;
 
 namespace Open.Domain.Product
 {

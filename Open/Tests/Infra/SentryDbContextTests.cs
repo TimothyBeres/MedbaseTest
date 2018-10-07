@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
+using Open.Data.Effect;
 using Open.Data.Location;
 using Open.Data.Money;
-using Open.Data.Product;
 using Open.Infra;
 using Open.Tests.Infra.Location;
 

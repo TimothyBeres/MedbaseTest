@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Open.Aids;
 using Open.Core;
-using Open.Data.Product;
 using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product

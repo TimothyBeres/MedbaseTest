@@ -1,7 +1,6 @@
-﻿using System.IO.Pipes;
-using Open.Data.Common;
+﻿using Open.Data.Common;
 
-namespace Open.Data.Product
+namespace Open.Data.Effect
 {
     public class MedicineDbRecord : UniqueDbRecord
     {

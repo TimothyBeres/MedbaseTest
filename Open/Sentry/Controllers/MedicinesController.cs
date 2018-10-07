@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
-using Open.Data.Product;
+using Open.Data.Effect;
 using Open.Domain.Product;
 using Open.Facade.Product;
 
