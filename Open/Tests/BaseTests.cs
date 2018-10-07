@@ -8,6 +8,7 @@ namespace Open.Tests
 {
     public class BaseTests
     {
+        /* test commit*/
         private const string NotTested = "<{0}> is not tested";
         private const string NotSpecified = "Class is not specified";
         private List<string> members { get; set; }
