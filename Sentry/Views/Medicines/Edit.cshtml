@@ -1,0 +1,80 @@
+﻿@using Open.Facade.Product
+@using Open.Sentry1.Extensions
+@model Open.Facade.Product.MedicineViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    ViewBag.SubTitle = $"Medicine ({Model.Name})";
+    ViewBag.Button = "Save";
+    Layout = "_EditPartial";
+    var effects = ViewBag.Effects as EffectViewModelsList ?? new EffectViewModelsList(null);
+    var prevDisabled = !effects.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !effects.HasNextPage ? "disabled" : "";
+}
+
+<body>
+    @Html.HiddenFor(model => model.ID)
+    @Html.EditingControlsFor(model => model.Name)
+    @Html.EditingControlsFor(model => model.AtcCode)
+    @Html.EditingControlsFor(model => model.FormOfInjection)
+    @Html.EditingControlsFor(model => model.Strength)
+    @Html.EditingControlsFor(model => model.Manufacturer)
+    @Html.EditingControlsFor(model => model.LegalStatus)
+    @Html.EditingControlsFor(model => model.Reimbursment)
+    @Html.EditingControlsFor(model => model.Spc)
+    @Html.EditingControlsFor(model => model.Pil)
+    @Html.EditingControlsFor(model => model.ValidFrom)
+    @Html.EditingControlsFor(model => model.ValidTo)
+    <div class="form-group">
+        @Html.LabelFor(m => m.EffectsInMedicine, new { @class = "control-label col-md-2" })
+        <div class="col-md-4" style="margin-top: 10px">
+            <table class="table">
+                @{ var r = Model.EffectsInMedicine.FirstOrDefault(); }
+                <thead>
+                    <tr>
+                        <th>@Html.LabelFor(x => r.Name)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.EffectsInMedicine)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => item.Name)</td>
+                            <td>@Html.ActionLink("Remove", "RemoveEffect", new { medicine = Model.ID, effect = item.ID })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-horizontal">
+                <p>
+                    <a asp-action="Edit"
+                       asp-route-page="@(effects.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled"><</a>
+                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
+                    <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
+                    <a asp-action="Edit"
+                       asp-route-page="@(effects.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled">></a>
+                </p>
+            </div>
+            <table class="table">
+                <tbody>
+                    @foreach (var item in effects)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => item.Name)</td>
+                            <td>@Html.ActionLink("Add", "AddEffect", new { medicine = Model.ID, effect = item.ID })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+@section Actions{
+    @Html.ActionLink("Back to List", "Index")
+}

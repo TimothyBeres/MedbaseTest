@@ -1,0 +1,7 @@
+﻿@using Open.Sentry1.Extensions
+@model Open.Facade.Location.EMailAddressViewModel
+
+@Html.HiddenFor(a => a.ID)
+@Html.EditingControlsFor(a => a.EmailAddress)
+@Html.EditingControlsFor(a => a.ValidFrom)
+@Html.EditingControlsFor(a => a.ValidTo)

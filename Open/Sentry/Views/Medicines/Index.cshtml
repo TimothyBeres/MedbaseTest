@@ -1,0 +1,52 @@
+﻿@using Open.Sentry1.Extensions
+@model Open.Core.IPaginatedList<Open.Facade.Product.MedicineViewModel>
+@{
+    ViewBag.Title = "Medicines";
+    Layout = "_IndexPartial";
+}
+
+@section Create{
+    <a asp-action=Create>Create New</a>
+}
+
+<body>
+    <table class="table">
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+            <tr>
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                @Html.SortColumnHeaderFor(ViewData["SortAtcCode"], model => dummy.AtcCode)
+                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
+                @Html.SortColumnHeaderFor(ViewData["SortStrength"], model => dummy.Strength)
+                @Html.SortColumnHeaderFor(ViewData["SortManufacturer"], model => dummy.Manufacturer)
+                @Html.SortColumnHeaderFor(ViewData["SortLegalStatus"], model => dummy.LegalStatus)
+                @Html.SortColumnHeaderFor(ViewData["SortReimbursement"], model => dummy.Reimbursment)
+                @Html.SortColumnHeaderFor(ViewData["SortSpc"], model => dummy.Spc)
+                @Html.SortColumnHeaderFor(ViewData["SortPil"], model => dummy.Pil)
+                @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
+                @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.AtcCode)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
+                <td>@Html.DisplayFor(modelItem => item.Strength)</td>
+                <td>@Html.DisplayFor(modelItem => item.Manufacturer)</td>
+                <td>@Html.DisplayFor(modelItem => item.LegalStatus)</td>
+                <td>@Html.DisplayFor(modelItem => item.Reimbursment)</td>
+                <td>@Html.DisplayFor(modelItem => item.Spc)</td>
+                <td>@Html.DisplayFor(modelItem => item.Pil)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                @Html.EditDetailDeleteFor(modelItem => item.ID)
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+

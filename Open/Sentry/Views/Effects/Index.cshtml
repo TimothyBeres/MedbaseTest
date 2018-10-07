@@ -1,0 +1,36 @@
+﻿@using Open.Sentry1.Extensions
+@model Open.Core.IPaginatedList<Open.Facade.Product.EffectViewModel>
+@{
+    ViewBag.Title = "Effects";
+    Layout = "_IndexPartial";
+}
+
+@section Create{
+    <a asp-action=Create>Create New</a>
+}
+
+<body>
+    <table class="table">
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+            <tr>
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
+                @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.ID)
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+

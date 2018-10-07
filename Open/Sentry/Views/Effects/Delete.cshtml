@@ -1,0 +1,21 @@
+﻿@using Open.Facade.Product
+@using Open.Sentry1.Extensions
+@model Open.Facade.Product.EffectViewModel
+@{
+    ViewBag.Title = "Delete";
+    ViewBag.SubTitle = "Effect";
+    ViewBag.Button = "Delete";
+    Layout = "_DeletePartial";
+}
+
+<body>
+    @Html.ViewingControlsFor(model => model.Name)
+    @Html.ViewingControlsFor(model => model.ValidFrom)
+    @Html.ViewingControlsFor(model => model.ValidTo)
+</body>
+
+@section Actions
+    {@Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Back to List", "Index")
+}
+
