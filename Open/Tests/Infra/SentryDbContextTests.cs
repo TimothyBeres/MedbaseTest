@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Data.Location;
 using Open.Data.Money;
+using Open.Data.Product;
 using Open.Infra;
 using Open.Tests.Infra.Location;
 
@@ -84,6 +85,24 @@ namespace Open.Tests.Infra
         }
 
         [TestMethod]
+        public void EffectsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void MedicinesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void MedicineEffectsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
         public void CreateAddressTableTest()
         {
             var set = new ConventionSet();
@@ -110,14 +129,14 @@ namespace Open.Tests.Infra
             testHasTelecomRegistrationEntities(mb);
         }
 
-        /*[TestMethod]
-        public void CreateProductCatalogueTableTest()
+        [TestMethod]
+        public void CreateMedicineEffectsTableTest()
         {
             var set = new ConventionSet();
             var mb = new ModelBuilder(set);
-            SentryDbContext.CreateProductCatalogueTable(mb);
-            testHasProductCatalogueEntities(mb);
-        }*/
+            SentryDbContext.CreateMedicineEffectsTable(mb);
+            testHasMedicineEffectsEntities(mb);
+        }
 
         [TestMethod]
         public void OnModelCreatingTest()
@@ -159,17 +178,17 @@ namespace Open.Tests.Infra
             testForeignKey(entity, currencyID, typeof(CurrencyDbRecord));
         }
 
-        /*private static void testHasProductCatalogueEntities(ModelBuilder mb)
+        private static void testHasMedicineEffectsEntities(ModelBuilder mb)
         {
             testEntity<EffectDbRecord>(mb);
-            testEntity<CatalogueDbRecord>(mb);
+            testEntity<MedicineDbRecord>(mb);
             var entity = testEntity<MedicineEffectsDbRecord>(mb, true, 2);
-            var productID = GetMember.Name<MedicineEffectsDbRecord>(x => x.ProductID);
-            var catalogueID = GetMember.Name<MedicineEffectsDbRecord>(x => x.CatalogueID);
-            testPrimaryKey(entity, productID, catalogueID);
-            testForeignKey(entity, productID, typeof(EffectDbRecord));
-            testForeignKey(entity, catalogueID, typeof(CatalogueDbRecord));
-        }*/
+            var medicineID = GetMember.Name<MedicineEffectsDbRecord>(x => x.MedicineID);
+            var effectID = GetMember.Name<MedicineEffectsDbRecord>(x => x.EffectID);
+            testPrimaryKey(entity, effectID, medicineID);
+            testForeignKey(entity, effectID, typeof(EffectDbRecord));
+            testForeignKey(entity, medicineID, typeof(MedicineDbRecord));
+        }
 
         private static void testHasAddressEntities(ModelBuilder mb)
         {

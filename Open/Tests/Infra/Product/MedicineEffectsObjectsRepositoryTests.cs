@@ -3,7 +3,7 @@ using Open.Infra.Product;
 
 namespace Open.Tests.Infra.Product
 {
-    public class ProductCatalogueObjectsRepositoryTests : BaseTests
+    public class MedicineEffectsObjectsRepositoryTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()

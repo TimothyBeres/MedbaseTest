@@ -4,29 +4,23 @@ using Open.Infra.Product;
 namespace Open.Tests.Infra.Product
 {
     [TestClass]
-    public class ProductObjectsRepositoryTests : BaseTests
+    public class EffectsDbTableInitializerTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(EffectObjectsRepository);
+            type = typeof(EffectsDbTableInitializer);
         }
 
         [TestMethod]
-        public void CanCreate()
-        {
-            Assert.IsNotNull(new EffectObjectsRepository(null));
-        }
-
-        [TestMethod]
-        public void GetObjectsListTest()
+        public void CanInitializeTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod]
-        public void IsInitializedTest()
+        public void InitializeTest()
         {
             Assert.Inconclusive();
         }

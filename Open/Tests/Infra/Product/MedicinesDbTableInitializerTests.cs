@@ -4,13 +4,19 @@ using Open.Infra.Product;
 namespace Open.Tests.Infra.Product
 {
     [TestClass]
-    public class ProductCataloguesDbTableInitializerTests : BaseTests
+    public class MedicinesDbTableInitializerTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(MedicineEffectsDbTableInitializer);
+            type = typeof(MedicinesDbTableInitializer);
+        }
+
+        [TestMethod]
+        public void CanInitializeTest()
+        {
+            Assert.Inconclusive();
         }
 
         [TestMethod]
