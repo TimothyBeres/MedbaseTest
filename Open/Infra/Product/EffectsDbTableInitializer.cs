@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Infra.Product
 {

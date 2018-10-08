@@ -5,7 +5,7 @@ using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    public class CatalogueObjectsListTests : DomainObjectsListTests<MedicineObjectsList, MedicineObject>
+    /*public class CatalogueObjectsListTests : DomainObjectsListTests<MedicineObjectsList, MedicineObject>
     {
         protected override MedicineObjectsList getRandomTestObject()
         {
@@ -13,5 +13,5 @@ namespace Open.Tests.Domain.Product
             var l = GetRandom.Object<List<CatalogueDbRecord>>();
             return new MedicineObjectsList(l, GetRandom.Object<RepositoryPage>());
         }
-    }
+    }*/
 }

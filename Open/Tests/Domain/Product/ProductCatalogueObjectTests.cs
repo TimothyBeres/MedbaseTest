@@ -4,7 +4,7 @@ using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class ProductCatalogueObjectTests : ObjectTests<MedicineEffectsObject>
     {
         protected override MedicineEffectsObject getRandomTestObject()
@@ -31,5 +31,5 @@ namespace Open.Tests.Domain.Product
             Assert.AreEqual(obj.Product.DbRecord, obj.DbRecord.Product);
             Assert.AreEqual(obj.Product.DbRecord, obj.DbRecord.Product);
         }
-    }
+    }*/
 }

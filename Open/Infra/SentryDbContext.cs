@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Open.Data.Effect;
 using Open.Data.Location;
 using Open.Data.Money;
+using Open.Data.Product;
 
 namespace Open.Infra
 {

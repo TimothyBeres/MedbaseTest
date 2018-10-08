@@ -6,7 +6,7 @@ using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class CatalogueObjectTests : DomainObjectTests<MedicineObject, CatalogueDbRecord>
     {
         protected override MedicineObject getRandomTestObject()
@@ -31,5 +31,5 @@ namespace Open.Tests.Domain.Product
             obj.RegisteredInProduct(product);
             Assert.IsTrue(obj.RegisteredInProducts.Contains(product));
         }
-    }
+    }*/
 }

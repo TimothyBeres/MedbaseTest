@@ -6,7 +6,7 @@ using Open.Facade.Product;
 
 namespace Open.Tests.Facade.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class CatalogueViewModelTests : ViewModelTests<MedicineViewModel, UniqueEntityViewModel>
     {
         protected override MedicineViewModel getRandomTestObject()
@@ -33,5 +33,5 @@ namespace Open.Tests.Facade.Product
             var name = GetMember.Name<MedicineViewModel>(x => x.ProductsInCatalogue);
             Assert.IsTrue(IsReadOnly.Property<MedicineViewModel>(name));
         }
-    }
+    }*/
 }

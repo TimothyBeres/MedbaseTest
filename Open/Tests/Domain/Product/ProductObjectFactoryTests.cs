@@ -2,12 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Core;
-using Open.Data.Effect;
 using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class ProductObjectFactoryTests : BaseTests
     {
         [TestInitialize]
@@ -35,5 +34,5 @@ namespace Open.Tests.Domain.Product
             Assert.IsInstanceOfType(o, typeof(EffectObject));
             testVariables(o.DbRecord, r.ID, r.ProductName, r.ProductType, r.ValidFrom, r.ValidTo);
         }
-    }
+    }*/
 }

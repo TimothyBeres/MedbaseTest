@@ -2,12 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Core;
-using Open.Data.Effect;
 using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class ProductCatalogueObjectFactoryTests : BaseTests
     {
         [TestInitialize]
@@ -49,5 +48,5 @@ namespace Open.Tests.Domain.Product
             Assert.AreEqual(o.DbRecord.ProductID, Constants.Unspecified);
             Assert.AreEqual(o.DbRecord.CatalogueID, Constants.Unspecified);
         }
-    }
+    }*/
 }

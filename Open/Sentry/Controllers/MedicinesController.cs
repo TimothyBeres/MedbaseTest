@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
-using Open.Data.Effect;
+using Open.Data.Product;
 using Open.Domain.Product;
 using Open.Facade.Product;
 
@@ -38,7 +38,7 @@ namespace Open.Sentry1.Controllers
             ViewData["SortLegalStatus"] = sortOrder == "legal_status" ? "legal_status_desc" : "legal_status";
             ViewData["SortReimbursement"] = sortOrder == "reimbursement" ? "reimbursement_desc" : "reimbursement";
             ViewData["SortValidFrom"] = sortOrder == "validFrom" ? "validFrom_desc" : "validFrom";
-            ViewData["SortValidTo"] = sortOrder == "validTo" ? "validTo_desc" : "validTo";       
+            ViewData["SortValidTo"] = sortOrder == "validTo" ? "validTo_desc" : "validTo";
 
             repository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
                 ? SortOrder.Descending

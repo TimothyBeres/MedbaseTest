@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Open.Aids;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Infra.Product
 {

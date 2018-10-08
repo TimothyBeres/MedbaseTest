@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Data.Common;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Tests.Data.Product
 {
     [TestClass]
-    public class ProductDbRecordTests : ObjectTests<EffectDbRecord>
+    public class EffectDbRecordTests : ObjectTests<EffectDbRecord>
     {
         protected override EffectDbRecord getRandomTestObject()
         {
@@ -20,15 +20,9 @@ namespace Open.Tests.Data.Product
         }
 
         [TestMethod]
-        public void ProductTypeTest()
+        public void NameTest()
         {
-            testReadWriteProperty(() => obj.ProductType, x => obj.ProductType = x);
-        }
-
-        [TestMethod]
-        public void ProductNameTest()
-        {
-            testReadWriteProperty(() => obj.ProductName, x => obj.ProductName = x);
+            testReadWriteProperty(() => obj.Name, x => obj.Name = x);
         }
     }
 }

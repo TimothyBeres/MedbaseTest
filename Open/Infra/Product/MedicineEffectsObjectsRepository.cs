@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Open.Data.Effect;
+using Open.Data.Product;
 using Open.Domain.Location;
 using Open.Domain.Money;
 using Open.Domain.Product;

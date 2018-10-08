@@ -1,5 +1,5 @@
 ﻿using System;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Domain.Product
 {

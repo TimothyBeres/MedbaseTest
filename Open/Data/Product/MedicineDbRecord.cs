@@ -1,6 +1,6 @@
 ﻿using Open.Data.Common;
 
-namespace Open.Data.Effect
+namespace Open.Data.Product
 {
     public class MedicineDbRecord : UniqueDbRecord
     {
@@ -10,7 +10,7 @@ namespace Open.Data.Effect
         private string strength;
         private string manufacturer;
         private string legal_status;
-        private bool reimbursed=false;
+        private bool reimbursed = false;
         private string spc;
         private string pil;
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Open.Aids;
 using Open.Core;
-using Open.Data.Effect;
+using Open.Data.Product;
 using Open.Domain.Product;
 using Open.Facade.Product;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Open.Core;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Domain.Product
 {

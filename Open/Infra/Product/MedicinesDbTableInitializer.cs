@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Open.Aids;
-using Open.Data.Effect;
+using Open.Data.Product;
 
 namespace Open.Infra.Product
 {
@@ -44,7 +44,7 @@ namespace Open.Infra.Product
                     LegalStatus = "Hospital use",
                     Reimbursement = true,
                     Spc = "www.neti.ee",
-                    Pil = "www.delfi.ee"                    
+                    Pil = "www.delfi.ee"
                 }),
                 add(c, new MedicineDbRecord
                 {

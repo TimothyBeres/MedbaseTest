@@ -56,9 +56,9 @@
     <Compile Include="Location\WebPageAddressDbRecord.cs" />
     <Compile Include="Money\CountryCurrencyDbRecord.cs" />
     <Compile Include="Money\CurrencyDbRecord.cs" />
-    <Compile Include="Effect\MedicineEffectsDbRecord.cs" />
-    <Compile Include="Effect\EffectDbRecord.cs" />
-    <Compile Include="Effect\MedicineDbRecord.cs" />
+    <Compile Include="Product\MedicineEffectsDbRecord.cs" />
+    <Compile Include="Product\EffectDbRecord.cs" />
+    <Compile Include="Product\MedicineDbRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quantity\MeasureDbRecord.cs" />
     <Compile Include="Quantity\UnitDbRecord.cs" />

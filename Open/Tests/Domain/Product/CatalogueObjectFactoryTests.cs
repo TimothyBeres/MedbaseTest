@@ -5,7 +5,7 @@ using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    [TestClass]
+    /*[TestClass]
     public class CatalogueObjectFactoryTests : BaseTests
     {
         [TestInitialize]
@@ -33,5 +33,5 @@ namespace Open.Tests.Domain.Product
             Assert.IsInstanceOfType(o, typeof(MedicineObject));
             testVariables(o.DbRecord, r.ID, r.CatalogueName, r.Description, r.ValidFrom, r.ValidTo);
         }
-    }
+    }*/
 }

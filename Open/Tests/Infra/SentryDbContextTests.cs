@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
-using Open.Data.Effect;
 using Open.Data.Location;
 using Open.Data.Money;
 using Open.Infra;
@@ -111,14 +110,14 @@ namespace Open.Tests.Infra
             testHasTelecomRegistrationEntities(mb);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void CreateProductCatalogueTableTest()
         {
             var set = new ConventionSet();
             var mb = new ModelBuilder(set);
             SentryDbContext.CreateProductCatalogueTable(mb);
             testHasProductCatalogueEntities(mb);
-        }
+        }*/
 
         [TestMethod]
         public void OnModelCreatingTest()
@@ -160,7 +159,7 @@ namespace Open.Tests.Infra
             testForeignKey(entity, currencyID, typeof(CurrencyDbRecord));
         }
 
-        private static void testHasProductCatalogueEntities(ModelBuilder mb)
+        /*private static void testHasProductCatalogueEntities(ModelBuilder mb)
         {
             testEntity<EffectDbRecord>(mb);
             testEntity<CatalogueDbRecord>(mb);
@@ -170,7 +169,7 @@ namespace Open.Tests.Infra
             testPrimaryKey(entity, productID, catalogueID);
             testForeignKey(entity, productID, typeof(EffectDbRecord));
             testForeignKey(entity, catalogueID, typeof(CatalogueDbRecord));
-        }
+        }*/
 
         private static void testHasAddressEntities(ModelBuilder mb)
         {
