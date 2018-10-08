@@ -14,10 +14,10 @@ namespace Open.Domain.Product
             usedInMedicines = new List<MedicineObject>();
         }
 
-        public IReadOnlyList<MedicineObject> UsesInMedicines =>
+        public IReadOnlyList<MedicineObject> UsedInMedicines =>
             usedInMedicines.AsReadOnly();
 
-        public void UsedInMedicines(MedicineObject medicineObject)
+        public void UsedInMedicine(MedicineObject medicineObject)
         {
             if (medicineObject is null) return;
             if (medicineObject.DbRecord.ID == Constants.Unspecified) return;

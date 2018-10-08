@@ -59,7 +59,7 @@ namespace Open.Infra.Product
             var medicines = await dbSet.Include(x => x.Medicine).Where(x => x.EffectID == id)
                 .AsNoTracking().ToListAsync();
             foreach (var c in medicines)
-                effect.UsedInMedicines(new MedicineObject(c.Medicine));
+                effect.UsedInMedicine(new MedicineObject(c.Medicine));
         }
         public async Task LoadEffects(MedicineObject medicine)
         {

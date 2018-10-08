@@ -8,7 +8,7 @@ using Open.Domain.Product;
 namespace Open.Tests.Domain.Product
 {
     [TestClass]
-    public class ProductCatalogueObjectsListTests : DomainObjectsListTests<MedicineEffectsObjectsList, MedicineEffectsObject>
+    public class MedicineEffectsObjectsListTests : DomainObjectsListTests<MedicineEffectsObjectsList, MedicineEffectsObject>
     {
         protected override MedicineEffectsObjectsList getRandomTestObject()
         {

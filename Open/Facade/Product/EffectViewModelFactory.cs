@@ -15,7 +15,7 @@ namespace Open.Facade.Product
             if (o is null) return v;
             v.ValidFrom = setNullIfExtremum(o.DbRecord.ValidFrom);
             v.ValidTo = setNullIfExtremum(o.DbRecord.ValidTo);
-            foreach (var c in o.UsesInMedicines)
+            foreach (var c in o.UsedInMedicines)
             {
                 var medicine = MedicineViewModelFactory.Create(c);
                 v.UsedInMedicines.Add(medicine);

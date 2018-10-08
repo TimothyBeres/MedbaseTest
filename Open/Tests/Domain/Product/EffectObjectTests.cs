@@ -2,12 +2,13 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
+using Open.Data.Product;
 using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    /*[TestClass]
-    public class ProductObjectTests : DomainObjectTests<EffectObject, EffectDbRecord>
+    [TestClass]
+    public class EffectObjectTests : DomainObjectTests<EffectObject, EffectDbRecord>
     {
         protected override EffectObject getRandomTestObject()
         {
@@ -17,19 +18,19 @@ namespace Open.Tests.Domain.Product
         }
 
         [TestMethod]
-        public void RegisteredInCataloguesTest()
+        public void UsedInMedicinesTest()
         {
-            Assert.IsNotNull(obj.RegisteredInCatalogues);
-            Assert.IsInstanceOfType(obj.RegisteredInCatalogues, typeof(IReadOnlyList<MedicineObject>));
+            Assert.IsNotNull(obj.UsedInMedicines);
+            Assert.IsInstanceOfType(obj.UsedInMedicines, typeof(IReadOnlyList<MedicineObject>));
         }
 
         [TestMethod]
-        public void RegisteredInCatalogueTest()
+        public void UsedInMedicineTest()
         {
             var catalogue = GetRandom.Object<MedicineObject>();
-            Assert.IsFalse(obj.RegisteredInCatalogues.Contains(catalogue));
-            obj.RegisteredInCatalogue(catalogue);
-            Assert.IsTrue(obj.RegisteredInCatalogues.Contains(catalogue));
+            Assert.IsFalse(obj.UsedInMedicines.Contains(catalogue));
+            obj.UsedInMedicine(catalogue);
+            Assert.IsTrue(obj.UsedInMedicines.Contains(catalogue));
         }
-    }*/
+    }
 }

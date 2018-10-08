@@ -4,8 +4,8 @@ using Open.Domain.Product;
 
 namespace Open.Tests.Domain.Product
 {
-    /*[TestClass]
-    public class ProductCatalogueObjectTests : ObjectTests<MedicineEffectsObject>
+    [TestClass]
+    public class MedicineEffectsObjectTests : ObjectTests<MedicineEffectsObject>
     {
         protected override MedicineEffectsObject getRandomTestObject()
         {
@@ -13,23 +13,23 @@ namespace Open.Tests.Domain.Product
         }
 
         [TestMethod]
-        public void ProductTest()
+        public void EffectTest()
         {
-            Assert.AreEqual(obj.Product.DbRecord, obj.DbRecord.Product);
+            Assert.AreEqual(obj.Effect.DbRecord, obj.DbRecord.Effect);
         }
 
         [TestMethod]
-        public void CatalogueTest()
+        public void MedicineTest()
         {
-            Assert.AreEqual(obj.Catalogue.DbRecord, obj.DbRecord.Catalogue);
+            Assert.AreEqual(obj.Medicine.DbRecord, obj.DbRecord.Medicine);
         }
 
         [TestMethod]
         public void WhenCreatedWithNullArgumentsTest()
         {
             obj = new MedicineEffectsObject(null);
-            Assert.AreEqual(obj.Product.DbRecord, obj.DbRecord.Product);
-            Assert.AreEqual(obj.Product.DbRecord, obj.DbRecord.Product);
+            Assert.AreEqual(obj.Medicine.DbRecord, obj.DbRecord.Medicine);
+            Assert.AreEqual(obj.Effect.DbRecord, obj.DbRecord.Effect);
         }
-    }*/
+    }
 }
