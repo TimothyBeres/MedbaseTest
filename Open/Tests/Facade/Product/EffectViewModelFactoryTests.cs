@@ -7,8 +7,8 @@ using Open.Facade.Product;
 
 namespace Open.Tests.Facade.Product
 {
-    /*[TestClass]
-    public class ProductViewModelFactoryTests : BaseTests
+    [TestClass]
+    public class EffectViewModelFactoryTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
@@ -22,8 +22,8 @@ namespace Open.Tests.Facade.Product
         {
             var o = GetRandom.Object<EffectObject>();
             var v = EffectViewModelFactory.Create(o);
-            Assert.AreEqual(v.ProductName, o.DbRecord.ProductName);
-            Assert.AreEqual(v.ProductType, o.DbRecord.ProductType);
+            Assert.AreEqual(v.ID, o.DbRecord.ID);
+            Assert.AreEqual(v.Name, o.DbRecord.Name);
             Assert.AreEqual(v.ValidFrom, o.DbRecord.ValidFrom);
             Assert.AreEqual(v.ValidTo, o.DbRecord.ValidTo);
         }
@@ -32,8 +32,8 @@ namespace Open.Tests.Facade.Product
         public void CreateNullTest()
         {
             var v = EffectViewModelFactory.Create(null);
-            Assert.AreEqual(v.ProductName, Constants.Unspecified);
-            Assert.AreEqual(v.ProductType, Constants.Unspecified);
+            Assert.AreEqual(v.ID, Constants.Unspecified);
+            Assert.AreEqual(v.Name, Constants.Unspecified);
             Assert.AreEqual(v.ValidFrom, null);
             Assert.AreEqual(v.ValidTo, null);
         }
@@ -45,10 +45,10 @@ namespace Open.Tests.Facade.Product
             o.DbRecord.ValidFrom = DateTime.MinValue;
             o.DbRecord.ValidTo = DateTime.MaxValue;
             var v = EffectViewModelFactory.Create(o);
-            Assert.AreEqual(v.ProductName, o.DbRecord.ProductName);
-            Assert.AreEqual(v.ProductType, o.DbRecord.ProductType);
+            Assert.AreEqual(v.ID, o.DbRecord.ID);
+            Assert.AreEqual(v.Name, o.DbRecord.Name);
             Assert.AreEqual(v.ValidFrom, null);
             Assert.AreEqual(v.ValidTo, null);
         }
-    }*/
+    }
 }

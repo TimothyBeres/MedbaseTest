@@ -6,7 +6,7 @@ using Open.Facade.Product;
 namespace Open.Tests.Facade.Product
 {
     [TestClass]
-    public class ProductViewModelsListTests : ObjectTests<EffectViewModelsList>
+    public class EffectViewModelsListTests : ObjectTests<EffectViewModelsList>
     {
         [TestMethod]
         public void CanCreateWithNullArgumentTest()

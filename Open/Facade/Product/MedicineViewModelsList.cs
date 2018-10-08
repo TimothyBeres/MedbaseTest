@@ -55,10 +55,10 @@ namespace Open.Facade.Product
                     ordered = catalogues.OrderByDescending(s => s.LegalStatus);
                     break;
                 case "reimbursement":
-                    ordered = catalogues.OrderBy(s => s.Reimbursment);
+                    ordered = catalogues.OrderBy(s => s.Reimbursement);
                     break;
                 case "reimbursement_desc":
-                    ordered = catalogues.OrderByDescending(s => s.Reimbursment);
+                    ordered = catalogues.OrderByDescending(s => s.Reimbursement);
                     break;
                 case "validFrom":
                     ordered = catalogues.OrderBy(s => s.ValidFrom);

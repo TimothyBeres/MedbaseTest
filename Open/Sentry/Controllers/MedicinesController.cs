@@ -80,7 +80,7 @@ namespace Open.Sentry1.Controllers
             if (!ModelState.IsValid) return View(c);
             c.ID = Guid.NewGuid().ToString();
             var o = MedicineObjectFactory.Create(c.ID, c.Name, c.AtcCode, c.FormOfInjection, c.Strength, c.Manufacturer,
-                c.LegalStatus, c.Reimbursment, c.Spc, c.Pil, c.ValidFrom, c.ValidTo);
+                c.LegalStatus, c.Reimbursement, c.Spc, c.Pil, c.ValidFrom, c.ValidTo);
             await repository.AddObject(o);
             return RedirectToAction("Index");
         }
