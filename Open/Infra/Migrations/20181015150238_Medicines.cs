@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Open.Infra.Migrations
 {
-    public partial class Sentry : Migration
+    public partial class Medicines : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,7 +63,7 @@ namespace Open.Infra.Migrations
                     Manufacturer = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Pil = table.Column<string>(nullable: true),
-                    Reimbursement = table.Column<bool>(nullable: false),
+                    Reimbursement = table.Column<string>(nullable: true),
                     Spc = table.Column<string>(nullable: true),
                     Strength = table.Column<string>(nullable: true),
                     ValidFrom = table.Column<DateTime>(nullable: false),

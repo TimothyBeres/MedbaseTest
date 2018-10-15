@@ -18,7 +18,7 @@ namespace Open.Tests.Domain.Product
         }
 
         private void testVariables(MedicineDbRecord o, string id, string name, string atc_code, string form_of_injection, string strength,
-            string manufacturer, string legal_status, bool reimbursement, string spc, string pil, DateTime vFrom,
+            string manufacturer, string legal_status, string reimbursement, string spc, string pil, DateTime vFrom,
             DateTime vTo)
         {
             Assert.AreEqual(id, o.ID);

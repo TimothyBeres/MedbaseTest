@@ -6,7 +6,7 @@ namespace Open.Domain.Product
     public static class MedicineObjectFactory
     {
         public static MedicineObject Create(string id, string name, string atc_code, string form_of_injection, string strength,
-            string manufacturer, string legal_status, bool reimbursement, string spc, string pil, DateTime? validFrom = null,
+            string manufacturer, string legal_status, string reimbursement, string spc, string pil, DateTime? validFrom = null,
             DateTime? validTo = null)
         {
             var o = new MedicineDbRecord
