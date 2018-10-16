@@ -172,7 +172,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("Pil");
 
-                    b.Property<bool>("Reimbursement");
+                    b.Property<string>("Reimbursement");
 
                     b.Property<string>("Spc");
 

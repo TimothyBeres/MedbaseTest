@@ -10,7 +10,7 @@ namespace Open.Data.Product
         private string strength;
         private string manufacturer;
         private string legal_status;
-        private bool reimbursed = false;
+        private string reimbursed;
         private string spc;
         private string pil;
 
@@ -57,10 +57,10 @@ namespace Open.Data.Product
             set => pil = value;
         }
 
-        public bool Reimbursement
+        public string Reimbursement
         {
-            get { return reimbursed; }
-            set { reimbursed = value; }
+            get => getString(ref reimbursed);
+            set => reimbursed = value;
         }
     }
 }

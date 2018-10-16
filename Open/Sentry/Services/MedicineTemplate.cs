@@ -1,4 +1,5 @@
-﻿using FileHelpers;
+﻿using System;
+using FileHelpers;
 
 namespace Sentry1.Services
 {
@@ -6,6 +7,7 @@ namespace Sentry1.Services
     [IgnoreFirst(1)]
     public class MedicineTemplate
     {
+        
         [FieldOptional]
         private string atc;
         [FieldOptional]
@@ -26,12 +28,19 @@ namespace Sentry1.Services
         private string spc;
         [FieldOptional]
         private string pil;
+
         [FieldOptional]
-        private string emptyness;
+        [FieldConverter(ConverterKind.Date, "dd.MM.yyyy")]
+        [FieldNullValue(typeof(DateTime), "1900-01-01")]
+        private DateTime validFrom;
 
-        [FieldOptional] private string emptyness2;
+        [FieldOptional]
+        [FieldConverter(ConverterKind.Date, "dd.MM.yyyy")]
+        [FieldNullValue(typeof(DateTime), "1900-01-01")]
+        private DateTime validTo;
 
 
+        
         [FieldOptional]
         public string AtcCode
         {
@@ -93,17 +102,17 @@ namespace Sentry1.Services
             set { reimbursement = value; }
         }
         [FieldOptional]
-        public string Emptyness
+        public DateTime ValidFrom
         {
-            get { return emptyness; }
-            set { emptyness = value; }
+            get { return validFrom; }
+            set { validFrom = value; }
         }
 
         [FieldOptional]
-        public string Emptyness2
+        public DateTime ValidTo
         {
-            get { return emptyness2; }
-            set { emptyness2 = value; }
+            get { return validTo; }
+            set { validTo = value; }
         }
     }
 }
