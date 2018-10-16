@@ -1,0 +1,16 @@
+AtcCode;Effects;Name;FormOfInjection;Strength;LegalStatus;Reimbursements;Manufacturer;Spc;Pil;ValidFrom;ValidTo
+B05BA03;Carbohydrates;GLUCOSE B. BRAUN 10%;solution for infusion;10%;Hospital use;No;B. Braun Melsungen AG;SPC_1033119.pdf;PIL_1033119.pdf;01.01.9999;31.12.9999
+R03AC02;Salbutamol;VENTILASTIN NOVOLIZER;inhalation powder;100mcg 1annust;Hospital use,Prescription;No;Meda Pharma GmbH & Co. KG;SPC_1282788.pdf;PIL_1282788.pdf;01.01.9999;31.12.9999
+B05XA02;Sodium hydrogen carbonate;SODIUM BICARBONATE BRAUN 4,2%;solution for infusion;4,20%;Hospital use;No;B. BRAUN MELSUNGEN AG;SPC_1033131.pdf;PIL_1033131.pdf;01.01.9999;31.12.9999
+R01AD81;Fluticasone +Azelastine;BILENI;nasal spray, suspension;50mcg +137mcg 1pihustus;Hospital use,Prescription;No;Meda Pharma SIA;SPC_1544622.pdf;PIL_1544622.pdf;01.01.9999;31.12.9999
+V03AN01;Oxygen;CONOXIA;medicinal gas, cryogenic;100%;Hospital use;No;Aga AB;SPC_1237957.pdf;PIL_1237957.pdf;01.01.9999;31.12.9999
+N03AF02;Oxcarbazepine;OXCARBAZEPINE TEVA 600 MG;film-coated tablet;600mg;Hospital use,Prescription;Yes;Teva Pharma B.V.;SPC_1326989.pdf;PIL_1326989.pdf;01.01.9999;31.12.9999
+B05BA03;Carbohydrates;GLUCOSE FRESENIUS 20%;solution for infusion;20% 1ml;Hospital use;No;Fresenius Kabi Polska Sp.zo.o.;SPC_1041714.pdf;PIL_1041714.pdf;01.01.9999;31.12.9999
+B05BC01;Mannitol;MANNITOL FRESENIUS 10%;solution for infusion;10%;Hospital use;No;Fresenius Kabi Polska Sp.zo.o.;SPC_1553093.pdf;PIL_1553093.pdf;01.01.9999;31.12.9999
+C09DB02;Olmesartan medoxomil +Amlodipine;SANORAL;film-coated tablet;20mg +5mg;Hospital use,Prescription;No;Menarini International Operations Luxembourg S.A.;SPC_1308428.pdf;PIL_1308428.pdf;01.01.9999;31.12.9999
+C09DA01;Losartan +Hydrochlorothiazide;SARTENS PLUS 100/25 MG;film-coated tablet;100mg +25mg;Hospital use,Prescription;No;G.L. Pharma GmbH;SPC_1266397.pdf;PIL_1266397.pdf;01.01.9999;31.12.9999
+L04AA18;Everolimus;CERTICAN 1 MG TABLETID;tablet;1mg;Hospital use,Prescription;No;"SIA Novartis Baltics""""";SPC_1156159.pdf;PIL_1156159.pdf;01.01.9999;31.12.9999
+B05BB01;Electrolytes;RINGER-LACTAT B.BRAUN;solution for infusion;;Hospital use;No;B.Braun Melsungen AG;SPC_1067048.pdf;PIL_1067048.pdf;01.01.9999;31.12.9999
+N01AX13;Nitrous oxide;DILÄMMASTIKOKSIID;medicinal gas;100%;Hospital use;No;AS ELME MESSER GAAS;SPC_1706419.pdf;PIL_1706419.pdf;01.01.9999;31.12.9999
+G02AD02;Dinoprostone;PROSTENOON-GEEL;endocervical gel;1mg 3ml;Hospital use;No;Kevelt AS;SPC_1046348.pdf;PIL_1046348.pdf;01.01.9999;31.12.9999
+V03AN01;Oxygen;CONOXIA;medicinal gas, compressed;100%;Hospital use;No;Aga AB;SPC_1274655.pdf;PIL_1274655.pdf;01.01.9999;31.12.9999

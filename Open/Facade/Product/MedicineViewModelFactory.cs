@@ -16,7 +16,7 @@ namespace Open.Facade.Product
                 Strength = o?.DbRecord.Strength,
                 Manufacturer = o?.DbRecord.Manufacturer,
                 LegalStatus = o?.DbRecord.LegalStatus,
-                Reimbursement = o?.DbRecord.Reimbursement ?? false,
+                Reimbursement = o?.DbRecord.Reimbursement,
                 Spc = o?.DbRecord.Spc,
                 Pil = o?.DbRecord.Pil
             };

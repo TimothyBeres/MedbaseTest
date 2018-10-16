@@ -13,7 +13,7 @@ namespace Open.Facade.Product
         private string strength;
         private string manufacturer;
         private string legal_status;
-        private bool reimbursement = false;
+        private string reimbursement;
         private string spc;
         private string pil;
 
@@ -61,10 +61,10 @@ namespace Open.Facade.Product
         }
         [Required]
         [DisplayName("Reimbursed by state")]
-        public bool Reimbursement
+        public string Reimbursement
         {
-            get { return reimbursement; }
-            set { reimbursement = value; }
+            get => getString(ref reimbursement);
+            set => reimbursement = value;
         }
         [Required]
         [DisplayName("SPC")]
