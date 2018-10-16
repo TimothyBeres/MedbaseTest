@@ -34,6 +34,7 @@
       <HintPath>..\..\packages\FileHelpers.3.3.0\lib\net45\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +57,7 @@
     <Compile Include="Location\WebPageAddressDbRecord.cs" />
     <Compile Include="Money\CountryCurrencyDbRecord.cs" />
     <Compile Include="Money\CurrencyDbRecord.cs" />
+    <Compile Include="Person\PersonDbRecord.cs" />
     <Compile Include="Product\MedicineEffectsDbRecord.cs" />
     <Compile Include="Product\EffectDbRecord.cs" />
     <Compile Include="Product\MedicineDbRecord.cs" />

@@ -1,5 +1,6 @@
 ﻿using Open.Infra.Location;
 using Open.Infra.Money;
+using Open.Infra.Person;
 using Open.Infra.Product;
 
 namespace Open.Infra
@@ -15,6 +16,7 @@ namespace Open.Infra
             EffectsDbTableInitializer.Initialize(dbContext);
             MedicinesDbTableInitializer.Initialize(dbContext);
             MedicineEffectsDbTableInitializer.Initialize(dbContext);
+            PersonsDbTableInitializer.Initialize(dbContext);
         }
     }
 }

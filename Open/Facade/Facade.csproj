@@ -57,6 +57,9 @@
     <Compile Include="Money\CurrencyViewModel.cs" />
     <Compile Include="Money\CurrencyViewModelFactory.cs" />
     <Compile Include="Money\CurrencyViewModelsList.cs" />
+    <Compile Include="Person\PersonViewModel.cs" />
+    <Compile Include="Person\PersonViewModelFactory.cs" />
+    <Compile Include="Person\PersonViewModelsList.cs" />
     <Compile Include="Product\MedicineViewModel.cs" />
     <Compile Include="Product\MedicineViewModelFactory.cs" />
     <Compile Include="Product\MedicineViewModelsList.cs" />

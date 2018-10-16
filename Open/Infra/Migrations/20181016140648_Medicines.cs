@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Open.Infra.Migrations
 {
-    public partial class Sentry : Migration
+    public partial class Medicines : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,6 +72,22 @@ namespace Open.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                columns: table => new
+                {
+                    ID = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    IDCode = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +223,9 @@ namespace Open.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "MedicineEffects");
+
+            migrationBuilder.DropTable(
+                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "TelecomDeviceRegistration");

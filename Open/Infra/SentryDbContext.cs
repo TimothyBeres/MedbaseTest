@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Open.Data.Location;
 using Open.Data.Money;
+using Open.Data.Person;
 using Open.Data.Product;
 
 namespace Open.Infra
@@ -27,6 +28,8 @@ namespace Open.Infra
 
         public DbSet<MedicineEffectsDbRecord> MedicineEffects { get; set; }
 
+        public DbSet<PersonDbRecord> Persons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -34,6 +37,7 @@ namespace Open.Infra
             b.Entity<CountryDbRecord>().ToTable("Country");
             b.Entity<EffectDbRecord>().ToTable("Effect");
             b.Entity<MedicineDbRecord>().ToTable("Medicine");
+            b.Entity<PersonDbRecord>().ToTable("Person");
             CreateAddressTable(b);
             CreateTelecomAddressRegistrationTable(b);
             CreateCountryCurrencyTable(b);

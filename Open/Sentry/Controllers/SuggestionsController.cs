@@ -1,46 +1,73 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Open.Aids;
 using Open.Core;
-using Open.Data.Location;
-using Open.Domain.Location;
-using Open.Facade.Location;
+using Open.Data.Product;
+using Open.Domain.Product;
+using Open.Facade.Product;
 using Sentry1.Models;
 
 namespace Open.Sentry1.Controllers
 {
     public class SuggestionsController : Controller
     {
+        private readonly IMedicineObjectsRepository repository;
+
+        public SuggestionsController(IMedicineObjectsRepository r)
+        {
+            repository = r;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Create()
-        {
-            ViewData["Message"] = "Your application description page.";
 
-            return View();
+        public async Task<IActionResult> PatientInfo(string sortOrder = null,
+            string currentFilter = null,
+            string searchString = null,
+            int? page = null)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["SortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["SortAtcCode"] = sortOrder == "atc_code" ? "atc_code_desc" : "atc_code";
+            ViewData["SortFormOfInjection"] =
+                sortOrder == "form_of_injection" ? "form_of_injection_desc" : "form_of_injection";
+            ViewData["SortStrength"] = sortOrder == "strength" ? "strength_desc" : "strength";
+            ViewData["SortManufacturer"] = sortOrder == "manufacturer" ? "manufacturer_desc" : "manufacturer";
+            ViewData["SortLegalStatus"] = sortOrder == "legal_status" ? "legal_status_desc" : "legal_status";
+            ViewData["SortReimbursement"] = sortOrder == "reimbursement" ? "reimbursement_desc" : "reimbursement";
+            ViewData["SortValidFrom"] = sortOrder == "validFrom" ? "validFrom_desc" : "validFrom";
+            ViewData["SortValidTo"] = sortOrder == "validTo" ? "validTo_desc" : "validTo";
+
+            repository.SortOrder = sortOrder != null && sortOrder.EndsWith("_desc")
+                ? SortOrder.Descending
+                : SortOrder.Ascending;
+            repository.SortFunction = getSortFunction(sortOrder);
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;
+            repository.SearchString = searchString;
+            repository.PageIndex = page ?? 1;
+            var l = await repository.GetObjectsList();
+            return View(new MedicineViewModelsList(l));
         }
 
-        public IActionResult Contact()
+        private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
         {
-            ViewData["Message"] = "Your contact page.";
+            if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
+            if (sortOrder.StartsWith("validTo")) return x => x.ValidTo;
+            if (sortOrder.StartsWith("validFrom")) return x => x.ValidFrom;
+            if (sortOrder.StartsWith("atc_code")) return x => x.AtcCode;
+            if (sortOrder.StartsWith("form_of_injection")) return x => x.FormOfInjection;
+            if (sortOrder.StartsWith("strength")) return x => x.Strength;
+            if (sortOrder.StartsWith("manufacturer")) return x => x.Manufacturer;
+            if (sortOrder.StartsWith("legal_status")) return x => x.LegalStatus;
+            if (sortOrder.StartsWith("reimbursement")) return x => x.Reimbursement;
 
-            return View();
+            return x => x.Name;
         }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-
     }
 }

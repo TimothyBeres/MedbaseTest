@@ -119,6 +119,26 @@ namespace Open.Infra.Migrations
                     b.ToTable("Currency");
                 });
 
+            modelBuilder.Entity("Open.Data.Person.PersonDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("IDCode");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Person");
+                });
+
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
                 {
                     b.Property<string>("ID")

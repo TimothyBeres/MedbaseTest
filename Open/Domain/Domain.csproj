@@ -69,6 +69,10 @@
     <Compile Include="Money\CurrencyObjectsList.cs" />
     <Compile Include="Money\ICountryCurrencyObjectsRepository.cs" />
     <Compile Include="Money\ICurrencyObjectsRepository.cs" />
+    <Compile Include="Person\IPersonObjectsRepository.cs" />
+    <Compile Include="Person\PersonObject.cs" />
+    <Compile Include="Person\PersonObjectFactory.cs" />
+    <Compile Include="Person\PersonObjectsList.cs" />
     <Compile Include="Product\IMedicineObjectsRepository.cs" />
     <Compile Include="Product\IMedicineEffectsObjectsRepository.cs" />
     <Compile Include="Product\IEffectObjectsRepository.cs" />

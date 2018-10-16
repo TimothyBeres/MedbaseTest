@@ -1,10 +1,20 @@
 ﻿@{
+    Layout = "_Layout";
     ViewBag.Title = "Suggestions";
-    ViewBag.Button = "Create";
-    Layout = "_IndexPartial";
 
 }
-@section Create{
-    <a asp-action=Create>Create New</a>
-}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action=@ViewBag.ActionIndex method="get">
+    <div class="form-horizontal">
+        <p>
+            Search for patient (ID Code): <input type="text" name="SearchString" />
+            <br />
+            <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions")'">Search</button>
+        </p>
+    </div>
+</form>
+
+
 

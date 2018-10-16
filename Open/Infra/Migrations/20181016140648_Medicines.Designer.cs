@@ -13,8 +13,8 @@ using System;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181002182546_Sentry")]
-    partial class Sentry
+    [Migration("20181016140648_Medicines")]
+    partial class Medicines
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,26 @@ namespace Open.Infra.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Currency");
+                });
+
+            modelBuilder.Entity("Open.Data.Person.PersonDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("IDCode");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
