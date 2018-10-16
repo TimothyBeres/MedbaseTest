@@ -7,6 +7,7 @@ namespace Sentry1.Services
     [IgnoreFirst(1)]
     public class MedicineTemplate
     {
+        
         [FieldOptional]
         private string atc;
         [FieldOptional]
@@ -28,11 +29,18 @@ namespace Sentry1.Services
         [FieldOptional]
         private string pil;
 
-        [FieldOptional] private DateTime validFrom;
+        [FieldOptional]
+        [FieldConverter(ConverterKind.Date, "dd.MM.yyyy")]
+        [FieldNullValue(typeof(DateTime), "1900-01-01")]
+        private DateTime validFrom;
 
-        [FieldOptional] private DateTime validTo;
+        [FieldOptional]
+        [FieldConverter(ConverterKind.Date, "dd.MM.yyyy")]
+        [FieldNullValue(typeof(DateTime), "1900-01-01")]
+        private DateTime validTo;
 
 
+        
         [FieldOptional]
         public string AtcCode
         {

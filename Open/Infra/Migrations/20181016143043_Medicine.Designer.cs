@@ -13,8 +13,8 @@ using System;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181015150238_Medicines")]
-    partial class Medicines
+    [Migration("20181016143043_Medicine")]
+    partial class Medicine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
