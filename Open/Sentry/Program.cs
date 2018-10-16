@@ -24,6 +24,7 @@ namespace Open.Sentry1
                 try
                 {
                     var dbContext = services.GetRequiredService<SentryDbContext>();
+                    //CsvImporter.Importer(dbContext);
                     DbTablesInitializer.Initialize(dbContext);
                     
                 }

@@ -1,33 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Your trusty source for OTC drugs";
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{        
+    ViewData["Title"] = "Welcome to Medbase";
 }
-<div class="jumbotron">
+<div class="jumbotron" style="opacity: 0.8">
     <h1>@ViewData["Title"]</h1>
 </div>
+<style>
+    body {
+        background: url("./fade.jpg");
+        background-size: cover;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-4">
-        <h2>Welcome to Sentry</h2>
+        <h2>Welcome to MedBase</h2>
         <p>
-            This project is in work and aims
-            to provide a stable, reliable and
-            trustworthy solution to choosing the
-            right OTC drugs for your everyday use.
+            We are a new application, looking to better the lives of both doctors and patients!
         </p>
     </div>
     <div class="col-md-4">
         <h2>Partnership with Ravimiregister</h2>
         <p>All our data comes from and is therefore validated by Estonian state run IT system Ravimiregister.</p>
-        <p><a class="btn btn-default"
-              href="http://ravimiregister.ravimiamet.ee/default.aspx?pv=HumRavimid.Otsing">Check the link! &raquo;</a></p>
+        <p>
+            <a class="btn btn-default"
+               href="http://ravimiregister.ravimiamet.ee/default.aspx?pv=HumRavimid.Otsing">Check the link! &raquo;</a>
+        </p>
     </div>
     <div class="col-md-4">
         <h2>Download it</h2>
         <p>You can download the completed project from GitHub</p>
-        <p><a class="btn btn-default"
-              href="https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final">
-              See project source code &raquo;
-              </a></p>
-        </div>
+        <p>
+            <a class="btn btn-default"
+               href="https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final">
+                See project source code &raquo;
+            </a>
+        </p>
     </div>
+</div>
 
 

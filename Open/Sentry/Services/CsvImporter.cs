@@ -14,7 +14,10 @@ namespace Sentry1.Services
         {
             var engine = new FileHelperEngine<MedicineTemplate>();
             var res = engine.ReadFile("ravimid.csv");
-            
+            foreach (var thing in res)
+            {
+                Console.WriteLine(thing);
+            }
             foreach (MedicineTemplate med in res)
             {
                 var effects = new List<string>();

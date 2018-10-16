@@ -21,6 +21,7 @@ namespace Open.Sentry1
     {
         public Startup(IConfiguration configuration)
         {
+            
             Configuration = configuration;
 
         }
