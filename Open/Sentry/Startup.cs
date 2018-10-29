@@ -6,10 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Open.Domain.Location;
 using Open.Domain.Money;
+using Open.Domain.Person;
 using Open.Domain.Product;
 using Open.Infra;
 using Open.Infra.Location;
 using Open.Infra.Money;
+using Open.Infra.Person;
 using Open.Infra.Product;
 using Sentry1.Data;
 using Sentry1.Models;
@@ -45,7 +47,7 @@ namespace Open.Sentry1
             services.AddScoped<IEffectObjectsRepository, EffectObjectsRepository>();
             services.AddScoped<IMedicineObjectsRepository, MedicineObjectsRepository>();
             services.AddScoped<IMedicineEffectsObjectsRepository, MedicineEffectsObjectsRepository>();
-            
+            services.AddScoped<IPersonObjectsRepository, PersonObjectsRepository>();
         }
 
         protected virtual void setMvcWithAntyFoggeryToken(IServiceCollection services)
@@ -62,8 +64,6 @@ namespace Open.Sentry1
         {
             var s = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(s));
-            services.AddDbContext<SentryDbContext>(
                 options => options.UseSqlServer(s));
             services.AddDbContext<SentryDbContext>(
                 options => options.UseSqlServer(s));
