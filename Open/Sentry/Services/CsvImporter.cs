@@ -11,14 +11,14 @@ using Open.Sentry1;
 
 namespace Sentry1.Services
 {
-    public static class CsvImporter 
+    public static class CsvImporter
     {
         public static void Importer(SentryDbContext c)
         {
-            
+
             var engine = new DelimitedFileEngine<MedicineTemplate>();
-            var res = engine.ReadFile("C:\\Users\\kevin\\Desktop\\ravimidtest.csv");
-           
+            var res = engine.ReadFile("ravimidtest.csv");
+
 
             foreach (MedicineTemplate med in res)
             {
@@ -30,24 +30,24 @@ namespace Sentry1.Services
                     string[] effects = med.Effects.Split(" +");
                     foreach (string effect in effects)
                     {
-                        
+
                         AddEffectWithPlusSign(med, effect, medicineId);
-                        
+
                     }
 
                 }
                 else
                 {
-                    
+
                     AddEffect(med, effectId);
                     AddMedicineEffect(medicineId, effectId, med);
                 }
-                
-            
-                
+
+
+
             }
 
-            
+
         }
 
         public static void AddMedicineEffect(Guid medicineId, Guid effectId, MedicineTemplate med)
@@ -64,7 +64,7 @@ namespace Sentry1.Services
                     command.Parameters.AddWithValue("@EffectID", effectId);
                     command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
                     command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-                    
+
 
 
 
@@ -76,16 +76,16 @@ namespace Sentry1.Services
                 }
             }
         }
-        
+
         public static void AddMedicine(MedicineTemplate med, Guid id)
         {
-            
+
             string _connectionString =
                 "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 String query = "INSERT INTO dbo.Medicine (ID,AtcCode,FormOfInjection,LegalStatus,Manufacturer,Name,Pil,Reimbursement,Spc,Strength,ValidFrom,ValidTo) VALUES (@ID,@AtcCode,@FormOfInjection,@LegalStatus,@Manufacturer,@Name,@Pil,@Reimbursement,@Spc,@Strength,@ValidFrom,@ValidTo)";
-                
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@ID", id);
@@ -107,7 +107,7 @@ namespace Sentry1.Services
                     command.ExecuteNonQuery();
 
                     // Check Error
-                    
+
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace Sentry1.Services
 
 
 
-                    
+
                     command1.ExecuteNonQuery();
 
                     // Check Error
@@ -180,7 +180,7 @@ namespace Sentry1.Services
                     command2.ExecuteNonQuery();
                 }
             }
-            
+
         }
 
         public static void ClearMedicinesAndEffects()
@@ -213,7 +213,7 @@ namespace Sentry1.Services
 
         }
 
-       
-        
+
+
     }
 }
