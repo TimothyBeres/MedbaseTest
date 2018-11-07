@@ -49,6 +49,11 @@ namespace Open.Tests.Infra
         }
 
         [TestMethod]
+        public void PersonsTest()
+        {
+            Assert.Inconclusive();
+        }
+        [TestMethod]
         public void CountryCurrenciesTest()
         {
             Assert.Inconclusive();

@@ -47,7 +47,7 @@ namespace Open.Tests.Facade.Product
             Assert.AreEqual(v.Strength, Constants.Unspecified);
             Assert.AreEqual(v.Manufacturer, Constants.Unspecified);
             Assert.AreEqual(v.LegalStatus, Constants.Unspecified);
-            Assert.AreEqual(v.Reimbursement, false);
+            Assert.AreEqual(v.Reimbursement, Constants.Unspecified);
             Assert.AreEqual(v.Spc, Constants.Unspecified);
             Assert.AreEqual(v.Pil, Constants.Unspecified);
             Assert.AreEqual(v.ValidFrom, null);
