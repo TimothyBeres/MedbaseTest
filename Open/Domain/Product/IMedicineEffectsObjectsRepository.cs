@@ -7,6 +7,6 @@ namespace Open.Domain.Product
     {
         Task LoadEffects(MedicineObject medicine);
         Task LoadMedicines(EffectObject effect);
-        Task<MedicineEffectsObject> GetObject(string pro, string cat);
+        Task<MedicineEffectsObject> GetObject(string eff, string med);
     }
 }
