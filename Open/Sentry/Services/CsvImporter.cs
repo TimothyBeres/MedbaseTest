@@ -17,8 +17,8 @@ namespace Sentry1.Services
         {
 
             var engine = new DelimitedFileEngine<MedicineTemplate>();
-            var res = engine.ReadFile("ravimidtest.csv");
-
+            var res = engine.ReadFile("ravimidTest.csv");
+           
 
             foreach (MedicineTemplate med in res)
             {

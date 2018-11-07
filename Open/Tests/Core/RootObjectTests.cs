@@ -78,5 +78,11 @@ namespace Open.Tests.Core
             Assert.IsTrue(obj.Contains(obj.Date.Day.ToString()));
             Assert.IsTrue(obj.Contains(obj.Date.Month.ToString()));
         }
+
+        [TestMethod]
+        public void getBoolTest()
+        {
+            Assert.Inconclusive();
+        }
     }
 }
