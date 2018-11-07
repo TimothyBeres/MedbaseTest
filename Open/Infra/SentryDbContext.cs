@@ -30,6 +30,8 @@ namespace Open.Infra
 
         public DbSet<PersonDbRecord> Persons { get; set; }
 
+        public DbSet<PersonMedicineDbRecord> PersonMedicines { get; set; }
+
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -42,6 +44,7 @@ namespace Open.Infra
             CreateTelecomAddressRegistrationTable(b);
             CreateCountryCurrencyTable(b);
             CreateMedicineEffectsTable(b);
+            CreatePersonMedicinesTable(b);
         }
 
         public static void CreateCountryCurrencyTable(ModelBuilder b)
@@ -58,6 +61,14 @@ namespace Open.Infra
             createPrimaryKey<MedicineEffectsDbRecord>(b, table, a => new { a.EffectID, a.MedicineID });
             createForeignKey<MedicineEffectsDbRecord, EffectDbRecord>(b, table, x => x.EffectID, x => x.Effect);
             createForeignKey<MedicineEffectsDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
+        }
+
+        public static void CreatePersonMedicinesTable(ModelBuilder b)
+        {
+            const string table = "PersonMedicines";
+            createPrimaryKey<PersonMedicineDbRecord>(b, table, a => new { a.PersonID, a.MedicineID });
+            createForeignKey<PersonMedicineDbRecord, PersonDbRecord>(b, table, x => x.PersonID, x => x.Person);
+            createForeignKey<PersonMedicineDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
         }
 
         internal static void createPrimaryKey<TEntity>(

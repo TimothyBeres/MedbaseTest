@@ -69,7 +69,11 @@
     <Compile Include="Money\CurrencyObjectsList.cs" />
     <Compile Include="Money\ICountryCurrencyObjectsRepository.cs" />
     <Compile Include="Money\ICurrencyObjectsRepository.cs" />
+    <Compile Include="Person\IPersonMedicineObjectsRepository.cs" />
     <Compile Include="Person\IPersonObjectsRepository.cs" />
+    <Compile Include="Person\PersonMedicineObject.cs" />
+    <Compile Include="Person\PersonMedicineObjectFactory.cs" />
+    <Compile Include="Person\PersonMedicineObjectsList.cs" />
     <Compile Include="Person\PersonObject.cs" />
     <Compile Include="Person\PersonObjectFactory.cs" />
     <Compile Include="Person\PersonObjectsList.cs" />
