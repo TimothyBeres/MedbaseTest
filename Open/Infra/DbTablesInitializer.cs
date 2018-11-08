@@ -16,7 +16,7 @@ namespace Open.Infra
             EffectsDbTableInitializer.Initialize(dbContext);
             MedicinesDbTableInitializer.Initialize(dbContext);
             MedicineEffectsDbTableInitializer.Initialize(dbContext);
-          //  PersonsDbTableInitializer.Initialize(dbContext);
+            PersonsDbTableInitializer.Initialize(dbContext);
         }
     }
 }

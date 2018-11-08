@@ -1,5 +1,5 @@
 ﻿@using Open.Sentry1.Extensions
-@model Open.Core.IPaginatedList<Open.Facade.Product.MedicineViewModel>
+@model Open.Facade.Person.PersonViewModel
 
 @{
     ViewData["Title"] = "PatientInfo";
@@ -7,12 +7,12 @@
 
 <h2>Patient Info</h2>
 
-<h3>ID Code: </h3>
-<h3>First Name: </h3>
-<h3>Last Name: </h3>
+<h3>@Html.ViewingControlsFor(model => model.IDCode)</h3>
+<h3>@Html.ViewingControlsFor(model => model.FirstName)</h3>
+<h3>@Html.ViewingControlsFor(model => model.LastName)</h3>
 <br />
 
-<body>
+@*<body>
     <p>Suggestions already made to the patient</p>
     <table class="table">
         @{ var dummy = Model.FirstOrDefault();}
@@ -28,7 +28,7 @@
             </tr>
         </thead>
     </table>
-</body>
+</body>*@
 
 
 
