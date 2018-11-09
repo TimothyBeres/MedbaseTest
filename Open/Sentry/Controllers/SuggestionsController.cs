@@ -17,11 +17,12 @@ namespace Open.Sentry1.Controllers
     {
         private readonly IMedicineObjectsRepository repository;
         private readonly IPersonObjectsRepository persons;
+        private readonly IPersonMedicineObjectsRepository personMedicines;
 
-        public SuggestionsController(IMedicineObjectsRepository r, IPersonObjectsRepository p)
+        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm)
         {
-            repository = r;
             persons = p;
+            personMedicines = pm;
         }
 
         public IActionResult Index()
@@ -34,6 +35,7 @@ namespace Open.Sentry1.Controllers
         {
             var idCode = model.IDCode;
             var persona = await persons.GetPersonByIDCode(idCode);
+            await personMedicines.LoadMedicines(persona);
             return View("PatientInfo", PersonViewModelFactory.Create(persona));
         }
         /*public async Task<IActionResult> PatientInfo(string sortOrder = null,

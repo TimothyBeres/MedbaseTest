@@ -13,7 +13,7 @@ using System;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181104140059_Sentry")]
+    [Migration("20181108201941_Sentry")]
     partial class Sentry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,25 @@ namespace Open.Infra.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("Open.Data.Person.PersonMedicineDbRecord", b =>
+                {
+                    b.Property<string>("PersonID");
+
+                    b.Property<string>("MedicineID");
+
+                    b.Property<bool>("SuitableForPerson");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("PersonID", "MedicineID");
+
+                    b.HasIndex("MedicineID");
+
+                    b.ToTable("PersonMedicines");
                 });
 
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
@@ -274,6 +293,19 @@ namespace Open.Infra.Migrations
                     b.HasOne("Open.Data.Money.CurrencyDbRecord", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Person.PersonMedicineDbRecord", b =>
+                {
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Open.Data.Person.PersonDbRecord", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

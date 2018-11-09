@@ -170,6 +170,33 @@ namespace Open.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonMedicines",
+                columns: table => new
+                {
+                    PersonID = table.Column<string>(nullable: false),
+                    MedicineID = table.Column<string>(nullable: false),
+                    SuitableForPerson = table.Column<bool>(nullable: false),
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonMedicines", x => new { x.PersonID, x.MedicineID });
+                    table.ForeignKey(
+                        name: "FK_PersonMedicines_Medicine_MedicineID",
+                        column: x => x.MedicineID,
+                        principalTable: "Medicine",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PersonMedicines_Person_PersonID",
+                        column: x => x.PersonID,
+                        principalTable: "Person",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TelecomDeviceRegistration",
                 columns: table => new
                 {
@@ -211,6 +238,11 @@ namespace Open.Infra.Migrations
                 column: "MedicineID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersonMedicines_MedicineID",
+                table: "PersonMedicines",
+                column: "MedicineID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TelecomDeviceRegistration_DeviceID",
                 table: "TelecomDeviceRegistration",
                 column: "DeviceID");
@@ -225,7 +257,7 @@ namespace Open.Infra.Migrations
                 name: "MedicineEffects");
 
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "PersonMedicines");
 
             migrationBuilder.DropTable(
                 name: "TelecomDeviceRegistration");
@@ -238,6 +270,9 @@ namespace Open.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicine");
+
+            migrationBuilder.DropTable(
+                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Address");
