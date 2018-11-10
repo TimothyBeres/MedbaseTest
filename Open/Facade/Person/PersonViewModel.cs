@@ -14,6 +14,7 @@ namespace Open.Facade.Person
         private string last_name;
 
         [Required]
+        [StringLength(11, MinimumLength = 11)]
         [DisplayName("ID Code")]
         public string IDCode
         {

@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
 using Open.Data.Product;
+using Open.Domain.Person;
 using Open.Domain.Product;
+using Open.Facade.Person;
 using Open.Facade.Product;
 using Sentry1.Models;
 
@@ -13,10 +15,14 @@ namespace Open.Sentry1.Controllers
     public class SuggestionsController : Controller
     {
         private readonly IMedicineObjectsRepository repository;
+        private readonly IPersonObjectsRepository personRepository;
+        public const string properties = "ID, FirstName, LastName, ValidFrom, ValidTo";
 
-        public SuggestionsController(IMedicineObjectsRepository r)
+        public SuggestionsController(IMedicineObjectsRepository r,
+            IPersonObjectsRepository pr)
         {
             repository = r;
+            personRepository = pr;
         }
 
         public IActionResult Index()
@@ -53,6 +59,21 @@ namespace Open.Sentry1.Controllers
             repository.PageIndex = page ?? 1;
             var l = await repository.GetObjectsList();
             return View(new MedicineViewModelsList(l));
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind(properties)] PersonViewModel c)
+        {
+            if (!ModelState.IsValid) return View(c);
+            c.ID = Guid.NewGuid().ToString();
+            var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
+            await personRepository.AddObject(o);
+            return RedirectToAction("PatientInfo");
         }
 
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
