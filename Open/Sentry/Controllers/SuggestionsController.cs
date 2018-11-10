@@ -16,20 +16,23 @@ namespace Open.Sentry1.Controllers
     public class SuggestionsController : Controller
     {
         private readonly IMedicineObjectsRepository repository;
+        private readonly IPersonObjectsRepository personRepository;
         private readonly IPersonObjectsRepository persons;
         private readonly IPersonMedicineObjectsRepository personMedicines;
+        public const string properties = "ID, FirstName, LastName, ValidFrom, ValidTo";
 
-        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm)
+        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IPersonObjectsRepository pr)
         {
             persons = p;
             personMedicines = pm;
+            personRepository = pr;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> PatientInfo(PersonViewModel model)
         {
@@ -67,6 +70,20 @@ namespace Open.Sentry1.Controllers
             var l = await repository.GetObjectsList();
             return View(new MedicineViewModelsList(l));
         }*/
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind(properties)] PersonViewModel c)
+        {
+            if (!ModelState.IsValid) return View(c);
+            c.ID = Guid.NewGuid().ToString();
+            var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
+            await personRepository.AddObject(o);
+            return RedirectToAction("PatientInfo");
+        }
 
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
         {

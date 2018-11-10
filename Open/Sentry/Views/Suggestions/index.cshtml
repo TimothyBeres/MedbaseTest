@@ -8,19 +8,21 @@
 <h2>@ViewBag.Title</h2>
 
 @*<form asp-action=@ViewBag.ActionIndex method="get">
-    <div class="form-horizontal">
-        <p>
-            Search for patient (ID Code): <input type="text" name="SearchString" />
-            <br />
-            <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { id_code=Model.IDCode})'">Search</button>
-        </p>
-    </div>
-</form>*@
+        <div class="form-horizontal">
+            <p>
+                Search for patient (ID Code): <input type="text" name="SearchString" />
+                <br />
+                <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { id_code=Model.IDCode})'">Search</button>
+            </p>
+        </div>
+    </form>*@
 @using (Html.BeginForm("Patientinfo", "Suggestions", FormMethod.Post))
 {
     @Html.TextBoxFor(model => model.IDCode)
     @Html.ValidationMessageFor(model => model.IDCode)
-    <button type="submit">Search</button>
+    <button type="submit">Search</button><br />
+    <br />
+    <button type="button" onclick="location.href='@Url.Action("Create","Suggestions")'">Add Person</button>
 }
 
 
