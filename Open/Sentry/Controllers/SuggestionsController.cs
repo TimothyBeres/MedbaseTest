@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
 using Open.Data.Product;
+using Open.Data.Person;
 using Open.Domain.Person;
 using Open.Domain.Product;
-using Open.Facade.Person;
 using Open.Facade.Product;
+using Open.Facade.Person;
 using Sentry1.Models;
 
 namespace Open.Sentry1.Controllers
@@ -15,23 +16,29 @@ namespace Open.Sentry1.Controllers
     public class SuggestionsController : Controller
     {
         private readonly IMedicineObjectsRepository repository;
-        private readonly IPersonObjectsRepository personRepository;
-        public const string properties = "ID, FirstName, LastName, ValidFrom, ValidTo";
+        private readonly IPersonObjectsRepository persons;
+        private readonly IPersonMedicineObjectsRepository personMedicines;
 
-        public SuggestionsController(IMedicineObjectsRepository r,
-            IPersonObjectsRepository pr)
+        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm)
         {
-            repository = r;
-            personRepository = pr;
+            persons = p;
+            personMedicines = pm;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-
-
-        public async Task<IActionResult> PatientInfo(string sortOrder = null,
+        
+        [HttpPost]
+        public async Task<IActionResult> PatientInfo(PersonViewModel model)
+        {
+            var idCode = model.IDCode;
+            var persona = await persons.GetPersonByIDCode(idCode);
+            await personMedicines.LoadMedicines(persona);
+            return View("PatientInfo", PersonViewModelFactory.Create(persona));
+        }
+        /*public async Task<IActionResult> PatientInfo(string sortOrder = null,
             string currentFilter = null,
             string searchString = null,
             int? page = null)
@@ -59,22 +66,7 @@ namespace Open.Sentry1.Controllers
             repository.PageIndex = page ?? 1;
             var l = await repository.GetObjectsList();
             return View(new MedicineViewModelsList(l));
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind(properties)] PersonViewModel c)
-        {
-            if (!ModelState.IsValid) return View(c);
-            c.ID = Guid.NewGuid().ToString();
-            var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
-            await personRepository.AddObject(o);
-            return RedirectToAction("PatientInfo");
-        }
+        }*/
 
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
         {

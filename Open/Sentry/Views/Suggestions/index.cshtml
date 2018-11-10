@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Open.Facade.Person.PersonViewModel
+@{
     Layout = "_Layout";
     ViewBag.Title = "Suggestions";
 
@@ -6,17 +7,21 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form asp-action=@ViewBag.ActionIndex method="get">
+@*<form asp-action=@ViewBag.ActionIndex method="get">
     <div class="form-horizontal">
         <p>
             Search for patient (ID Code): <input type="text" name="SearchString" />
             <br />
-            <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions")'">Search</button> <br />
-            <br />
-            <button type="button" onclick="location.href='@Url.Action("Create","Suggestions")'">Add Person</button>
+            <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { id_code=Model.IDCode})'">Search</button>
         </p>
     </div>
-</form>
+</form>*@
+@using (Html.BeginForm("Patientinfo", "Suggestions", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.IDCode)
+    @Html.ValidationMessageFor(model => model.IDCode)
+    <button type="submit">Search</button>
+}
 
 
 

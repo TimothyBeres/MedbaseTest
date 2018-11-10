@@ -11,7 +11,7 @@ using System;
 namespace Open.Sentry1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181107130854_Application")]
+    [Migration("20181104135458_Application")]
     partial class Application
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,5 +1,5 @@
 ﻿@using Open.Sentry1.Extensions
-@model Open.Core.IPaginatedList<Open.Facade.Product.MedicineViewModel>
+@model Open.Facade.Person.PersonViewModel
 
 @{
     ViewData["Title"] = "PatientInfo";
@@ -7,26 +7,37 @@
 
 <h2>Patient Info</h2>
 
-<h3>ID Code: </h3>
-<h3>First Name: </h3>
-<h3>Last Name: </h3>
+<h3>@Html.ViewingControlsFor(model => model.IDCode)</h3>
+<h3>@Html.ViewingControlsFor(model => model.FirstName)</h3>
+<h3>@Html.ViewingControlsFor(model => model.LastName)</h3>
 <br />
 
 <body>
-    <p>Suggestions already made to the patient</p>
+    <P style="font-size:130%;">&nbsp;</P>
+    <P style="font-size:130%;">Suggestions already made to the patient</P>
     <table class="table">
-        @{ var dummy = Model.FirstOrDefault();}
+        @{ var dummy = Model.MedicinesInUse.FirstOrDefault();}
         <thead>
             <tr>
                 @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
-                @Html.SortColumnHeaderFor(ViewData["SortStrength"], model => dummy.Strength)
-                @Html.SortColumnHeaderFor(ViewData["SortManufacturer"], model => dummy.Manufacturer)
+                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.AtcCode)
                 @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
                 @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
                 <th></th>
             </tr>
         </thead>
+        <tbody>
+            @foreach (var item in Model.MedicinesInUse)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AtcCode)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.ID)
+                </tr>
+            }
+        </tbody>
     </table>
 </body>
 
