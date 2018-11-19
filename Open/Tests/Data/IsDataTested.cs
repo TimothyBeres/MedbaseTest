@@ -42,5 +42,11 @@ namespace Open.Tests.Data
         {
             isAllClassesTested(assembly, Namespace("Product"));
         }
+
+        [TestMethod]
+        public void IsPersonTested()
+        {
+            isAllClassesTested(assembly, Namespace("Person"));
+        }
     }
 }

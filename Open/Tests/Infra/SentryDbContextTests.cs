@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Aids;
 using Open.Data.Location;
 using Open.Data.Money;
+using Open.Data.Person;
 using Open.Data.Product;
 using Open.Infra;
 using Open.Tests.Infra.Location;
@@ -108,6 +109,12 @@ namespace Open.Tests.Infra
         }
 
         [TestMethod]
+        public void PersonMedicinesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
         public void CreateAddressTableTest()
         {
             var set = new ConventionSet();
@@ -141,6 +148,15 @@ namespace Open.Tests.Infra
             var mb = new ModelBuilder(set);
             SentryDbContext.CreateMedicineEffectsTable(mb);
             testHasMedicineEffectsEntities(mb);
+        }
+
+        [TestMethod]
+        public void CreatePersonMedicinesTableTest()
+        {
+            var set = new ConventionSet();
+            var mb = new ModelBuilder(set);
+            SentryDbContext.CreatePersonMedicinesTable(mb);
+            testHasPersonMedicinesEntities(mb);
         }
 
         [TestMethod]
@@ -192,6 +208,18 @@ namespace Open.Tests.Infra
             var effectID = GetMember.Name<MedicineEffectsDbRecord>(x => x.EffectID);
             testPrimaryKey(entity, effectID, medicineID);
             testForeignKey(entity, effectID, typeof(EffectDbRecord));
+            testForeignKey(entity, medicineID, typeof(MedicineDbRecord));
+        }
+
+        private static void testHasPersonMedicinesEntities(ModelBuilder mb)
+        {
+            testEntity<PersonDbRecord>(mb);
+            testEntity<MedicineDbRecord>(mb);
+            var entity = testEntity<PersonMedicineDbRecord>(mb, true, 2);
+            var medicineID = GetMember.Name<PersonMedicineDbRecord>(x => x.MedicineID);
+            var personID = GetMember.Name<PersonMedicineDbRecord>(x => x.PersonID);
+            testPrimaryKey(entity, personID, medicineID);
+            testForeignKey(entity, personID, typeof(PersonDbRecord));
             testForeignKey(entity, medicineID, typeof(MedicineDbRecord));
         }
 

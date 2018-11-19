@@ -31,6 +31,12 @@ namespace Open.Tests.Infra
             isAllClassesTested(assembly, Namespace("Product"));
         }
 
+        [TestMethod]
+        public void IsPersonTested()
+        {
+            isAllClassesTested(assembly, Namespace("Person"));
+        }
+
         //[TestMethod]
         //public void IsTested()
         //{

@@ -36,5 +36,11 @@ namespace Open.Tests.Facade
         {
             isAllClassesTested(assembly, Namespace("Product"));
         }
+
+        [TestMethod]
+        public void IsPersonTested()
+        {
+            isAllClassesTested(assembly, Namespace("Person"));
+        }
     }
 }
