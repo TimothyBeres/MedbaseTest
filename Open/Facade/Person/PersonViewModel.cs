@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Open.Facade.Common;
 using Open.Facade.Product;
+using Open.Core;
 
 namespace Open.Facade.Person
 {
@@ -12,10 +13,12 @@ namespace Open.Facade.Person
         private string id_code;
         private string first_name;
         private string last_name;
+        public string nameError = "Nimi võib sisaldada ainult tähti!";
 
-        [Required]
-        [StringLength(11, MinimumLength = 11)]
+        [Required(ErrorMessage = Constants.FieldRequired)]
         [DisplayName("ID Code")]
+        [RegularExpression(@"^\d+$", ErrorMessage = Constants.IdDigitsError)]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = Constants.IdLengthError)]
         public string IDCode
         {
             get => getString(ref id_code);
@@ -23,6 +26,7 @@ namespace Open.Facade.Person
         }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$",ErrorMessage = Constants.NameError)]
         [DisplayName("First Name")]
         public string FirstName
         {
@@ -31,6 +35,7 @@ namespace Open.Facade.Person
         }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
         [DisplayName("Last Name")]
         public string LastName
         {

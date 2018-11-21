@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Open.Infra.Migrations
 {
@@ -12,11 +11,11 @@ namespace Open.Infra.Migrations
                 name: "Country",
                 columns: table => new
                 {
-                    ID = table.Column<string>(nullable: false),
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ID = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,11 +26,11 @@ namespace Open.Infra.Migrations
                 name: "Currency",
                 columns: table => new
                 {
-                    ID = table.Column<string>(nullable: false),
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ID = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,10 +41,10 @@ namespace Open.Infra.Migrations
                 name: "Effect",
                 columns: table => new
                 {
-                    ID = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
                     ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,18 +55,18 @@ namespace Open.Infra.Migrations
                 name: "Medicine",
                 columns: table => new
                 {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
                     ID = table.Column<string>(nullable: false),
                     AtcCode = table.Column<string>(nullable: true),
-                    FormOfInjection = table.Column<string>(nullable: true),
-                    LegalStatus = table.Column<string>(nullable: true),
-                    Manufacturer = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Pil = table.Column<string>(nullable: true),
-                    Reimbursement = table.Column<string>(nullable: true),
-                    Spc = table.Column<string>(nullable: true),
+                    FormOfInjection = table.Column<string>(nullable: true),
                     Strength = table.Column<string>(nullable: true),
-                    ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    Manufacturer = table.Column<string>(nullable: true),
+                    LegalStatus = table.Column<string>(nullable: true),
+                    Spc = table.Column<string>(nullable: true),
+                    Pil = table.Column<string>(nullable: true),
+                    Reimbursement = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,12 +77,12 @@ namespace Open.Infra.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    ID = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    IDCode = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
                     ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    IDCode = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,17 +93,17 @@ namespace Open.Infra.Migrations
                 name: "Address",
                 columns: table => new
                 {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
                     ID = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     CityOrAreaCode = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
                     RegionOrStateOrCountryCode = table.Column<string>(nullable: true),
-                    ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false),
                     ZipOrPostCodeOrExtension = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
                     CountryID = table.Column<string>(nullable: true),
-                    Device = table.Column<int>(nullable: true),
-                    NationalDirectDialingPrefix = table.Column<string>(nullable: true)
+                    NationalDirectDialingPrefix = table.Column<string>(nullable: true),
+                    Device = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,10 +120,10 @@ namespace Open.Infra.Migrations
                 name: "CountryCurrency",
                 columns: table => new
                 {
-                    CountryID = table.Column<string>(nullable: false),
-                    CurrencyID = table.Column<string>(nullable: false),
                     ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    CountryID = table.Column<string>(nullable: false),
+                    CurrencyID = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,10 +146,10 @@ namespace Open.Infra.Migrations
                 name: "MedicineEffects",
                 columns: table => new
                 {
-                    EffectID = table.Column<string>(nullable: false),
-                    MedicineID = table.Column<string>(nullable: false),
                     ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    MedicineID = table.Column<string>(nullable: false),
+                    EffectID = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,11 +172,11 @@ namespace Open.Infra.Migrations
                 name: "PersonMedicines",
                 columns: table => new
                 {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
                     PersonID = table.Column<string>(nullable: false),
                     MedicineID = table.Column<string>(nullable: false),
-                    SuitableForPerson = table.Column<bool>(nullable: false),
-                    ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    SuitableForPerson = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,10 +199,10 @@ namespace Open.Infra.Migrations
                 name: "TelecomDeviceRegistration",
                 columns: table => new
                 {
-                    AddressID = table.Column<string>(nullable: false),
-                    DeviceID = table.Column<string>(nullable: false),
                     ValidFrom = table.Column<DateTime>(nullable: false),
-                    ValidTo = table.Column<DateTime>(nullable: false)
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    AddressID = table.Column<string>(nullable: false),
+                    DeviceID = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

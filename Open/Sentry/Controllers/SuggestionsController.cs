@@ -19,7 +19,7 @@ namespace Open.Sentry1.Controllers
         private readonly IPersonObjectsRepository personRepository;
         private readonly IPersonObjectsRepository persons;
         private readonly IPersonMedicineObjectsRepository personMedicines;
-        public const string properties = "ID, FirstName, LastName, ValidFrom, ValidTo";
+        public const string properties = "ID, IDCode, FirstName, LastName, ValidFrom, ValidTo";
 
         public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IPersonObjectsRepository pr)
         {
@@ -37,9 +37,17 @@ namespace Open.Sentry1.Controllers
         public async Task<IActionResult> PatientInfo(PersonViewModel model)
         {
             var idCode = model.IDCode;
-            var persona = await persons.GetPersonByIDCode(idCode);
-            await personMedicines.LoadMedicines(persona);
-            return View("PatientInfo", PersonViewModelFactory.Create(persona));
+            try
+            {
+                var persona = await persons.GetPersonByIDCode(idCode);
+                await personMedicines.LoadMedicines(persona);
+                return View("PatientInfo", PersonViewModelFactory.Create(persona));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
         /*public async Task<IActionResult> PatientInfo(string sortOrder = null,
             string currentFilter = null,
@@ -82,7 +90,7 @@ namespace Open.Sentry1.Controllers
             c.ID = Guid.NewGuid().ToString();
             var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
             await personRepository.AddObject(o);
-            return RedirectToAction("PatientInfo");
+            return View("PatientInfo", c);
         }
 
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
