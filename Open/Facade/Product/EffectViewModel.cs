@@ -11,14 +11,14 @@ namespace Open.Facade.Product
         private string name;
 
         [Required]
-        [DisplayName("Product Name")]
+        [DisplayName("Toimeaine")]
         public string Name
         {
             get => getString(ref name);
             set => name = value;
         }
 
-        [DisplayName("Used in Medicines")]
+        [DisplayName("Ravimid, milles sisaldub")]
         public List<MedicineViewModel> UsedInMedicines { get; } = new List<MedicineViewModel>();
     }
 }

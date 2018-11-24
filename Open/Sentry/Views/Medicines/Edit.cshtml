@@ -3,9 +3,9 @@
 @model Open.Facade.Product.MedicineViewModel
 
 @{
-    ViewBag.Title = "Edit";
-    ViewBag.SubTitle = $"Medicine ({Model.Name})";
-    ViewBag.Button = "Save";
+    ViewBag.Title = "Muuda";
+    ViewBag.SubTitle = $"Ravim ({Model.Name})";
+    ViewBag.Button = "Salvesta";
     Layout = "_EditPartial";
     var effects = ViewBag.Effects as EffectViewModelsList ?? new EffectViewModelsList(null);
     var prevDisabled = !effects.HasPreviousPage ? "disabled" : "";
@@ -41,7 +41,7 @@
                     {
                         <tr>
                             <td>@Html.DisplayFor(x => item.Name)</td>
-                            <td>@Html.ActionLink("Remove", "RemoveEffect", new { medicine = Model.ID, effect = item.ID })</td>
+                            <td>@Html.ActionLink("Eemalda", "RemoveEffect", new { medicine = Model.ID, effect = item.ID })</td>
                         </tr>
                     }
                 </tbody>
@@ -53,7 +53,7 @@
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
                        class="btn btn-default @prevDisabled"><</a>
                     <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
-                    <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
+                    <input type="submit" value="Otsi" class="btn btn-default" formmethod="get" />
                     <a asp-action="Edit"
                        asp-route-page="@(effects.PageIndex + 1)"
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
@@ -66,7 +66,7 @@
                     {
                         <tr>
                             <td>@Html.DisplayFor(x => item.Name)</td>
-                            <td>@Html.ActionLink("Add", "AddEffect", new { medicine = Model.ID, effect = item.ID })</td>
+                            <td>@Html.ActionLink("Lisa", "AddEffect", new { medicine = Model.ID, effect = item.ID })</td>
                         </tr>
                     }
                 </tbody>
@@ -76,5 +76,5 @@
 </body>
 
 @section Actions{
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tagasi", "Index")
 }

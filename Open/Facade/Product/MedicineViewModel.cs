@@ -19,7 +19,7 @@ namespace Open.Facade.Product
 
 
         [Required]
-        [DisplayName("Medicine Name")]
+        [DisplayName("Ravimi nimetus")]
         public string Name
         {
             get => getString(ref name);
@@ -27,40 +27,42 @@ namespace Open.Facade.Product
         }
 
         [Required]
-        [DisplayName("ATC Code")]
+        [DisplayName("ATC kood")]
         public string AtcCode
         {
             get => getString(ref atc_code);
             set => atc_code = value;
         }
         [Required]
-        [DisplayName("Form of Injection")]
+        [DisplayName("Manustamisviis")]
         public string FormOfInjection
         {
             get => getString(ref form_of_injection);
             set => form_of_injection = value;
         }
         [Required]
+        [DisplayName("Tugevus")]
         public string Strength
         {
             get => getString(ref strength);
             set => strength = value;
         }
         [Required]
+        [DisplayName("Tootja")]
         public string Manufacturer
         {
             get => getString(ref manufacturer);
             set => manufacturer = value;
         }
         [Required]
-        [DisplayName("Legal Status")]
+        [DisplayName("Legaalne staatus")]
         public string LegalStatus
         {
             get => getString(ref legal_status);
             set => legal_status = value;
         }
         [Required]
-        [DisplayName("Reimbursed by state")]
+        [DisplayName("Hüvitamine riigi poolt")]
         public string Reimbursement
         {
             get => getString(ref reimbursement);
@@ -81,7 +83,7 @@ namespace Open.Facade.Product
             set => pil = value;
         }
 
-        [DisplayName("Effects in Medicine")]
+        [DisplayName("Toimeained ravimis")]
         public List<EffectViewModel> EffectsInMedicine { get; } = new List<EffectViewModel>();
     }
 }

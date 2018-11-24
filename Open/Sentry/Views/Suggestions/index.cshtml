@@ -1,7 +1,7 @@
 ﻿@model Open.Facade.Person.PersonViewModel
 @{
     Layout = "_Layout";
-    ViewBag.Title = "Suggestions";
+    ViewBag.Title = "Soovitused";
 
 }
 
@@ -20,9 +20,9 @@
 {
     @Html.TextBoxFor(model => model.IDCode)
     @Html.ValidationMessageFor(model => model.IDCode)
-    <button type="submit">Search</button><br />
+    <button type="submit">Otsi</button><br />
     <br />
-    <button type="button" onclick="location.href='@Url.Action("Create","Suggestions")'">Add Person</button>
+    <button type="button" onclick="location.href='@Url.Action("Create","Suggestions")'">Lisa patsient</button>
 }
 
 

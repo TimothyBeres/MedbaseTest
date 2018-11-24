@@ -87,11 +87,11 @@ namespace Open.Sentry1.Extensions
             var htmlStrings = new List<object>
             {
                 new HtmlString("<th>"),
-                htmlHelper.ActionLink("Edit", edit, new {id = index}),
+                htmlHelper.ActionLink("Muuda", edit, new {id = index}),
                 new HtmlString(" | "),
-                htmlHelper.ActionLink("Details", details, new {id = index}),
+                htmlHelper.ActionLink("Detailid", details, new {id = index}),
                 new HtmlString(" | "),
-                htmlHelper.ActionLink("Delete", delete, new {id = index}),
+                htmlHelper.ActionLink("Eemalda", delete, new {id = index}),
                 new HtmlString("</th>")
             };
             return new HtmlContentBuilder(htmlStrings);

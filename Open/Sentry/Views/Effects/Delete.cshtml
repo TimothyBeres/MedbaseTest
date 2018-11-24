@@ -2,9 +2,9 @@
 @using Open.Sentry1.Extensions
 @model Open.Facade.Product.EffectViewModel
 @{
-    ViewBag.Title = "Delete";
-    ViewBag.SubTitle = "Effect";
-    ViewBag.Button = "Delete";
+    ViewBag.Title = "Eemalda";
+    ViewBag.SubTitle = "Toimeaine";
+    ViewBag.Button = "Eemalda";
     Layout = "_DeletePartial";
 }
 
@@ -15,7 +15,8 @@
 </body>
 
 @section Actions
-    {@Html.ActionLink("Edit", "Edit", new { id = Model.ID })
-    @Html.ActionLink("Back to List", "Index")
+    {@Html.ActionLink("Muuda", "Edit", new { id = Model.ID })
+
+    @Html.ActionLink("Tagasi", "Index")
 }
 

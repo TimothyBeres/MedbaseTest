@@ -16,7 +16,7 @@ namespace Open.Facade.Person
         public string nameError = "Nimi võib sisaldada ainult tähti!";
 
         [Required(ErrorMessage = Constants.FieldRequired)]
-        [DisplayName("ID Code")]
+        [DisplayName("Isikukood")]
         [RegularExpression(@"^\d+$", ErrorMessage = Constants.IdDigitsError)]
         [StringLength(11, MinimumLength = 11, ErrorMessage = Constants.IdLengthError)]
         public string IDCode
@@ -27,7 +27,7 @@ namespace Open.Facade.Person
 
         [Required]
         [RegularExpression(@"^[a-zA-Z]+$",ErrorMessage = Constants.NameError)]
-        [DisplayName("First Name")]
+        [DisplayName("Eesnimi")]
         public string FirstName
         {
             get => getString(ref first_name);
@@ -36,14 +36,14 @@ namespace Open.Facade.Person
 
         [Required]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
-        [DisplayName("Last Name")]
+        [DisplayName("Perekonnanimi")]
         public string LastName
         {
             get => getString(ref last_name);
             set => last_name = value;
         }
 
-        [DisplayName("Suggested medicines")]
+        [DisplayName("Soovitatud ravimid")]
         public List<MedicineViewModel> MedicinesInUse { get; } = new List<MedicineViewModel>();
     }
 }
