@@ -26,7 +26,7 @@ namespace Open.Facade.Person
         }
 
         [Required]
-        [RegularExpression(@"^[a-zA-Z]+$",ErrorMessage = Constants.NameError)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
         [DisplayName("First Name")]
         public string FirstName
         {
