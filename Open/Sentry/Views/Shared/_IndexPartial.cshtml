@@ -13,9 +13,9 @@
 <form asp-action=@ViewBag.ActionIndex method="get">
     <div class="form-horizontal">
         <p>
-            Find by: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" />
-            <a asp-action=@ViewBag.ActionIndex>Back to Full list</a>
+            Otsing: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Otsi" class="btn btn-default" />
+            <a asp-action=@ViewBag.ActionIndex>Tagasi kogu nimekirja juurde</a>
         </p>
     </div>
 </form>

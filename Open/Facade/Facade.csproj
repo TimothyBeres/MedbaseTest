@@ -60,6 +60,8 @@
     <Compile Include="Person\PersonViewModel.cs" />
     <Compile Include="Person\PersonViewModelFactory.cs" />
     <Compile Include="Person\PersonViewModelsList.cs" />
+    <Compile Include="Process\SuggestionViewModel.cs" />
+    <Compile Include="Process\SuggestionViewModelFactory.cs" />
     <Compile Include="Product\MedicineViewModel.cs" />
     <Compile Include="Product\MedicineViewModelFactory.cs" />
     <Compile Include="Product\MedicineViewModelsList.cs" />

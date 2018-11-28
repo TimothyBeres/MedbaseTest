@@ -59,6 +59,8 @@
     <Compile Include="Money\CurrencyDbRecord.cs" />
     <Compile Include="Person\PersonDbRecord.cs" />
     <Compile Include="Person\PersonMedicineDbRecord.cs" />
+    <Compile Include="Process\DosageDbRecord.cs" />
+    <Compile Include="Process\SchemeDbRecord.cs" />
     <Compile Include="Product\MedicineEffectsDbRecord.cs" />
     <Compile Include="Product\EffectDbRecord.cs" />
     <Compile Include="Product\MedicineDbRecord.cs" />
@@ -77,7 +79,6 @@
     <Folder Include="Inventory\" />
     <Folder Include="Order\" />
     <Folder Include="Party\" />
-    <Folder Include="Process\" />
     <Folder Include="Relationship\" />
     <Folder Include="Rule\" />
   </ItemGroup>

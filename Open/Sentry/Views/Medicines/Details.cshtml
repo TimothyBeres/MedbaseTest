@@ -1,8 +1,8 @@
 ﻿@using Open.Sentry1.Extensions
 @model Open.Facade.Product.MedicineViewModel
 @{
-    ViewBag.Title = "Details";
-    ViewBag.SubTitle = "Catalogue";
+    ViewBag.Title = "Detailid";
+    ViewBag.SubTitle = "Ravim";
     Layout = "_DetailsPartial";
 }
 
@@ -50,5 +50,5 @@
 </body>
 
 @section Actions
-    {@Html.ActionLink("Edit", "Edit", new { id = Model.ID })
-    @Html.ActionLink("Back to List", "Index")}
+    {@Html.ActionLink("Muuda", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Tagasi", "Index")}

@@ -1,8 +1,8 @@
 ﻿@using Open.Sentry1.Extensions
 @model Open.Facade.Product.EffectViewModel
 @{
-    ViewBag.Title = "Details";
-    ViewBag.SubTitle = "Effect";
+    ViewBag.Title = "Detailid";
+    ViewBag.SubTitle = "Toimeaine";
     Layout = "_DetailsPartial";
 }
 
@@ -44,7 +44,7 @@
 </body>
 
 @section Actions
-    {@Html.ActionLink("Edit", "Edit", new { id = Model.ID })
-    @Html.ActionLink("Back to List", "Index")}
+    {@Html.ActionLink("Muuda", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Tagasi", "Index")}
 
 
