@@ -77,6 +77,14 @@
     <Compile Include="Person\PersonObject.cs" />
     <Compile Include="Person\PersonObjectFactory.cs" />
     <Compile Include="Person\PersonObjectsList.cs" />
+    <Compile Include="Process\DosageObject.cs" />
+    <Compile Include="Process\DosageObjectFactory.cs" />
+    <Compile Include="Process\DosageObjectsList.cs" />
+    <Compile Include="Process\IDosageObjectsRepository.cs" />
+    <Compile Include="Process\ISchemeObjectsrepository.cs" />
+    <Compile Include="Process\SchemeObject.cs" />
+    <Compile Include="Process\SchemeObjectsFactory.cs" />
+    <Compile Include="Process\SchemeObjectsList.cs" />
     <Compile Include="Product\IMedicineObjectsRepository.cs" />
     <Compile Include="Product\IMedicineEffectsObjectsRepository.cs" />
     <Compile Include="Product\IEffectObjectsRepository.cs" />
@@ -104,7 +112,6 @@
     <Folder Include="Inventory\" />
     <Folder Include="Order\" />
     <Folder Include="Party\" />
-    <Folder Include="Process\" />
     <Folder Include="Relationship\" />
     <Folder Include="Rule\" />
   </ItemGroup>

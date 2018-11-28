@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Open.Data.Location;
 using Open.Data.Money;
 using Open.Data.Person;
+using Open.Data.Process;
 using Open.Data.Product;
 
 namespace Open.Infra
@@ -31,7 +32,9 @@ namespace Open.Infra
         public DbSet<PersonDbRecord> Persons { get; set; }
 
         public DbSet<PersonMedicineDbRecord> PersonMedicines { get; set; }
+        public DbSet<DosageDbRecord> Dosages { get; set; }
 
+        public DbSet<SchemeDbRecord> Schemes { get; set; }
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
