@@ -8,11 +8,11 @@ namespace Open.Facade.Common
     public abstract class TemporalViewModel : RootObject
     {
         [DataType(DataType.Date)]
-        [DisplayName("Lisatud")]
+        [DisplayName("Alates")]
         public DateTime? ValidFrom { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayName("Kehtib kuni")]
+        [DisplayName("Kuni")]
         public DateTime? ValidTo { get; set; }
     }
 }

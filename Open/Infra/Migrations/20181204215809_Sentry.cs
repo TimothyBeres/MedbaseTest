@@ -38,6 +38,22 @@ namespace Open.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Dosage",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    TypeOfTreatment = table.Column<string>(nullable: true),
+                    PersonID = table.Column<string>(nullable: true),
+                    MedicineID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dosage", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Effect",
                 columns: table => new
                 {
@@ -87,6 +103,25 @@ namespace Open.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Person", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Scheme",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    DosageId = table.Column<string>(nullable: true),
+                    QueueNr = table.Column<string>(nullable: true),
+                    Length = table.Column<string>(nullable: true),
+                    Amount = table.Column<string>(nullable: true),
+                    Times = table.Column<string>(nullable: true),
+                    TimeOfDay = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scheme", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,7 +211,7 @@ namespace Open.Infra.Migrations
                     ValidTo = table.Column<DateTime>(nullable: false),
                     PersonID = table.Column<string>(nullable: false),
                     MedicineID = table.Column<string>(nullable: false),
-                    SuitableForPerson = table.Column<bool>(nullable: false)
+                    SuitableForPerson = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,10 +288,16 @@ namespace Open.Infra.Migrations
                 name: "CountryCurrency");
 
             migrationBuilder.DropTable(
+                name: "Dosage");
+
+            migrationBuilder.DropTable(
                 name: "MedicineEffects");
 
             migrationBuilder.DropTable(
                 name: "PersonMedicines");
+
+            migrationBuilder.DropTable(
+                name: "Scheme");
 
             migrationBuilder.DropTable(
                 name: "TelecomDeviceRegistration");

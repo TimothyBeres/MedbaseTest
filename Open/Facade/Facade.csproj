@@ -33,6 +33,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +60,11 @@
     <Compile Include="Money\CurrencyViewModel.cs" />
     <Compile Include="Money\CurrencyViewModelFactory.cs" />
     <Compile Include="Money\CurrencyViewModelsList.cs" />
+    <Compile Include="Person\PersonInfoViewModelFactory.cs" />
     <Compile Include="Person\PersonViewModel.cs" />
     <Compile Include="Person\PersonViewModelFactory.cs" />
     <Compile Include="Person\PersonViewModelsList.cs" />
+    <Compile Include="Person\PersonInfoViewModel.cs" />
     <Compile Include="Process\SuggestionViewModel.cs" />
     <Compile Include="Process\SuggestionViewModelFactory.cs" />
     <Compile Include="Product\MedicineViewModel.cs" />
@@ -89,6 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Product.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

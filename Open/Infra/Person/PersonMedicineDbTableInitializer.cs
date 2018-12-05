@@ -11,7 +11,7 @@ namespace Open.Infra.Person
             if (c.PersonMedicines.Any()) return;
 
             c.SaveChanges();
-            foreach (var a in c.Persons)
+            /*foreach (var a in c.Persons)
             {
                 foreach (var p in c.Medicines)
                 {
@@ -24,7 +24,7 @@ namespace Open.Infra.Person
                 }
             }
 
-            c.SaveChanges();
+            c.SaveChanges();*/
 
         }
     }

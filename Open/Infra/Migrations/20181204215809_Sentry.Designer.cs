@@ -9,7 +9,7 @@ using Open.Infra;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181121123238_Sentry")]
+    [Migration("20181204215809_Sentry")]
     partial class Sentry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,7 +142,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("MedicineID");
 
-                    b.Property<bool>("SuitableForPerson");
+                    b.Property<string>("SuitableForPerson");
 
                     b.Property<DateTime>("ValidFrom");
 
@@ -153,6 +153,52 @@ namespace Open.Infra.Migrations
                     b.HasIndex("MedicineID");
 
                     b.ToTable("PersonMedicines");
+                });
+
+            modelBuilder.Entity("Open.Data.Process.DosageDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MedicineID");
+
+                    b.Property<string>("PersonID");
+
+                    b.Property<string>("TypeOfTreatment");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Dosage");
+                });
+
+            modelBuilder.Entity("Open.Data.Process.SchemeDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Amount");
+
+                    b.Property<string>("DosageId");
+
+                    b.Property<string>("Length");
+
+                    b.Property<string>("QueueNr");
+
+                    b.Property<string>("TimeOfDay");
+
+                    b.Property<string>("Times");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Scheme");
                 });
 
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>

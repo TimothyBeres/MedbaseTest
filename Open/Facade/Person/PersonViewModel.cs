@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Open.Facade.Common;
 using Open.Facade.Product;
 using Open.Core;
+using Open.Facade.Process;
 
 namespace Open.Facade.Person
 {
@@ -45,5 +46,7 @@ namespace Open.Facade.Person
 
         [DisplayName("Soovitatud ravimid")]
         public List<MedicineViewModel> MedicinesInUse { get; } = new List<MedicineViewModel>();
+        [DisplayName("Eelnevad soovitused")]
+        public List<PersonInfoViewModel> SuggestionsMade { get; } = new List<PersonInfoViewModel>();
     }
 }

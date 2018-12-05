@@ -7,7 +7,7 @@ namespace Open.Domain.Person
 {
     public static class PersonMedicineObjectFactory
     {
-        public static PersonMedicineObject Create(PersonObject person, MedicineObject medicine, bool suitableForPerson,
+        public static PersonMedicineObject Create(PersonObject person, MedicineObject medicine, string suitableForPerson,
             DateTime? validFrom = null, DateTime? validTo = null)
         {
             var o = new PersonMedicineDbRecord

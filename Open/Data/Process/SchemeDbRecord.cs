@@ -4,22 +4,22 @@ namespace Open.Data.Process
 {
     public class SchemeDbRecord : UniqueDbRecord
     {
-        private string dosage_id;
-        private string queue_nr;
+        private string dosageId;
+        private string queueNr;
         private string length;
         private string amount;
         private string times;
-        private string time_of_day;
+        private string timeOfDay;
 
         public string DosageId
         {
-            get => getString(ref dosage_id);
-            set => dosage_id = value;
+            get => getString(ref dosageId);
+            set => dosageId = value;
         }
         public string QueueNr
         {
-            get => getString(ref queue_nr);
-            set => queue_nr = value;
+            get => getString(ref queueNr);
+            set => queueNr = value;
         }
         public string Length
         {
@@ -38,8 +38,8 @@ namespace Open.Data.Process
         }
         public string TimeOfDay
         {
-            get => getString(ref time_of_day);
-            set => time_of_day = value;
+            get => getString(ref timeOfDay);
+            set => timeOfDay = value;
         }
     }
 }

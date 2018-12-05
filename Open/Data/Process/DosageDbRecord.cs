@@ -6,22 +6,25 @@ namespace Open.Data.Process
 {
     public class DosageDbRecord : UniqueDbRecord
     {
-        private string type_of_treatment;
-        private string personMedicine_id;
+        private string typeOfTreatment;
+        private string personId;
+        private string medicineId;
 
         public string TypeOfTreatment
         {
-            get => getString(ref type_of_treatment);
-            set => type_of_treatment = value;
+            get => getString(ref typeOfTreatment);
+            set => typeOfTreatment = value;
         }
 
-        public string PersonMedicineId
+        public string PersonID
         {
-            get => getString(ref personMedicine_id);
-            set => personMedicine_id = value;
+            get => getString(ref personId);
+            set => personId = value;
         }
-        public virtual PersonDbRecord Person { get; set; }
-        public virtual MedicineDbRecord Medicine { get; set; }
-        public virtual PersonMedicineDbRecord PersonMedicine { get; set; }
+        public string MedicineID
+        {
+            get => getString(ref medicineId);
+            set => medicineId = value;
+        }
     }
 }

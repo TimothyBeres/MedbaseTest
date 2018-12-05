@@ -2,17 +2,26 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Open.Facade.Common;
+using Open.Facade.Product;
 
 namespace Open.Facade.Process
 {
     public class SuggestionViewModel : UniqueEntityViewModel
     {
+        private string medicineId;
         private string typeOfTreatment;
         private string length;
         private string amount;
         private string times;
         private string timeOfDay;
+        private MedicineViewModel usedMedicine;
 
+        [Required]
+        public string MedicineID
+        {
+            get => getString(ref medicineId);
+            set => medicineId = value;
+        }
         [Required]
         [DisplayName("Ravi tüüp")]
         public string TypeOfTreatment
@@ -47,6 +56,12 @@ namespace Open.Facade.Process
         {
             get => getString(ref timeOfDay);
             set => timeOfDay = value;
+        }
+        [DisplayName("Ravim")]
+        public MedicineViewModel UsedMedicine
+        {
+            get { return usedMedicine; }
+            set { usedMedicine = value; }
         }
     }
 }

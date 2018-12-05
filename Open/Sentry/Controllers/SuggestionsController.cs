@@ -1,31 +1,42 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
 using Open.Data.Product;
 using Open.Data.Person;
+using Open.Domain.Location;
 using Open.Domain.Person;
+using Open.Domain.Process;
 using Open.Domain.Product;
+using Open.Facade.Location;
 using Open.Facade.Product;
 using Open.Facade.Person;
+using Open.Facade.Process;
 using Sentry1.Models;
 
 namespace Open.Sentry1.Controllers
 {
     public class SuggestionsController : Controller
     {
-        private readonly IMedicineObjectsRepository repository;
-        private readonly IPersonObjectsRepository personRepository;
+        private readonly IMedicineObjectsRepository medicines;
         private readonly IPersonObjectsRepository persons;
         private readonly IPersonMedicineObjectsRepository personMedicines;
+        private readonly IDosageObjectsRepository dosages;
+        private readonly ISchemeObjectsRepository schemes;
         public const string properties = "ID, IDCode, FirstName, LastName, ValidFrom, ValidTo";
+        internal const string sugProperties =
+            "ID, MedicineID, TypeOfTreatment, Length, Amount, Times, TimeOfDay, UsedMedicine, ValidFrom, ValidTo";
 
-        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IPersonObjectsRepository pr)
+        public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IMedicineObjectsRepository m,
+            IDosageObjectsRepository d, ISchemeObjectsRepository s)
         {
             persons = p;
             personMedicines = pm;
-            personRepository = pr;
+            medicines = m;
+            dosages = d;
+            schemes = s;
         }
 
         public IActionResult Index()
@@ -40,12 +51,22 @@ namespace Open.Sentry1.Controllers
             try
             {
                 var persona = await persons.GetPersonByIDCode(idCode);
+
                 await personMedicines.LoadMedicines(persona);
-                return View("PatientInfo", PersonViewModelFactory.Create(persona));
+                var personView = PersonViewModelFactory.Create(persona);
+                var personSuggestions = await dosages.GetAllDosages(persona.DbRecord.ID);
+                foreach (var sug in personSuggestions)
+                {
+                    var pm = await personMedicines.GetObject(sug.DbRecord.MedicineID, persona.DbRecord.ID);
+                    var med = await medicines.GetObject(sug.DbRecord.MedicineID);
+                    personView.SuggestionsMade.Add(PersonInfoViewModelFactory.Create(sug, pm,med));
+                }
+                return View("PatientInfo", personView);
             }
             catch (Exception e)
             {
-                throw e;
+                ViewBag.Message = "Sellise id-koodiga inimene puudub!";
+                return View("Index");
             }
             
         }
@@ -83,16 +104,6 @@ namespace Open.Sentry1.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind(properties)] PersonViewModel c)
-        {
-            if (!ModelState.IsValid) return View(c);
-            c.ID = Guid.NewGuid().ToString();
-            var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
-            await personRepository.AddObject(o);
-            return View("PatientInfo", c);
-        }
-
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
@@ -106,6 +117,67 @@ namespace Open.Sentry1.Controllers
             if (sortOrder.StartsWith("reimbursement")) return x => x.Reimbursement;
 
             return x => x.Name;
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s)
+        {
+            string suitable;
+            if (!ModelState.IsValid) return View(s);
+            var currentDate = DateTime.Now;
+            var dosageId = Guid.NewGuid().ToString();
+            var schemeId = Guid.NewGuid().ToString();
+            var perObj = await persons.GetPersonByIDCode(s.ID);
+            var medObj = await medicines.GetObject(s.MedicineID);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate);
+            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate);
+            var o = await personMedicines.GetObject(s.MedicineID, perObj.DbRecord.ID);
+            if (o.DbRecord.MedicineID == "Unspecified")
+            {
+                suitable = "Teadmata";
+            }
+            else
+            {
+                suitable = "Jah";
+                await personMedicines.DeleteObject(o);
+            }
+            await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));
+            await dosages.AddObject(dosage);
+            await schemes.AddObject(scheme);
+            return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
+        }
+        public async Task<IActionResult> DosageScheme(string id,
+            string currentFilter = null,
+            string searchString = null,
+            int? page = null,
+            string medId=null)
+        {
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;           
+            medicines.SearchString = searchString;
+            medicines.PageIndex = page ?? 1;
+            var meds = new MedicineViewModelsList(null);
+            if (!string.IsNullOrWhiteSpace(searchString))
+                meds = new MedicineViewModelsList(await medicines.GetObjectsList());           
+            var dosagesSch = SuggestionViewModelFactory.Create(id);
+            if (medId != null)
+            {
+                dosagesSch.UsedMedicine = MedicineViewModelFactory.Create(await medicines.GetObject(medId));
+                meds.RemoveAll(x => x.ID == medId);
+                dosagesSch.MedicineID = medId;
+            }
+            ViewBag.Medicines = meds;
+            return View(dosagesSch);
+        }
+        public async Task<IActionResult> RemoveMedicine(string personId, string medicineId)
+        {
+            return RedirectToAction("DosageScheme", new { id = personId });
+        }
+
+        public async Task<IActionResult> AddMedicine(string personId, string medicineId)
+        {
+            return RedirectToAction("DosageScheme", new { id = personId, medId=medicineId });
         }
     }
 }
