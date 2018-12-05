@@ -77,7 +77,7 @@ namespace Open.Infra.Person
             //medicine.EffectsInMedicine(new PersonObject(c.Person));
         }*/
 
-        public async Task<PersonMedicineObject> GetObject(string person, string medicine)
+        public async Task<PersonMedicineObject> GetObject(string medicine, string person)
         {
             var o = await dbSet.FirstOrDefaultAsync(
                 x => x.PersonID == person && x.MedicineID == medicine);

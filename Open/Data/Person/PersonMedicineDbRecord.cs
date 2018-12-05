@@ -1,4 +1,5 @@
-﻿using Open.Data.Common;
+﻿using Open.Aids;
+using Open.Data.Common;
 using Open.Data.Product;
 
 namespace Open.Data.Person
@@ -7,7 +8,7 @@ namespace Open.Data.Person
     {
         private string personId;
         private string medicineId;
-        private bool suitableForPerson = false;
+        private string suitableForPerson;
 
         public string PersonID
         {
@@ -21,9 +22,9 @@ namespace Open.Data.Person
             set => medicineId = value;
         }
 
-        public bool SuitableForPerson
+        public string SuitableForPerson
         {
-            get => getBool(ref suitableForPerson);
+            get => getString(ref suitableForPerson);
             set => suitableForPerson = value;
         }
 

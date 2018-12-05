@@ -12,7 +12,7 @@ namespace Open.Infra
     public class SentryDbContext : DbContext
     {
         public SentryDbContext(DbContextOptions<SentryDbContext> o) : base(o) { }
-
+   
         public DbSet<CountryDbRecord> Countries { get; set; }
 
         public DbSet<CurrencyDbRecord> Currencies { get; set; }
@@ -43,6 +43,8 @@ namespace Open.Infra
             b.Entity<EffectDbRecord>().ToTable("Effect");
             b.Entity<MedicineDbRecord>().ToTable("Medicine");
             b.Entity<PersonDbRecord>().ToTable("Person");
+            b.Entity<DosageDbRecord>().ToTable("Dosage");
+            b.Entity<SchemeDbRecord>().ToTable("Scheme");
             CreateAddressTable(b);
             CreateTelecomAddressRegistrationTable(b);
             CreateCountryCurrencyTable(b);

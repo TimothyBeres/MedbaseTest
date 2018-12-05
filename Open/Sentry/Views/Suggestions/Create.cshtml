@@ -1,23 +1,7 @@
-﻿@using Open.Sentry1.Extensions
-@model Open.Facade.Person.PersonViewModel
-
+﻿
 @{
-    ViewBag.Title = "Lisa patsient";
-    ViewBag.Subtitle = "Patsient";
-    ViewBag.Button = "Lisa";
-    Layout = "_EditPartial";
+    ViewData["Title"] = "Create";
 }
 
-
-<body>
-    @Html.EditingControlsFor(model => model.IDCode)
-    @Html.EditingControlsFor(model => model.FirstName)
-    @Html.EditingControlsFor(model => model.LastName)
-    @Html.EditingControlsFor(model => model.ValidFrom)
-    @Html.EditingControlsFor(model => model.ValidTo)
-</body>
-
-@section Actions
-    {@Html.ActionLink("Tagasi", "Index")}
-
+<h2>Create</h2>
 

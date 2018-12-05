@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Open.Domain.Location;
 using Open.Domain.Money;
 using Open.Domain.Person;
+using Open.Domain.Process;
 using Open.Domain.Product;
 using Open.Infra;
 using Open.Infra.Location;
 using Open.Infra.Money;
 using Open.Infra.Person;
+using Open.Infra.Process;
 using Open.Infra.Product;
 using Sentry1.Data;
 using Sentry1.Models;
@@ -49,6 +51,8 @@ namespace Open.Sentry1
             services.AddScoped<IMedicineEffectsObjectsRepository, MedicineEffectsObjectsRepository>();
             services.AddScoped<IPersonObjectsRepository, PersonObjectsRepository>();
             services.AddScoped<IPersonMedicineObjectsRepository, PersonMedicineObjectsRepository>();
+            services.AddScoped<IDosageObjectsRepository, DosageObjectsRepository>();
+            services.AddScoped<ISchemeObjectsRepository, SchemeObjectsRepository>();
         }
 
         protected virtual void setMvcWithAntyFoggeryToken(IServiceCollection services)

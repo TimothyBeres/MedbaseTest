@@ -1,13 +1,23 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Open.Data.Process;
 
 namespace Open.Domain.Process
 {
     public static class DosageObjectFactory
     {
-        public static DosageObject Create(string id, string typeOfTreatment, string key)
+        public static DosageObject Create(string id, string typeOfTreatment, string personId, string medicineId, DateTime? validFrom = null,
+            DateTime? validTo = null)
         {
-            var o = new DosageDbRecord {ID = id, TypeOfTreatment = typeOfTreatment, PersonMedicineId = key};
+            var o = new DosageDbRecord
+            {
+                ID = id,
+                TypeOfTreatment = typeOfTreatment,
+                PersonID = personId,
+                MedicineID = medicineId,
+                ValidFrom = validFrom ?? DateTime.MinValue,
+                ValidTo = validTo ?? DateTime.MaxValue
+            };
             return new DosageObject(o);
         }
 

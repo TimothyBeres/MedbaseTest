@@ -43,7 +43,7 @@ namespace Open.Tests.Domain.Person
         [TestMethod]
         public void CreateWithNullArgumentsTest()
         {
-            var o = PersonMedicineObjectFactory.Create(null, null, false);
+            var o = PersonMedicineObjectFactory.Create(null, null, "Jah");
 
             Assert.AreEqual(o.DbRecord.ValidFrom, DateTime.MinValue);
             Assert.AreEqual(o.DbRecord.ValidTo, DateTime.MaxValue);

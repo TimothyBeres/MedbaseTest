@@ -2,7 +2,7 @@
 @{
     Layout = "_Layout";
     ViewBag.Title = "Soovitused";
-
+    string word = "NB!";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -16,13 +16,19 @@
             </p>
         </div>
     </form>*@
+<div class="text-danger" style="font-size: large">
+    @ViewBag.Message
+</div>
+
+@Html.ValidationMessageFor(model => model.IDCode)
 @using (Html.BeginForm("Patientinfo", "Suggestions", FormMethod.Post))
 {
+
     @Html.TextBoxFor(model => model.IDCode)
-    @Html.ValidationMessageFor(model => model.IDCode)
+
     <button type="submit">Otsi</button><br />
     <br />
-    <button type="button" onclick="location.href='@Url.Action("Create","Suggestions")'">Lisa patsient</button>
+    <button type="button" onclick="location.href='@Url.Action("Create","Persons")'">Lisa patsient</button>
 }
 
 
