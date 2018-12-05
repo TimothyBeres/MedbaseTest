@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Open.Infra.Migrations
 {
-    public partial class Sentry : Migration
+    public partial class Medicine : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -87,6 +87,25 @@ namespace Open.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Person", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schemes",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    DosageId = table.Column<string>(nullable: true),
+                    QueueNr = table.Column<string>(nullable: true),
+                    Length = table.Column<string>(nullable: true),
+                    Amount = table.Column<string>(nullable: true),
+                    Times = table.Column<string>(nullable: true),
+                    TimeOfDay = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schemes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -221,6 +240,43 @@ namespace Open.Infra.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Dosages",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    TypeOfTreatment = table.Column<string>(nullable: true),
+                    PersonMedicineId = table.Column<string>(nullable: true),
+                    PersonID = table.Column<string>(nullable: true),
+                    MedicineID = table.Column<string>(nullable: true),
+                    PersonMedicinePersonID = table.Column<string>(nullable: true),
+                    PersonMedicineMedicineID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dosages", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Dosages_Medicine_MedicineID",
+                        column: x => x.MedicineID,
+                        principalTable: "Medicine",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dosages_Person_PersonID",
+                        column: x => x.PersonID,
+                        principalTable: "Person",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Dosages_PersonMedicines_PersonMedicinePersonID_PersonMedicineMedicineID",
+                        columns: x => new { x.PersonMedicinePersonID, x.PersonMedicineMedicineID },
+                        principalTable: "PersonMedicines",
+                        principalColumns: new[] { "PersonID", "MedicineID" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Address_CountryID",
                 table: "Address",
@@ -230,6 +286,21 @@ namespace Open.Infra.Migrations
                 name: "IX_CountryCurrency_CurrencyID",
                 table: "CountryCurrency",
                 column: "CurrencyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dosages_MedicineID",
+                table: "Dosages",
+                column: "MedicineID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dosages_PersonID",
+                table: "Dosages",
+                column: "PersonID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dosages_PersonMedicinePersonID_PersonMedicineMedicineID",
+                table: "Dosages",
+                columns: new[] { "PersonMedicinePersonID", "PersonMedicineMedicineID" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicineEffects_MedicineID",
@@ -253,10 +324,13 @@ namespace Open.Infra.Migrations
                 name: "CountryCurrency");
 
             migrationBuilder.DropTable(
+                name: "Dosages");
+
+            migrationBuilder.DropTable(
                 name: "MedicineEffects");
 
             migrationBuilder.DropTable(
-                name: "PersonMedicines");
+                name: "Schemes");
 
             migrationBuilder.DropTable(
                 name: "TelecomDeviceRegistration");
@@ -265,16 +339,19 @@ namespace Open.Infra.Migrations
                 name: "Currency");
 
             migrationBuilder.DropTable(
+                name: "PersonMedicines");
+
+            migrationBuilder.DropTable(
                 name: "Effect");
+
+            migrationBuilder.DropTable(
+                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Medicine");
 
             migrationBuilder.DropTable(
                 name: "Person");
-
-            migrationBuilder.DropTable(
-                name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Country");

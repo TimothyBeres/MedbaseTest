@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+
 using Open.Infra;
 
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181121123238_Sentry")]
-    partial class Sentry
+    [Migration("20181205174023_Medicine")]
+    partial class Medicine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,6 +154,64 @@ namespace Open.Infra.Migrations
                     b.HasIndex("MedicineID");
 
                     b.ToTable("PersonMedicines");
+                });
+
+            modelBuilder.Entity("Open.Data.Process.DosageDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("MedicineID");
+
+                    b.Property<string>("PersonID");
+
+                    b.Property<string>("PersonMedicineId");
+
+                    b.Property<string>("PersonMedicineMedicineID");
+
+                    b.Property<string>("PersonMedicinePersonID");
+
+                    b.Property<string>("TypeOfTreatment");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MedicineID");
+
+                    b.HasIndex("PersonID");
+
+                    b.HasIndex("PersonMedicinePersonID", "PersonMedicineMedicineID");
+
+                    b.ToTable("Dosages");
+                });
+
+            modelBuilder.Entity("Open.Data.Process.SchemeDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Amount");
+
+                    b.Property<string>("DosageId");
+
+                    b.Property<string>("Length");
+
+                    b.Property<string>("QueueNr");
+
+                    b.Property<string>("TimeOfDay");
+
+                    b.Property<string>("Times");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Schemes");
                 });
 
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
@@ -303,6 +362,21 @@ namespace Open.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Process.DosageDbRecord", b =>
+                {
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID");
+
+                    b.HasOne("Open.Data.Person.PersonDbRecord", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID");
+
+                    b.HasOne("Open.Data.Person.PersonMedicineDbRecord", "PersonMedicine")
+                        .WithMany()
+                        .HasForeignKey("PersonMedicinePersonID", "PersonMedicineMedicineID");
                 });
 
             modelBuilder.Entity("Open.Data.Product.MedicineEffectsDbRecord", b =>
