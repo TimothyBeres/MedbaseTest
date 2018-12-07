@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+
 using Open.Infra;
 
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181204215809_Sentry")]
-    partial class Sentry
+    [Migration("20181205174023_Medicine")]
+    partial class Medicine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -142,7 +143,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("MedicineID");
 
-                    b.Property<string>("SuitableForPerson");
+                    b.Property<bool>("SuitableForPerson");
 
                     b.Property<DateTime>("ValidFrom");
 
@@ -164,6 +165,12 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("PersonID");
 
+                    b.Property<string>("PersonMedicineId");
+
+                    b.Property<string>("PersonMedicineMedicineID");
+
+                    b.Property<string>("PersonMedicinePersonID");
+
                     b.Property<string>("TypeOfTreatment");
 
                     b.Property<DateTime>("ValidFrom");
@@ -172,7 +179,13 @@ namespace Open.Infra.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Dosage");
+                    b.HasIndex("MedicineID");
+
+                    b.HasIndex("PersonID");
+
+                    b.HasIndex("PersonMedicinePersonID", "PersonMedicineMedicineID");
+
+                    b.ToTable("Dosages");
                 });
 
             modelBuilder.Entity("Open.Data.Process.SchemeDbRecord", b =>
@@ -198,7 +211,7 @@ namespace Open.Infra.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Scheme");
+                    b.ToTable("Schemes");
                 });
 
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
@@ -349,6 +362,21 @@ namespace Open.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Process.DosageDbRecord", b =>
+                {
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID");
+
+                    b.HasOne("Open.Data.Person.PersonDbRecord", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID");
+
+                    b.HasOne("Open.Data.Person.PersonMedicineDbRecord", "PersonMedicine")
+                        .WithMany()
+                        .HasForeignKey("PersonMedicinePersonID", "PersonMedicineMedicineID");
                 });
 
             modelBuilder.Entity("Open.Data.Product.MedicineEffectsDbRecord", b =>

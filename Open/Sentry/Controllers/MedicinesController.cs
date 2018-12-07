@@ -162,5 +162,7 @@ namespace Open.Sentry1.Controllers
             await medicineEffectsRepository.DeleteObject(o);
             return RedirectToAction("Edit", new { id = effect });
         }
+        
+        
     }
 }
