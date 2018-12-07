@@ -6,7 +6,7 @@ namespace Sentry1.Models.AccountViewModels
     {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
+            [Display(Name = "Taastamise kood")]
             public string RecoveryCode { get; set; }
     }
 }

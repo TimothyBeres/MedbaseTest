@@ -12,7 +12,7 @@ namespace Sentry1.Models.AccountViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Mäleta mind")]
         public bool RememberMe { get; set; }
     }
 }

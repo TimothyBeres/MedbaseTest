@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,7 +44,11 @@ namespace Open.Facade.Person
             get => getString(ref last_name);
             set => last_name = value;
         }
-
+        [DataType(DataType.Date)]
+        [DisplayName("Sünnikuupäev")]
+        public override DateTime? ValidFrom { get; set; }
+        [DisplayName("")]
+        public string EmptyHeader { get; set; }
         [DisplayName("Soovitatud ravimid")]
         public List<MedicineViewModel> MedicinesInUse { get; } = new List<MedicineViewModel>();
         [DisplayName("Eelnevad soovitused")]

@@ -16,9 +16,19 @@ namespace Sentry1.Controllers
         {
             persons = p;
         }
-        public IActionResult Index()
+        
+        public async Task<IActionResult> Index(string sortOrder = null,
+            string currentFilter = null,
+            string searchString = null,
+            int? page = null)
         {
-            return View();
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;
+            persons.SearchString = searchString;
+            persons.PageIndex = page ?? 1;
+            var l = await persons.GetObjectsList();
+            return View(new PersonViewModelsList(l));
         }
         public IActionResult Create()
         {
@@ -37,7 +47,7 @@ namespace Sentry1.Controllers
             c.ID = Guid.NewGuid().ToString();
             var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
             await persons.AddObject(o);
-            return RedirectToAction("Index", "Suggestions", c);
+            return RedirectToAction("PatientInfo", "Suggestions", c);
         }
 
         private async Task<bool> IsUnique(string idCode)

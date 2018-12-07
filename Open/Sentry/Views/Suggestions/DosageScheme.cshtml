@@ -1,63 +1,68 @@
 ﻿@model Open.Facade.Process.SuggestionViewModel
+@using System.Collections
 @using Open.Facade.Product
 @using Open.Sentry1.Extensions
 @{
     ViewBag.Title = "Lisa soovitus";
     ViewBag.Button = "Lisa";
     Layout = "_EditPartial";
-    var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
-    var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
+    var medicines = ViewBag.Medicines as IEnumerable<SelectListItem>;
+    //var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
+    //var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
+    //var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
 }
 @Model.ID
 <body>
     <div class="form-group">
         <div class="col-md-4" style="margin-top: 10px">
-            <table class="table">
-                @{ var r = Model.UsedMedicine; }
-                <thead>
-                    <tr>
-                        <th>@Html.LabelFor(x => r.Name)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (r != null)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(x => r.Name)</td>
-                            <td>@Html.ActionLink("Remove", "RemoveMedicine")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
             <div class="form-horizontal">
-                <p>
-                    <a asp-action="DosageScheme"
-                       asp-route-page="@(medicines.PageIndex - 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="btn btn-default @prevDisabled"><</a>
-                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
-                    <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
-                    <a asp-action="DosageScheme"
-                       asp-route-page="@(medicines.PageIndex + 1)"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                       class="btn btn-default @nextDisabled">></a>
-                </p>
+                @Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class = "selectpicker" })
             </div>
-            <table class="table">
-                <tbody>
-                    @foreach (var item in medicines)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(x => item.Name)</td>
-                            <td>@Html.ActionLink("Add", "AddMedicine", new { personId = Model.ID, medicineId = item.ID })</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @*<table class="table">
+            @{ var r = Model.UsedMedicine; }
+            <thead>
+                <tr>
+                    <th>@Html.LabelFor(x => r.Name)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (r != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => r.Name)</td>
+                        <td>@Html.ActionLink("Remove", "RemoveMedicine")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="form-horizontal">
+            <p>
+                <a asp-action="DosageScheme"
+                   asp-route-page="@(medicines.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @prevDisabled"><</a>
+                <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
+                <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
+                <a asp-action="DosageScheme"
+                   asp-route-page="@(medicines.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-default @nextDisabled">></a>
+            </p>
         </div>
-    </div>
+            <table class="table">
+            <tbody>
+                @foreach (var item in medicines)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => item.Name)</td>
+                        <td>@Html.ActionLink("Add", "AddMedicine", new { personId = Model.ID, medicineId = item.ID })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@
+        </div>
+        </div>
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.MedicineID)
     @Html.EditingControlsFor(model => model.TypeOfTreatment)

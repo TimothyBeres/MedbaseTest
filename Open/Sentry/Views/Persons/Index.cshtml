@@ -1,1 +1,65 @@
-﻿
+﻿@using Open.Sentry1.Extensions
+@model Open.Core.IPaginatedList<Open.Facade.Person.PersonViewModel>
+@{
+    //Layout = "_Layout";
+    ViewBag.Title = "Isikud";
+    string word = "NB!";
+    Layout = "_IndexPartial";
+}
+
+<h2>@ViewBag.Title</h2>
+@section Create{
+    <a asp-action=Create>Create New</a>
+}
+
+<body>
+    <table class="table">
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+        <tr>
+            @Html.SortColumnHeaderFor("sortDefault", model => dummy.EmptyHeader)
+            @Html.SortColumnHeaderFor(ViewData["SortAlpha3"], model => dummy.IDCode)
+            @Html.SortColumnHeaderFor(ViewData["SortAlpha2"], model => dummy.FirstName)
+            @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.LastName)
+            @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td><button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { IDCode=item.IDCode})'">Soovitused</button></td>
+                <td>@Html.DisplayFor(modelItem => item.IDCode)</td>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                @Html.EditDetailDeleteFor(modelItem => item.ID)
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+@*<form asp-action=@ViewBag.ActionIndex method="get">
+        <div class="form-horizontal">
+            <p>
+                Search for patient (ID Code): <input type="text" name="SearchString" />
+                <br />
+                <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { id_code=Model.IDCode})'">Search</button>
+            </p>
+        </div>
+    </form>*@
+@*<div class="text-danger" style="font-size: large">
+        @ViewBag.Message
+    </div>
+
+    @Html.ValidationMessageFor(model => model.IDCode)
+    @using (Html.BeginForm("Patientinfo", "Suggestions", FormMethod.Post))
+    {
+
+        @Html.TextBoxFor(model => model.IDCode)
+
+        <button type="submit">Otsi</button><br />
+        <br />
+        <button type="button" onclick="location.href='@Url.Action("Create","Persons")'">Lisa patsient</button>
+    }*@

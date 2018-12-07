@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Open.Core;
 using Open.Data.Product;
 using Open.Data.Person;
@@ -43,8 +45,6 @@ namespace Open.Sentry1.Controllers
         {
             return View();
         }
-
-        [HttpPost]
         public async Task<IActionResult> PatientInfo(PersonViewModel model)
         {
             var idCode = model.IDCode;
@@ -120,7 +120,7 @@ namespace Open.Sentry1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s)
+        public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
         {
             string suitable;
             if (!ModelState.IsValid) return View(s);
@@ -128,10 +128,10 @@ namespace Open.Sentry1.Controllers
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
             var perObj = await persons.GetPersonByIDCode(s.ID);
-            var medObj = await medicines.GetObject(s.MedicineID);
-            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID, s.MedicineID, currentDate);
+            var medObj = await medicines.GetObject(medicineId);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate);
             var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate);
-            var o = await personMedicines.GetObject(s.MedicineID, perObj.DbRecord.ID);
+            var o = await personMedicines.GetObject(medicineId, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
                 suitable = "Teadmata";
@@ -167,7 +167,14 @@ namespace Open.Sentry1.Controllers
                 meds.RemoveAll(x => x.ID == medId);
                 dosagesSch.MedicineID = medId;
             }
-            ViewBag.Medicines = meds;
+
+            var l = await medicines.GetObjectsList();
+            //ViewBag.Medicines = meds;
+            ViewBag.Medicines = l.Select(x => new SelectListItem {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.Name
+            }).ToList();
+
             return View(dosagesSch);
         }
         public async Task<IActionResult> RemoveMedicine(string personId, string medicineId)

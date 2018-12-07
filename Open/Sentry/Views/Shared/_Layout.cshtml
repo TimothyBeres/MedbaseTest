@@ -8,17 +8,19 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-select.css"/>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        
     </environment>
 </head>
 <style>
     body {
-        background-color: whitesmoke;
+        background-color: white;
         color: black;
     }
     @*ul {
@@ -47,15 +49,14 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Esileht</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="About">Meist</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a></li>
                 @*<li><a asp-area="" asp-controller="Countries" asp-action="Index">Countries</a></li>
         <li><a asp-area="" asp-controller="Currencies" asp-action="Index">Currencies</a></li>
-        <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a></li>*@
-                <li><a asp-area="" asp-controller="Effects" asp-action="Index">Toimeained</a></li>
+        <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a></li>
+                <li><a asp-area="" asp-controller="Effects" asp-action="Index">Toimeained</a></li>*@
                 <li><a asp-area="" asp-controller="Medicines" asp-action="Index">Ravimid</a></li>
                 <li><a asp-area="" asp-controller="Suggestions" asp-action="Index">Soovitused</a></li>
-                
+                <li><a asp-area="" asp-controller="Persons" asp-action="Index">Patsiendid</a></li>
+
             </ul>
             @await Html.PartialAsync("_LoginPartial")
         </div>
@@ -72,7 +73,8 @@
 <environment include="Development">
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" ></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-select.js"></script>
 </environment>
 <environment exclude="Development">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

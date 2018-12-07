@@ -9,7 +9,7 @@ namespace Open.Facade.Common
     {
         [DataType(DataType.Date)]
         [DisplayName("Alates")]
-        public DateTime? ValidFrom { get; set; }
+        public virtual DateTime? ValidFrom { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayName("Kuni")]

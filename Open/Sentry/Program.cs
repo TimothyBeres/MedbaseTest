@@ -26,8 +26,8 @@ namespace Open.Sentry1
                     var dbContext = services.GetRequiredService<SentryDbContext>();
 
                     DbTablesInitializer.Initialize(dbContext);
-                    //CsvImporter.ClearMedicinesAndEffects();
-                    //CsvImporter.Importer(dbContext);
+                    CsvImporter.ClearMedicinesAndEffects();
+                    CsvImporter.Importer(dbContext);
 
                 }
                 catch (Exception ex)
