@@ -45,7 +45,6 @@ namespace Open.Sentry1.Controllers
         {
             return View();
         }
-
         public async Task<IActionResult> PatientInfo(PersonViewModel model)
         {
             var idCode = model.IDCode;
