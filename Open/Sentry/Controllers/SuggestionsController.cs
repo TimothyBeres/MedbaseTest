@@ -59,7 +59,7 @@ namespace Open.Sentry1.Controllers
                 {
                     var pm = await personMedicines.GetObject(sug.DbRecord.MedicineID, persona.DbRecord.ID);
                     var med = await medicines.GetObject(sug.DbRecord.MedicineID);
-                    personView.SuggestionsMade.Add(PersonInfoViewModelFactory.Create(sug, pm,med));
+                    personView.SuggestionsMade.Add(PersonInfoViewModelFactory.Create(sug, pm, med));
                 }
                 return View("PatientInfo", personView);
             }
@@ -68,7 +68,7 @@ namespace Open.Sentry1.Controllers
                 ViewBag.Message = "Sellise id-koodiga inimene puudub!";
                 return View("Index");
             }
-            
+
         }
         /*public async Task<IActionResult> PatientInfo(string sortOrder = null,
             string currentFilter = null,
@@ -129,7 +129,7 @@ namespace Open.Sentry1.Controllers
             var schemeId = Guid.NewGuid().ToString();
             var perObj = await persons.GetPersonByIDCode(s.ID);
             var medObj = await medicines.GetObject(s.MedicineID);
-            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID, s.MedicineID, currentDate);
             var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate);
             var o = await personMedicines.GetObject(s.MedicineID, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
@@ -150,16 +150,16 @@ namespace Open.Sentry1.Controllers
             string currentFilter = null,
             string searchString = null,
             int? page = null,
-            string medId=null)
+            string medId = null)
         {
             if (searchString != null) page = 1;
             else searchString = currentFilter;
-            ViewData["CurrentFilter"] = searchString;           
+            ViewData["CurrentFilter"] = searchString;
             medicines.SearchString = searchString;
             medicines.PageIndex = page ?? 1;
             var meds = new MedicineViewModelsList(null);
             if (!string.IsNullOrWhiteSpace(searchString))
-                meds = new MedicineViewModelsList(await medicines.GetObjectsList());           
+                meds = new MedicineViewModelsList(await medicines.GetObjectsList());
             var dosagesSch = SuggestionViewModelFactory.Create(id);
             if (medId != null)
             {
@@ -177,7 +177,7 @@ namespace Open.Sentry1.Controllers
 
         public async Task<IActionResult> AddMedicine(string personId, string medicineId)
         {
-            return RedirectToAction("DosageScheme", new { id = personId, medId=medicineId });
+            return RedirectToAction("DosageScheme", new { id = personId, medId = medicineId });
         }
     }
 }
