@@ -1,19 +1,21 @@
 ﻿@model Open.Facade.Process.SuggestionViewModel
+@using System.Collections
 @using Open.Facade.Product
 @using Open.Sentry1.Extensions
 @{
     ViewBag.Title = "Lisa soovitus";
     ViewBag.Button = "Lisa";
     Layout = "_EditPartial";
-    var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
-    var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
+    //var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
+    var medicines = ViewBag.Medicines as IEnumerable<SelectListItem>;
+    //var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
+    //var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
 }
 @Model.ID
 <body>
     <div class="form-group">
         <div class="col-md-4" style="margin-top: 10px">
-            <table class="table">
+            @*<table class="table">
                 @{ var r = Model.UsedMedicine; }
                 <thead>
                     <tr>
@@ -30,8 +32,11 @@
                         </tr>
                     }
                 </tbody>
-            </table>
+            </table>*@
             <div class="form-horizontal">
+                @Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class="selectpicker" })
+            </div>
+                @*<div class="form-horizontal">
                 <p>
                     <a asp-action="DosageScheme"
                        asp-route-page="@(medicines.PageIndex - 1)"
@@ -44,8 +49,8 @@
                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
                        class="btn btn-default @nextDisabled">></a>
                 </p>
-            </div>
-            <table class="table">
+            </div>*@
+                @*<table class="table">
                 <tbody>
                     @foreach (var item in medicines)
                     {
@@ -55,9 +60,9 @@
                         </tr>
                     }
                 </tbody>
-            </table>
+            </table>*@
+            </div>
         </div>
-    </div>
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.MedicineID)
     @Html.EditingControlsFor(model => model.TypeOfTreatment)

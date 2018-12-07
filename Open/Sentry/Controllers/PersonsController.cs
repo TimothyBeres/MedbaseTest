@@ -37,7 +37,7 @@ namespace Sentry1.Controllers
             c.ID = Guid.NewGuid().ToString();
             var o = PersonObjectFactory.Create(c.ID, c.IDCode, c.FirstName, c.LastName, c.ValidFrom, c.ValidTo);
             await persons.AddObject(o);
-            return RedirectToAction("Index", "Suggestions", c);
+            return RedirectToAction("PatientInfo", "Suggestions", c);
         }
 
         private async Task<bool> IsUnique(string idCode)
