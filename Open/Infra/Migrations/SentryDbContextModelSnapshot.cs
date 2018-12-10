@@ -162,7 +162,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("PersonID");
 
-                    b.Property<string>("TypeOfTreatment");
+                    b.Property<int>("TypeOfTreatment");
 
                     b.Property<DateTime>("ValidFrom");
 

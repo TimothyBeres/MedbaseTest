@@ -9,6 +9,8 @@ using Open.Infra;
 using Open.Infra.Location;
 using Open.Infra.Money;
 using Sentry1.Services;
+using Open.Core;
+using EmailSender = Open.Core.EmailSender;
 
 namespace Open.Sentry1
 {
@@ -26,7 +28,8 @@ namespace Open.Sentry1
                     var dbContext = services.GetRequiredService<SentryDbContext>();
 
                     DbTablesInitializer.Initialize(dbContext);
-                    CsvImporter.ClearMedicinesAndEffects();
+                    //CsvImporter.ClearMedicinesAndEffects();
+                    //EmailSender.Send("beres.timothy@gmail.com", "saki tulli");
                     CsvImporter.Importer(dbContext);
 
                 }

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="EmailSender.cs" />
     <Compile Include="ICrudRepository.cs" />
     <Compile Include="IObjectsRepository.cs" />
     <Compile Include="IPaginatedList.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="RootObject.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="TelecomDevice.cs" />
+    <Compile Include="TypeOfTreatment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aids\Aids.csproj">

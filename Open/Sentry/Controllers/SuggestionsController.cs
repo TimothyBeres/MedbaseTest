@@ -157,6 +157,7 @@ namespace Open.Sentry1.Controllers
             ViewData["CurrentFilter"] = searchString;           
             medicines.SearchString = searchString;
             medicines.PageIndex = page ?? 1;
+            medicines.PageSize = 1000000;
             var meds = new MedicineViewModelsList(null);
             if (!string.IsNullOrWhiteSpace(searchString))
                 meds = new MedicineViewModelsList(await medicines.GetObjectsList());           
@@ -167,7 +168,7 @@ namespace Open.Sentry1.Controllers
                 meds.RemoveAll(x => x.ID == medId);
                 dosagesSch.MedicineID = medId;
             }
-
+            
             var l = await medicines.GetObjectsList();
             //ViewBag.Medicines = meds;
             ViewBag.Medicines = l.Select(x => new SelectListItem {

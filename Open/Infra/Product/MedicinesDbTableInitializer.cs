@@ -14,7 +14,7 @@ namespace Open.Infra.Product
         {
             c.Database.EnsureCreated();
             if (c.Medicines.Any()) return;
-            initMedicines(c);
+            //initMedicines(c);
             c.SaveChanges();
         }
 

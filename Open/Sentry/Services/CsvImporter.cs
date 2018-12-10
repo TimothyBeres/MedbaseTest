@@ -17,98 +17,99 @@ namespace Sentry1.Services
         {
 
             var engine = new DelimitedFileEngine<MedicineTemplate>();
-            var res = engine.ReadFile("C:\\Users\\kevin\\Desktop\\Kool\\Proge 3.semester");
-           
-
+            //var res = engine.ReadFile("C:\\Users\\ACER\\Desktop\\projekt_ravim\\ravimid_3.csv");
+            var res = engine.ReadFile("ravimid.csv");
+            List<MedicineTemplate> meds = new List<MedicineTemplate>();
+            List<string> effectsList = new List<string>();
             foreach (MedicineTemplate med in res)
             {
-                Guid medicineId = CreateID();
-                Guid effectId = CreateID();
-                AddMedicine(med, medicineId);
-                if (med.Effects.Contains("+"))
+                med.ValidFrom = DateTime.Today;
+                meds.Add(med);
+            }
+            AddMedicines(meds);
+        }
+
+        public static List<string> GetMedicineEffects(MedicineTemplate med)
+        {
+            List<string> effectsList = new List<string>();
+            var effecto = med.Effects.Replace("\"", "");
+            if (effecto.Contains("+"))
+            {
+                string[] effects = effecto.Split(" +");
+                foreach (string effect in effects)
                 {
-                    string[] effects = med.Effects.Split(" +");
-                    foreach (string effect in effects)
+                    effectsList.Add(effect);
+                }
+            }
+            else
+            {
+                effectsList.Add(effecto);
+            }
+            return effectsList;
+        }
+        public static void AddMedicineEffect(Guid medicineId, Guid effectId, MedicineTemplate med, SqlConnection connection)
+        {
+            string query = "INSERT INTO dbo.MedicineEffects (MedicineID,EffectID,ValidFrom,ValidTo) VALUES (@MedicineID,@EffectID,@ValidFrom,@ValidTo)";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                 command.Parameters.AddWithValue("@MedicineID", medicineId);
+                 command.Parameters.AddWithValue("@EffectID", effectId);
+                 command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
+                 command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
+                 command.ExecuteNonQuery();
+            }  
+        }
+        public static void AddMedicines(List<MedicineTemplate> meds)
+        {
+            string _connectionString =
+                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                foreach (var med in meds)
+                {
+                    Guid id = CreateID();
+                    bool exists = MedicineInDb(med.Name, med.FormOfInjection, med.Strength, connection);
+                    string query = "INSERT INTO dbo.Medicine (ID,AtcCode,FormOfInjection,LegalStatus,Manufacturer,Name,Pil,Reimbursement,Spc,Strength,ValidFrom,ValidTo) VALUES (@ID,@AtcCode,@FormOfInjection,@LegalStatus,@Manufacturer,@Name,@Pil,@Reimbursement,@Spc,@Strength,@ValidFrom,@ValidTo)";
+                    if (!exists)
                     {
 
-                        AddEffectWithPlusSign(med, effect, medicineId);
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@ID", id);
+                            command.Parameters.AddWithValue("@AtcCode", med.AtcCode.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@FormOfInjection", med.FormOfInjection.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@LegalStatus", med.LegalStatus.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Manufacturer", med.Manufacturer.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Name", med.Name.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Pil", med.Pil.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Reimbursement", med.Reimbursement.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Spc", med.Spc.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@Strength", med.Strength.Replace("\"", ""));
+                            command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
+                            command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
+                            command.ExecuteNonQuery();
+                        }
+                        List<string> effects = GetMedicineEffects(med);
+                        List<Guid> effectIds = new List<Guid>();
+                        foreach (var e in effects)
+                        {
+                            var effectId = AddEffect(med, e, connection);
+                            effectIds.Add(effectId);
+                        }
 
-                    }
-
-                }
-                else
-                {
-
-                    AddEffect(med, effectId);
-                    AddMedicineEffect(medicineId, effectId, med);
-                }
-
-
-
-            }
-
-
-        }
-
-        public static void AddMedicineEffect(Guid medicineId, Guid effectId, MedicineTemplate med)
-        {
-            string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                String query = "INSERT INTO dbo.MedicineEffects (MedicineID,EffectID,ValidFrom,ValidTo) VALUES (@MedicineID,@EffectID,@ValidFrom,@ValidTo)";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@MedicineID", medicineId);
-                    command.Parameters.AddWithValue("@EffectID", effectId);
-                    command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
-                    command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-
-
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-
-                    // Check Error
-
-                }
-            }
-        }
-
-        public static void AddMedicine(MedicineTemplate med, Guid id)
-        {
-
-            string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                String query = "INSERT INTO dbo.Medicine (ID,AtcCode,FormOfInjection,LegalStatus,Manufacturer,Name,Pil,Reimbursement,Spc,Strength,ValidFrom,ValidTo) VALUES (@ID,@AtcCode,@FormOfInjection,@LegalStatus,@Manufacturer,@Name,@Pil,@Reimbursement,@Spc,@Strength,@ValidFrom,@ValidTo)";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@ID", id);
-                    command.Parameters.AddWithValue("@AtcCode", med.AtcCode);
-                    command.Parameters.AddWithValue("@FormOfInjection", med.FormOfInjection);
-                    command.Parameters.AddWithValue("@LegalStatus", med.LegalStatus);
-                    command.Parameters.AddWithValue("@Manufacturer", med.Manufacturer);
-                    command.Parameters.AddWithValue("@Name", med.Name);
-                    command.Parameters.AddWithValue("@Pil", med.Pil);
-                    command.Parameters.AddWithValue("@Reimbursement", med.Reimbursement);
-                    command.Parameters.AddWithValue("@Spc", med.Spc);
-                    command.Parameters.AddWithValue("@Strength", med.Strength);
-                    command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
-                    command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-
-                    // Check Error
-
-                }
+                        foreach (var efId in effectIds)
+                        {
+                            bool medEffExists = MedicineEffectInDb(efId, id, connection);
+                            if (!medEffExists)
+                            {
+                                AddMedicineEffect(id, efId, med, connection);
+                            }
+                            
+                        }
+                    }                    
+                }  
             }
         }
 
@@ -117,72 +118,35 @@ namespace Sentry1.Services
             Guid ID = Guid.NewGuid();
             return ID;
         }
-        public static void AddEffect(MedicineTemplate med, Guid id)
+        public static Guid AddEffect(MedicineTemplate med, string name, SqlConnection connection)
         {
-            string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            Guid id = CreateID();
+            string query = "INSERT INTO dbo.Effect (ID,Name,ValidFrom,ValidTo) VALUES (@ID,@Name,@ValidFrom,@ValidTo) ";
+            bool exists = EffectInDb(name, connection);
+            if (!exists)
             {
-                String query = "INSERT INTO dbo.Effect (ID,Name,ValidFrom,ValidTo) VALUES (@ID,@Name,@ValidFrom,@ValidTo) ";
-
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@ID", id);
-                    command.Parameters.AddWithValue("@Name", med.Effects);
+                    command.Parameters.AddWithValue("@Name", name);
                     command.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
                     command.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-
-
-
-                    connection.Open();
                     command.ExecuteNonQuery();
-
-                    // Check Error
-
                 }
+                return id;
             }
-        }
-
-        public static void AddEffectWithPlusSign(MedicineTemplate med, string name, Guid medId)
-        {
-            Guid id = CreateID();
-            string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            else
             {
-                String query1 = "INSERT INTO dbo.Effect (ID,Name,ValidFrom,ValidTo) VALUES (@ID,@Name,@ValidFrom,@ValidTo) ";
-                string query2 =
-                    "INSERT INTO dbo.MedicineEffects (MedicineID,EffectID,ValidFrom,ValidTo) VALUES (@MedicineID,@EffectID,@ValidFrom,@ValidTo)";
-                connection.Open();
-                using (SqlCommand command1 = new SqlCommand(query1, connection))
+                string newQuery = "SELECT ID FROM[Effect] WHERE([Name] = @Name)";
+                using (SqlCommand get_effect = new SqlCommand(query, connection))
                 {
-                    command1.Parameters.AddWithValue("@ID", id);
-                    command1.Parameters.AddWithValue("@Name", name);
-                    command1.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
-                    command1.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-
-
-
-
-                    command1.ExecuteNonQuery();
-
-                    // Check Error
-
-                }
-
-                using (SqlCommand command2 = new SqlCommand(query2, connection))
-                {
-                    command2.Parameters.AddWithValue("@MedicineID", medId);
-                    command2.Parameters.AddWithValue("@EffectID", id);
-                    command2.Parameters.AddWithValue("@ValidFrom", med.ValidFrom);
-                    command2.Parameters.AddWithValue("@ValidTo", med.ValidTo);
-
-                    command2.ExecuteNonQuery();
+                    get_effect.Parameters.AddWithValue("@Name", med.Effects.Replace("\"", ""));
+                    Guid returnedId = (Guid)get_effect.ExecuteScalar();
+                    return returnedId;
                 }
             }
-
+            
         }
-
         public static void ClearMedicinesAndEffects()
         {
             string query1 = "DELETE FROM dbo.Medicine";
@@ -213,7 +177,64 @@ namespace Sentry1.Services
 
         }
 
+        public static bool MedicineInDb(string medName, string medInj, string medStr, SqlConnection connection)
+        {
 
+            string query = "SELECT COUNT(*) FROM [Medicine] WHERE ([Name] = @Name) AND ([FormOfInjection] = @FormOfInjection) AND ([Strength] = @Strength)";
+            using (SqlCommand check_medicine = new SqlCommand(query, connection))
+            {
+                check_medicine.Parameters.AddWithValue("@Name", medName.Replace("\"", ""));
+                check_medicine.Parameters.AddWithValue("@FormOfInjection", medInj.Replace("\"", ""));
+                check_medicine.Parameters.AddWithValue("@Strength", medStr.Replace("\"", ""));
+                int UserExist = (int)check_medicine.ExecuteScalar();
 
+                if (UserExist > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }       
+            }                                    
+        }
+        public static bool EffectInDb(string effectName, SqlConnection connection)
+        {
+            string query = "SELECT COUNT(*) FROM [Effect] WHERE ([Name] = @Name)";
+            using (SqlCommand check_effect = new SqlCommand(query, connection))
+            {
+                check_effect.Parameters.AddWithValue("@Name", effectName.Replace("\"", ""));
+                int UserExist = (int)check_effect.ExecuteScalar();
+
+                if (UserExist > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool MedicineEffectInDb(Guid effectId, Guid medicineId, SqlConnection connection)
+        {
+            string query = "SELECT COUNT(*) FROM [MedicineEffects] WHERE ([MedicineID] = @MedicineID) AND ([EffectID] = @EffectID)";
+            using (SqlCommand check_medeffect = new SqlCommand(query, connection))
+            {
+                check_medeffect.Parameters.AddWithValue("@MedicineID", medicineId);
+                check_medeffect.Parameters.AddWithValue("@EffectID", effectId);
+                int UserExist = (int)check_medeffect.ExecuteScalar();
+
+                if (UserExist > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
