@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Open.Infra;
 
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    partial class SentryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181210175143_Sentry")]
+    partial class Sentry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,19 +121,11 @@ namespace Open.Infra.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Email");
-
                     b.Property<string>("FirstName");
-
-                    b.Property<int>("GetMedicineInfo");
 
                     b.Property<string>("IDCode");
 
                     b.Property<string>("LastName");
-
-                    b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime>("ValidFrom");
 

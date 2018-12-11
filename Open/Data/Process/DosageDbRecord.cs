@@ -1,4 +1,6 @@
-﻿using Open.Data.Common;
+﻿using Open.Aids;
+using Open.Core;
+using Open.Data.Common;
 using Open.Data.Person;
 using Open.Data.Product;
 
@@ -10,11 +12,7 @@ namespace Open.Data.Process
         private string personId;
         private string medicineId;
 
-        public string TypeOfTreatment
-        {
-            get => getString(ref typeOfTreatment);
-            set => typeOfTreatment = value;
-        }
+        public TypeOfTreatment TypeOfTreatment { get; set; }
 
         public string PersonID
         {

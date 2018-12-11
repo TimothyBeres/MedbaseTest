@@ -2,10 +2,10 @@
 @model Open.Facade.Person.PersonViewModel
 
 @{
-    ViewData["Title"] = "PatientInfo";
+    ViewData["Title"] = "Patsiendile kirjutatud soovitused";
 }
 
-<h2>Patient Info</h2>
+<h2>Patsiendile kirjutatud soovitused</h2>
 
 <h3>@Html.ViewingControlsFor(model => model.IDCode)</h3>
 <h3>@Html.ViewingControlsFor(model => model.FirstName)</h3>
@@ -17,9 +17,8 @@
 @Html.ViewingControlsFor(model => model.GetMedicineInfo)
 <br />
 
-<body>
-    <P style="font-size:130%;">&nbsp;</P>
-    <P style="font-size:130%;">Patsiendile kirjutatud soovitused</P>
+<P style="font-size:130%;">&nbsp;</P>
+<P style="font-size:130%;">&nbsp;</P>
     <table class="table">
         @{ var dummy = Model.SuggestionsMade.FirstOrDefault();}
         <thead>
@@ -48,7 +47,7 @@
     </table>
 </body>
 
-@Html.ActionLink("Lisa uus soovitus", "DosageScheme", new { id = Model.IDCode })
+
 
 
 

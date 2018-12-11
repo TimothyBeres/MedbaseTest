@@ -2,14 +2,14 @@
 @model Open.Core.IPaginatedList<Open.Facade.Person.PersonViewModel>
 @{
     //Layout = "_Layout";
-    ViewBag.Title = "Isikud";
+    ViewBag.Title = "Patsiendid";
     string word = "NB!";
     Layout = "_IndexPartial";
 }
 
 <h2>@ViewBag.Title</h2>
 @section Create{
-    <a asp-action=Create>Create New</a>
+    <a asp-action=Create><button class="btn btn-primary">Lisa uus patsient</button></a>
 }
 
 
