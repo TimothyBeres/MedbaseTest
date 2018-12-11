@@ -125,12 +125,13 @@ namespace Open.Sentry1.Controllers
             string suitable;
             if (!ModelState.IsValid) return View(s);
             var currentDate = DateTime.Now;
+            var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
             var perObj = await persons.GetPersonByIDCode(s.ID);
             var medObj = await medicines.GetObject(medicineId);
-            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate);
-            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate, untilDate);
+            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
             var o = await personMedicines.GetObject(medicineId, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
@@ -177,6 +178,11 @@ namespace Open.Sentry1.Controllers
             }).ToList();
 
             return View(dosagesSch);
+        }
+
+        public async Task<IActionResult> SendEmail(PersonViewModel c)
+        {
+            return null;
         }
         public async Task<IActionResult> RemoveMedicine(string personId, string medicineId)
         {

@@ -82,7 +82,8 @@ namespace Open.Facade.Product
             get => getString(ref pil);
             set => pil = value;
         }
-
+        [DisplayName("")]
+        public string EmptyHeader { get; set; }
         [DisplayName("Toimeained ravimis")]
         public List<EffectViewModel> EffectsInMedicine { get; } = new List<EffectViewModel>();
     }

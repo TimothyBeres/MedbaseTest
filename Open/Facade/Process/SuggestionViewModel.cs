@@ -26,7 +26,8 @@ namespace Open.Facade.Process
         [DisplayName("Ravi tüüp")]
         public TypeOfTreatment TypeOfTreatment { get; set; }
         [Required]
-        [DisplayName("Ravikuuri pikkus")]
+        [DisplayName("Ravikuuri pikkus(päevades)")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Lahter võib sisaldada ainult numbreid")]
         public string Length
         {
             get => getString(ref length,"");
