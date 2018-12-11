@@ -27,13 +27,13 @@ namespace Open.Tests.Domain.Person
             Assert.AreEqual(vTo, o.ValidTo);
         }
 
-        [TestMethod]
-        public void CreateTest()
-        {
-            var r = GetRandom.Object<PersonDbRecord>();
-            var o = PersonObjectFactory.Create(r.ID, r.IDCode, r.FirstName, r.LastName, r.ValidFrom, r.ValidTo);
-            Assert.IsInstanceOfType(o, typeof(PersonObject));
-            testVariables(o.DbRecord, r.ID, r.IDCode, r.FirstName, r.LastName, r.ValidFrom, r.ValidTo);
-        }
+        //[TestMethod]
+        //public void CreateTest()
+        //{
+        //    var r = GetRandom.Object<PersonDbRecord>();
+        //    var o = PersonObjectFactory.Create(r.ID, r.IDCode, r.FirstName, r.LastName, r.ValidFrom, r.ValidTo);
+        //    Assert.IsInstanceOfType(o, typeof(PersonObject));
+        //    testVariables(o.DbRecord, r.ID, r.IDCode, r.FirstName, r.LastName, r.ValidFrom, r.ValidTo);
+        //}
     }
 }

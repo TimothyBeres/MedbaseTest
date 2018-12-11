@@ -15,7 +15,6 @@ namespace Open.Core
             return field;
         }
 
-
         protected internal T getValue<T>(ref T field) where T : class, new()
         {
             field = field ?? new T();

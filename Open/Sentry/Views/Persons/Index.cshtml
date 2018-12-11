@@ -37,11 +37,13 @@
                     <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                     <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
                     @Html.EditDetailDeleteFor(modelItem => item.ID)
+                    <td><a href="javascript:void(0);" class="anchorDetail" data-id="@item.ID">Details</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </body>
+
 @*<form asp-action=@ViewBag.ActionIndex method="get">
         <div class="form-horizontal">
             <p>

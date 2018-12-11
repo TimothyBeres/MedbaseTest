@@ -7,15 +7,15 @@
 
 <h2>Patsiendile kirjutatud soovitused</h2>
 
-<h4>@Html.ViewingControlsFor(model => model.IDCode)</h4>
-<h4>@Html.ViewingControlsFor(model => model.FirstName)</h4>
-<h4>@Html.ViewingControlsFor(model => model.LastName)</h4>
+<h3>@Html.ViewingControlsFor(model => model.IDCode)</h3>
+<h3>@Html.ViewingControlsFor(model => model.FirstName)</h3>
+<h3>@Html.ViewingControlsFor(model => model.LastName)</h3>
+@Html.ViewingControlsFor(model => model.ValidFrom)
+@Html.ViewingControlsFor(model => model.Address)
+@Html.ViewingControlsFor(model => model.Email)
+@Html.ViewingControlsFor(model => model.PhoneNumber)
+@Html.ViewingControlsFor(model => model.GetMedicineInfo)
 <br />
-<body>
-<P style="font-size:130%;">&nbsp;</P>
-<div align="right">
-    <button class="btn btn-primary" onclick="location.href='@Url.Action("DosageScheme", "Suggestions", new { id = Model.IDCode })'">Lisa uus soovitus</button>
-</div>
 
 <P style="font-size:130%;">&nbsp;</P>
 <P style="font-size:130%;">&nbsp;</P>

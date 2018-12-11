@@ -15,6 +15,9 @@ namespace Open.Facade.Person
         private string id_code;
         private string first_name;
         private string last_name;
+        private string address;
+        private string email;
+        private string phone_number;
         public string nameError = "Nimi võib sisaldada ainult tähti!";
 
         [Required(ErrorMessage = Constants.FieldRequired)]
@@ -28,7 +31,7 @@ namespace Open.Facade.Person
         }
 
         [Required]
-        [RegularExpression(@"^[a-zA-Z]+$",ErrorMessage = Constants.NameError)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
         [DisplayName("Eesnimi")]
         public string FirstName
         {
@@ -44,6 +47,35 @@ namespace Open.Facade.Person
             get => getString(ref last_name);
             set => last_name = value;
         }
+
+        [Required]
+        [DisplayName("Aadress")]
+        public string Address
+        {
+            get => getString(ref address);
+            set => address = value;
+        }
+
+        [Required]
+        public string Email
+        {
+            get => getString(ref email);
+            set => email = value;
+        }
+
+        [Required]
+        [DisplayName("Telefon")]
+        [RegularExpression(@"^\d+$", ErrorMessage = Constants.PhoneNumberDigitsError)]
+        public string PhoneNumber
+        {
+            get => getString(ref phone_number);
+            set => phone_number = value;
+        }
+
+
+        [DisplayName("Ravimiinfo kättesaamine")]
+        public GetMedicineInfo GetMedicineInfo { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayName("Sünnikuupäev")]
         public override DateTime? ValidFrom { get; set; }

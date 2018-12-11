@@ -1,0 +1,26 @@
+﻿@using Open.Sentry1.Extensions
+@model Open.Facade.Person.PersonViewModel
+@{
+    ViewBag.Title = "Eemalda";
+    ViewBag.SubTitle = "Patsient";
+    ViewBag.Button = "Eemalda";
+    Layout = "_DeletePartial";
+}
+
+<body>
+    @Html.ViewingControlsFor(model => model.FirstName)
+    @Html.ViewingControlsFor(model => model.LastName)
+    @Html.ViewingControlsFor(model => model.IDCode)
+    @Html.ViewingControlsFor(model => model.Address)
+    @Html.ViewingControlsFor(model => model.Email)
+    @Html.ViewingControlsFor(model => model.PhoneNumber)
+    @Html.ViewingControlsFor(model => model.GetMedicineInfo)
+    @Html.ViewingControlsFor(model => model.ValidFrom)
+    @Html.HiddenFor(model => model.ValidTo)
+</body>
+
+@section Actions
+    {@Html.ActionLink("Muuda", "Edit", new { id = Model.ID })
+    @Html.ActionLink("Tagasi", "Index")
+}
+
