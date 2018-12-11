@@ -124,6 +124,12 @@ namespace Open.Sentry1.Controllers
         {
             string suitable;
             if (!ModelState.IsValid) return View(s);
+            if (medicineId.Length == 11)
+            {
+                var tempId = medicineId;
+                medicineId = s.ID;
+                s.ID = tempId;
+            }
             var currentDate = DateTime.Now;
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
@@ -180,9 +186,105 @@ namespace Open.Sentry1.Controllers
             return View(dosagesSch);
         }
 
-        public async Task<IActionResult> SendEmail(PersonViewModel c)
+        public async Task<IActionResult> DosageSchemeMed(string id,
+            string currentFilter = null,
+            string searchString = null,
+            int? page = null)
         {
-            return null;
+            if (searchString != null) page = 1;
+            else searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;
+            persons.SearchString = searchString;
+            persons.PageIndex = page ?? 1;
+            persons.PageSize = 1000000;
+            var pers = new PersonViewModelsList(null);
+            var l = await persons.GetObjectsList();
+            if (!string.IsNullOrWhiteSpace(searchString))
+                pers = new PersonViewModelsList(l);
+            var dosagesSch = SuggestionViewModelFactory.Create(id);
+            var medicine = await medicines.GetObject(id);
+            ViewBag.MedicineName = medicine.DbRecord.Name;
+            //ViewBag.Medicines = meds;
+            ViewBag.Persons = l.Select(x => new SelectListItem
+            {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.IDCode
+            }).ToList();
+
+            return View(dosagesSch);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DosageSchemeMed([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
+        {
+            string suitable;
+            if (!ModelState.IsValid) return View(s);
+            var tempId = medicineId;
+            medicineId = s.ID;
+            s.ID = tempId;
+            
+            var currentDate = DateTime.Now;
+            var untilDate = currentDate.AddDays(double.Parse(s.Length));
+            var dosageId = Guid.NewGuid().ToString();
+            var schemeId = Guid.NewGuid().ToString();
+            var perObj = await persons.GetObject(s.ID);
+            var medObj = await medicines.GetObject(medicineId);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, s.ID, medicineId, currentDate, untilDate);
+            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
+            var o = await personMedicines.GetObject(medicineId, s.ID);
+            if (o.DbRecord.MedicineID == "Unspecified")
+            {
+                suitable = "Teadmata";
+            }
+            else
+            {
+                suitable = "Jah";
+                await personMedicines.DeleteObject(o);
+            }
+            await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));
+            await dosages.AddObject(dosage);
+            await schemes.AddObject(scheme);
+            return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendEmail(PersonInfoViewModel c)
+        {
+            var person = await persons.GetObject(c.ID);
+            var medicine = await medicines.GetObject(c.MedicineID);
+            var dosage = await dosages.GetObject(c.DosageID);
+            await schemes.LoadSchemes(dosage);
+            var schems = dosage.SchemesInUse;
+            var scheme = schems[0];
+            char[] males = new[] {'1', '3', '5', '7', '9'};
+            char[] females = new[] { '2', '4', '6', '8', '0' };
+            string sex;
+            if (males.Contains(person.DbRecord.IDCode[0]))
+            {
+                sex = "härra";
+            }
+            else
+            {
+                sex = "preili/proua";
+            }
+
+            string header = "Tervist lp " + sex + " " + person.DbRecord.LastName+"@"+"@";
+            string suggestion = "Siin on teile kirjutatud soovitus Dr. Mardna poolt kuupäeval: " + c.ValidFrom +
+                                "@" +"Isikukood : "+ person.DbRecord.IDCode +
+                                "@" + "Eesnimi : " + person.DbRecord.FirstName +
+                                "@" + "Perekonnanimi : " + person.DbRecord.LastName +
+                                "@" + "Ravimi nimi : " + medicine.DbRecord.Name +
+                                "@" + "Ravimi manustamise viis : " + medicine.DbRecord.FormOfInjection +
+                                "@" + "Ravimi tugevus : " + medicine.DbRecord.Strength +
+                                "@" + "@" + "------ANNUSTAMINE------" +
+                                "@" + "Ravimi manustamise tüüp : " + dosage.DbRecord.TypeOfTreatment +
+                                "@" + "Ravikuuri pikkus : " + scheme.DbRecord.Length +
+                                "@" + "Ravimit manustada ühe korraga : " + scheme.DbRecord.Amount +
+                                "@" + "Ravimit manustada kordi päevas : " + scheme.DbRecord.Times +
+                                "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay;
+            string finalMessage = header + suggestion;
+            finalMessage = finalMessage.Replace("@", System.Environment.NewLine);
+            EmailSender.Send(person.DbRecord.Email,finalMessage);
+            return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(person));
         }
         public async Task<IActionResult> RemoveMedicine(string personId, string medicineId)
         {

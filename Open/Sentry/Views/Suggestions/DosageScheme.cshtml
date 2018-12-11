@@ -18,67 +18,70 @@
 </div>
 
 <body>
-    <div class="form-group">
-        <div class="col-md-4" style="margin-top: 10px">
-            <div class="form-horizontal" align="right">
-                <b>Lisa ravim: </b>@Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class = "selectpicker" })
-            </div>
-
-            @*<table class="table">
-                    @{ var r = Model.UsedMedicine; }
-                    <thead>
-                        <tr>
-                            <th>@Html.LabelFor(x => r.Name)</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (r != null)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(x => r.Name)</td>
-                                <td>@Html.ActionLink("Remove", "RemoveMedicine")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="form-horizontal">
-                    <p>
-                        <a asp-action="DosageScheme"
-                           asp-route-page="@(medicines.PageIndex - 1)"
-                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="btn btn-default @prevDisabled"><</a>
-                        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
-                        <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
-                        <a asp-action="DosageScheme"
-                           asp-route-page="@(medicines.PageIndex + 1)"
-                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="btn btn-default @nextDisabled">></a>
-                    </p>
-                </div>
-                    <table class="table">
-                    <tbody>
-                        @foreach (var item in medicines)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(x => item.Name)</td>
-                                <td>@Html.ActionLink("Add", "AddMedicine", new { personId = Model.ID, medicineId = item.ID })</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>*@
+<div class="form-group">
+    <div class="col-md-4" style="margin-top: 10px">
+        <div class="form-horizontal" align="right">
+            <b>Lisa ravim: </b>@Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class = "selectpicker" })
         </div>
-    </div>
 
-    @Html.HiddenFor(model => model.ID)
-    @Html.HiddenFor(model => model.MedicineID)
-    @Html.EditingControlsForEnum(model => model.TypeOfTreatment)
-    @Html.EditingControlsFor(model => model.Length)
-    @Html.EditingControlsFor(model => model.Amount)
-    @Html.EditingControlsFor(model => model.Times)
-    @Html.EditingControlsFor(model => model.TimeOfDay)
-    @Html.EditingControlsFor(model => model.ValidFrom)
-    @Html.EditingControlsFor(model => model.ValidTo)
+        @*<table class="table">
+                @{ var r = Model.UsedMedicine; }
+                <thead>
+                    <tr>
+                        <th>@Html.LabelFor(x => r.Name)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (r != null)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => r.Name)</td>
+                            <td>@Html.ActionLink("Remove", "RemoveMedicine")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-horizontal">
+                <p>
+                    <a asp-action="DosageScheme"
+                       asp-route-page="@(medicines.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled"><</a>
+                    <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
+                    <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
+                    <a asp-action="DosageScheme"
+                       asp-route-page="@(medicines.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled">></a>
+                </p>
+            </div>
+                <table class="table">
+                <tbody>
+                    @foreach (var item in medicines)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => item.Name)</td>
+                            <td>@Html.ActionLink("Add", "AddMedicine", new { personId = Model.ID, medicineId = item.ID })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>*@
+    </div>
+</div>
+
+
+
+
+@Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model => model.MedicineID)
+@Html.EditingControlsForEnum(model => model.TypeOfTreatment)
+@Html.EditingControlsFor(model => model.Length)
+@Html.EditingControlsFor(model => model.Amount)
+@Html.EditingControlsFor(model => model.Times)
+@Html.EditingControlsFor(model => model.TimeOfDay)
+@Html.EditingControlsFor(model => model.ValidFrom)
+@Html.EditingControlsFor(model => model.ValidTo)
 </body>
 @section Actions
     {@Html.ActionLink("Tagasi", "Index")}
