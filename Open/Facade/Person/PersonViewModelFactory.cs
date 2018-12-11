@@ -1,4 +1,6 @@
 ﻿using System;
+using Open.Core;
+using Open.Data.Person;
 using Open.Domain.Person;
 using Open.Facade.Product;
 
@@ -13,7 +15,11 @@ namespace Open.Facade.Person
                 ID = o?.DbRecord.ID,
                 IDCode = o?.DbRecord.IDCode,
                 FirstName = o?.DbRecord.FirstName,
-                LastName = o?.DbRecord.LastName
+                LastName = o?.DbRecord.LastName,
+                Address = o?.DbRecord.Address,
+                Email = o?.DbRecord.Email,
+                PhoneNumber = o?.DbRecord.PhoneNumber,
+                GetMedicineInfo = o?.DbRecord.GetMedicineInfo ?? GetMedicineInfo.Teadmata
             };
             if (o is null) return v;
             v.ValidFrom = setNullIfExtremum(o.DbRecord.ValidFrom);

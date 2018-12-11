@@ -10,6 +10,9 @@ namespace Open.Data.Person
         private string id_code;
         private string first_name;
         private string last_name;
+        private string address;
+        private string email;
+        private string phone_number;
 
         public string IDCode
         {
@@ -28,5 +31,25 @@ namespace Open.Data.Person
             get => getString(ref last_name);
             set => last_name = value;
         }
+
+        public string Address
+        {
+            get => getString(ref address);
+            set => address = value;
+        }
+
+        public string Email
+        {
+            get => getString(ref email);
+            set => email = value;
+        }
+
+        public string PhoneNumber
+        {
+            get => getString(ref phone_number);
+            set => phone_number = value;
+        }
+
+        public GetMedicineInfo GetMedicineInfo { get; set; }
     }
 }

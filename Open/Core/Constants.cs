@@ -7,5 +7,6 @@
         public const string IdDigitsError = "ID kood võib sisaldada ainult numbreid!";
         public const string IdLengthError = "ID kood peab oleme 11 numbrit pikk!";
         public const string FieldRequired = "Väli peab olema täidetud!";
+        public const string PhoneNumberDigitsError = "Telefoninumber võib sisaldada ainult numbreid!";
     }
 }
