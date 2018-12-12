@@ -19,33 +19,32 @@
 
 <P style="font-size:130%;">&nbsp;</P>
 <P style="font-size:130%;">&nbsp;</P>
-    <table class="table">
-        @{ var dummy = Model.SuggestionsMade.FirstOrDefault();}
-        <thead>
+<table class="table">
+    @{ var dummy = Model.SuggestionsMade.FirstOrDefault();}
+    <thead>
+        <tr>
+            @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.MedicineName)
+            @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
+            @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.Suitable)
+            @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
+            @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SuggestionsMade)
+        {
             <tr>
-                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.MedicineName)
-                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
-                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.Suitable)
-                @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
-                @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
-                <th></th>
+                <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
+                <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                @Html.EditDetailDeleteFor(modelItem => item.ID)
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.SuggestionsMade)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
-                    @Html.EditDetailDeleteFor(modelItem => item.ID)
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
+        }
+    </tbody>
+</table>
 
 
 

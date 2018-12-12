@@ -9,7 +9,7 @@ using Open.Infra;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20181210175143_Sentry")]
+    [Migration("20181211191433_Sentry")]
     partial class Sentry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,11 +121,19 @@ namespace Open.Infra.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Email");
+
                     b.Property<string>("FirstName");
+
+                    b.Property<int>("GetMedicineInfo");
 
                     b.Property<string>("IDCode");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime>("ValidFrom");
 

@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Open\Infra\Infra.csproj", "{D97B8303-480F-4E33-B0C3-0B6B84FF9F47}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sentry1", "Open\Sentry\Sentry1.csproj", "{C15DE0BC-5E3A-41C6-8752-B9BDFF65F35B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{81410E67-A0B3-4D57-B75E-54F566142F63} = {81410E67-A0B3-4D57-B75E-54F566142F63}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Open\Tests\Tests.csproj", "{5A67AECE-5F94-4B59-879B-7E17DD2B549B}"
 EndProject

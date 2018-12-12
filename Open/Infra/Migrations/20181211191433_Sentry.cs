@@ -44,7 +44,7 @@ namespace Open.Infra.Migrations
                     ValidFrom = table.Column<DateTime>(nullable: false),
                     ValidTo = table.Column<DateTime>(nullable: false),
                     ID = table.Column<string>(nullable: false),
-                    TypeOfTreatment = table.Column<string>(nullable: true),
+                    TypeOfTreatment = table.Column<int>(nullable: false),
                     PersonID = table.Column<string>(nullable: true),
                     MedicineID = table.Column<string>(nullable: true)
                 },
