@@ -10,9 +10,10 @@
 <h2>@ViewBag.Title</h2>
 @section Create{
     <a asp-action=Create><button class="btn btn-primary">Lisa uus patsient</button></a>
+    <br>
+    <br>
+    <br><strong>Otsi patsienti isikukoodi järgi:</strong>
 }
-
-
 <body>
     <table class="table">
         @{ var dummy = Model.FirstOrDefault();}

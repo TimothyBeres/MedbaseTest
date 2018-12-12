@@ -13,6 +13,8 @@ namespace Open.Facade.Person
             var v = new PersonInfoViewModel()
             {
                 ID = d?.DbRecord.PersonID,
+                MedicineID = m.DbRecord.ID,
+                DosageID = d.DbRecord.ID,
                 Suitable = pm?.DbRecord.SuitableForPerson,
                 MedicineName = m?.DbRecord.Name,
                 FormOfInjection = m?.DbRecord.FormOfInjection

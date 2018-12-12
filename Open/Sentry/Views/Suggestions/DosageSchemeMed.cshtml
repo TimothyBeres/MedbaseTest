@@ -1,0 +1,43 @@
+﻿@model Open.Facade.Process.SuggestionViewModel
+@using System.Collections
+@using Open.Facade.Product
+@using Open.Sentry1.Extensions
+@{
+    ViewBag.Title = "Lisa soovitus";
+    ViewBag.Button = "Lisa";
+    Layout = "_EditPartial";
+    var persons = ViewBag.Persons as IEnumerable<SelectListItem>;
+    //var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
+    //var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
+    //var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
+}
+<div align="center">
+    <b>
+        Kirjutate soovitust ravimile: @ViewBag.MedicineName
+    </b>
+</div>
+
+<body>
+<div class="form-group">
+    <div class="col-md-4" style="margin-top: 10px">
+        <div class="form-horizontal" >
+            <b>Lisa patsient(isikukoodi järgi): </b>@Html.DropDownList("medicineId", new SelectList(persons, "Value", "Text"), new { @class = "selectpicker" })
+        </div>
+    </div>
+</div>
+
+    
+
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.MedicineID)
+    @Html.EditingControlsForEnum(model => model.TypeOfTreatment)
+    @Html.EditingControlsFor(model => model.Length)
+    @Html.EditingControlsFor(model => model.Amount)
+    @Html.EditingControlsFor(model => model.Times)
+    @Html.EditingControlsFor(model => model.TimeOfDay)
+    @Html.EditingControlsFor(model => model.ValidFrom)
+    @Html.EditingControlsFor(model => model.ValidTo)
+</body>
+@section Actions
+    {@Html.ActionLink("Tagasi", "Index")}
+

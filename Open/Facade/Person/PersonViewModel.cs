@@ -30,7 +30,7 @@ namespace Open.Facade.Person
             set => id_code = value;
         }
 
-        [Required]
+        [Required(ErrorMessage = Constants.FieldRequired)]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
         [DisplayName("Eesnimi")]
         public string FirstName
@@ -39,7 +39,7 @@ namespace Open.Facade.Person
             set => first_name = value;
         }
 
-        [Required]
+        [Required(ErrorMessage = Constants.FieldRequired)]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = Constants.NameError)]
         [DisplayName("Perekonnanimi")]
         public string LastName
@@ -48,7 +48,6 @@ namespace Open.Facade.Person
             set => last_name = value;
         }
 
-        [Required]
         [DisplayName("Aadress")]
         public string Address
         {
@@ -56,7 +55,6 @@ namespace Open.Facade.Person
             set => address = value;
         }
 
-        [Required]
         public string Email
         {
             get => getString(ref email);
@@ -72,10 +70,10 @@ namespace Open.Facade.Person
             set => phone_number = value;
         }
 
-
         [DisplayName("Ravimiinfo kättesaamine")]
         public GetMedicineInfo GetMedicineInfo { get; set; }
 
+        [Required(ErrorMessage = Constants.FieldRequired)]
         [DataType(DataType.Date)]
         [DisplayName("Sünnikuupäev")]
         public override DateTime? ValidFrom { get; set; }

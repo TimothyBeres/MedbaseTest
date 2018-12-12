@@ -7,6 +7,9 @@
 
 @section Create{
     <a asp-action=Create><button class="btn btn-primary">Lisa uus Ravim</button></a>
+    <br>
+    <br>
+    <br><strong>Otsi ravimit nime järgi:</strong>
 }
 
 <body>
@@ -14,6 +17,7 @@
         @{ var dummy = Model.FirstOrDefault();}
         <thead>
             <tr>
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.EmptyHeader)
                 @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
                 @Html.SortColumnHeaderFor(ViewData["SortAtcCode"], model => dummy.AtcCode)
                 @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
@@ -32,6 +36,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td><button type="button" onclick="location.href='@Url.Action("DosageSchemeMed","Suggestions", new { id=item.ID})'">Lisa soovitus</button></td>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.AtcCode)</td>
                     <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>

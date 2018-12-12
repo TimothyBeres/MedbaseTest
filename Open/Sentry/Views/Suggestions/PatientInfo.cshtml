@@ -7,9 +7,9 @@
 
 <h2>Patsiendile kirjutatud soovitused</h2>
 
-<h3>@Html.ViewingControlsFor(model => model.IDCode)</h3>
-<h3>@Html.ViewingControlsFor(model => model.FirstName)</h3>
-<h3>@Html.ViewingControlsFor(model => model.LastName)</h3>
+@Html.ViewingControlsFor(model => model.IDCode)
+@Html.ViewingControlsFor(model => model.FirstName)
+@Html.ViewingControlsFor(model => model.LastName)
 @Html.ViewingControlsFor(model => model.ValidFrom)
 @Html.ViewingControlsFor(model => model.Address)
 @Html.ViewingControlsFor(model => model.Email)
@@ -18,11 +18,14 @@
 <br />
 
 <P style="font-size:130%;">&nbsp;</P>
-<P style="font-size:130%;">&nbsp;</P>
+<div align="right">
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("DosageScheme", "Suggestions", new { id = Model.IDCode })'">Lisa uus soovitus</button>
+</div>
 <table class="table">
     @{ var dummy = Model.SuggestionsMade.FirstOrDefault();}
     <thead>
         <tr>
+            @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.EmptyHeader)
             @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.MedicineName)
             @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
             @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.Suitable)
@@ -32,19 +35,28 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.SuggestionsMade)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
-                <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
-                <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
-                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-                <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
-                @Html.EditDetailDeleteFor(modelItem => item.ID)
-            </tr>
-        }
+    @foreach (var item in Model.SuggestionsMade)
+    {
+        <tr>
+            <td>@using (Html.BeginForm("SendEmail","Suggestions",item))
+                {
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Saada info e-mailile" class="btn btn-default"/>
+                        </div>
+                    </div>
+                }</td>
+            <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
+            <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
+            <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+            <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+            @Html.EditDetailDeleteFor(modelItem => item.ID)
+        </tr>
+    }
     </tbody>
 </table>
+
 
 
 

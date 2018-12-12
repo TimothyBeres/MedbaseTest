@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Open.Domain.Process;
 using Open.Facade.Common;
 
 namespace Open.Facade.Person
@@ -9,6 +10,8 @@ namespace Open.Facade.Person
         private string medicineName;
         private string formOfInjection;
         private string suitable;
+        private string medicineId;
+        private string dosageId;
         [Required]
         [DisplayName("Ravimi nimetus")]
         public string MedicineName
@@ -30,5 +33,17 @@ namespace Open.Facade.Person
             get => getString(ref suitable);
             set => suitable = value;
         }
+        public string MedicineID
+        {
+            get => getString(ref medicineId);
+            set => medicineId = value;
+        }
+        public string DosageID
+        {
+            get => getString(ref dosageId);
+            set => dosageId = value;
+        }
+        [DisplayName("")]
+        public string EmptyHeader { get; set; }
     }
 }
