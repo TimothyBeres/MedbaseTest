@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Open.Core;
@@ -137,6 +138,8 @@ namespace Open.Sentry1.Controllers
             return View(MedicineViewModelFactory.Create(c));
         }
 
+        
+
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -162,7 +165,52 @@ namespace Open.Sentry1.Controllers
             await medicineEffectsRepository.DeleteObject(o);
             return RedirectToAction("Edit", new { id = effect });
         }
-        
-        
+        [HttpGet]
+        public IActionResult Ask()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Ask(AskViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    MailMessage msg = new MailMessage();
+                    msg.From = new MailAddress(vm.Email);
+                    msg.To.Add("kevinkoppel98@gmail.com");//Where mail will be sent 
+                    msg.Subject = vm.Subject;
+                    msg.Body = "Nimi: " + vm.Name + "\n" + "Email: " + vm.Email + "\n" + "Küsimus: " + vm.Message;
+                    SmtpClient smtp = new SmtpClient();
+
+                    smtp.Host = "smtp.gmail.com";
+
+                    smtp.Port = 587;
+
+                    smtp.Credentials = new System.Net.NetworkCredential
+                        ("medbasetest@gmail.com", "Qwerty1!123");
+
+                    smtp.EnableSsl = true;
+
+                    smtp.Send(msg);
+
+                    ModelState.Clear();
+                    ViewBag.Message = "Tänan küsimuse eest, vastame esimesel võimalusel?";
+                }
+                catch (Exception ex)
+                {
+                    ModelState.Clear();
+                    ViewBag.Message = $" Sorry we are facing Problem here {ex.Message}";
+                }
+            }
+
+            return View();
+        }
+        public IActionResult Error()
+        {
+            return View();
+        }
+
     }
 }
