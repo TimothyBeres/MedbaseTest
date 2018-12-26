@@ -6,6 +6,7 @@ using Open.Data.Money;
 using Open.Data.Person;
 using Open.Data.Process;
 using Open.Data.Product;
+using Open.Data.Representor;
 
 namespace Open.Infra
 {
@@ -35,6 +36,10 @@ namespace Open.Infra
         public DbSet<DosageDbRecord> Dosages { get; set; }
 
         public DbSet<SchemeDbRecord> Schemes { get; set; }
+
+        public DbSet<RepresentorDbRecord> Representors { get; set; }
+
+        public DbSet<MedicineRepresentorDbRecord> MedicineRepresentors { get; set; }
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -45,11 +50,13 @@ namespace Open.Infra
             b.Entity<PersonDbRecord>().ToTable("Person");
             b.Entity<DosageDbRecord>().ToTable("Dosage");
             b.Entity<SchemeDbRecord>().ToTable("Scheme");
+            b.Entity<RepresentorDbRecord>().ToTable("Representor");
             CreateAddressTable(b);
             CreateTelecomAddressRegistrationTable(b);
             CreateCountryCurrencyTable(b);
             CreateMedicineEffectsTable(b);
             CreatePersonMedicinesTable(b);
+            CreateMedicineRepresentorsTable(b);
         }
 
         public static void CreateCountryCurrencyTable(ModelBuilder b)
@@ -74,6 +81,13 @@ namespace Open.Infra
             createPrimaryKey<PersonMedicineDbRecord>(b, table, a => new { a.PersonID, a.MedicineID });
             createForeignKey<PersonMedicineDbRecord, PersonDbRecord>(b, table, x => x.PersonID, x => x.Person);
             createForeignKey<PersonMedicineDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
+        }
+        public static void CreateMedicineRepresentorsTable(ModelBuilder b)
+        {
+            const string table = "MedicineRepresentors";
+            createPrimaryKey<MedicineRepresentorDbRecord>(b, table, a => new { a.RepresentorID, a.MedicineID });
+            createForeignKey<MedicineRepresentorDbRecord, RepresentorDbRecord>(b, table, x => x.RepresentorID, x => x.Representor);
+            createForeignKey<MedicineRepresentorDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
         }
 
         internal static void createPrimaryKey<TEntity>(
