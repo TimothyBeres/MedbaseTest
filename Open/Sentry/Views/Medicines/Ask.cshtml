@@ -1,0 +1,64 @@
+﻿@using Open.Facade.Product
+@using Open.Sentry1.Extensions
+@model Open.Facade.Product.AskViewModel
+
+@{
+    ViewData["Title"] = "Küsi ravimiesindajalt";
+    Layout = "_Layout";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<div>
+    <div class="col-md-6">
+        <div>
+            @if (ViewBag.Message == null)
+            {
+
+                <div>
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="Name">Nimi</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-muted"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email">E-mail</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-muted"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Subject">Teema</label>
+                            <input asp-for="Subject" class="form-control" />
+                            <span asp-validation-for="Subject" class="text-muted"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Message">Küsimus</label>
+                            <textarea rows="5" cols="15" asp-for="Message" class="form-control"></textarea>
+                            <span asp-validation-for="Message" class="text-muted"></span>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-success">Send </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            }
+        </div>
+
+
+        <div>
+            <div>
+                @if (ViewBag.Message != null)
+                {
+                    <div>@ViewBag.Message</div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

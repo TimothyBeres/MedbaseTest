@@ -23,6 +23,7 @@ namespace Open.Core
             mailMessage.Subject = subject;
             client.Send(mailMessage);
         }
+
         
     }
 }
