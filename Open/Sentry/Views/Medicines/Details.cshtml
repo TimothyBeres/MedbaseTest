@@ -8,16 +8,16 @@
 
 <body>
     @Html.ViewingControlsFor(model => model.Name)
-    @Html.ViewingControlsFor(model => model.AtcCode)
     @Html.ViewingControlsFor(model => model.FormOfInjection)
     @Html.ViewingControlsFor(model => model.Strength)
     @Html.ViewingControlsFor(model => model.Manufacturer)
-    @Html.ViewingControlsFor(model => model.LegalStatus)
+    @*@Html.ViewingControlsFor(model => model.LegalStatus)
+    @Html.ViewingControlsFor(model => model.AtcCode)   
     @Html.ViewingControlsFor(model => model.Reimbursement)
     @Html.ViewingControlsFor(model => model.Spc)
     @Html.ViewingControlsFor(model => model.Pil)
     @Html.ViewingControlsFor(model => model.ValidFrom)
-    @Html.ViewingControlsFor(model => model.ValidTo)
+    @Html.ViewingControlsFor(model => model.ValidTo)*@
 
     @if (Model.EffectsInMedicine.Count >= 0)
     {
@@ -29,8 +29,8 @@
                     <thead>
                         <tr>
                             <th>@Html.LabelFor(x => r.Name)</th>
-                            <th>@Html.LabelFor(x => r.ValidFrom)</th>
-                            <th>@Html.LabelFor(x => r.ValidTo)</th>
+                            @*<th>@Html.LabelFor(x => r.ValidFrom)</th>
+                            <th>@Html.LabelFor(x => r.ValidTo)</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -38,8 +38,8 @@
                         {
                             <tr>
                                 <td>@Html.DisplayFor(x => item.Name)</td>
-                                <td>@Html.DisplayFor(x => item.ValidFrom)</td>
-                                <td>@Html.DisplayFor(x => item.ValidTo)</td>
+                                @*<td>@Html.DisplayFor(x => item.ValidFrom)</td>
+                                <td>@Html.DisplayFor(x => item.ValidTo)</td>*@
                             </tr>
                         }
                     </tbody>

@@ -7,6 +7,7 @@
 
 <h2>Patsiendile kirjutatud soovitused</h2>
 
+@*<h4><strong>Isikukood:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>@Html.DisplayFor(model => model.IDCode)</h4>*@
 @Html.ViewingControlsFor(model => model.IDCode)
 @Html.ViewingControlsFor(model => model.FirstName)
 @Html.ViewingControlsFor(model => model.LastName)
@@ -35,25 +36,27 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.SuggestionsMade)
-    {
-        <tr>
-            <td>@using (Html.BeginForm("SendEmail","Suggestions",item))
-                {
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Saada info e-mailile" class="btn btn-default"/>
+        @foreach (var item in Model.SuggestionsMade)
+        {
+            <tr>
+                <td>
+                    @using (Html.BeginForm("SendEmail", "Suggestions", item))
+                    {
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Saada info e-mailile" class="btn btn-default" />
+                            </div>
                         </div>
-                    </div>
-                }</td>
-            <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
-            <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
-            <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
-            <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-            <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
-            @Html.EditDetailDeleteFor(modelItem => item.ID)
-        </tr>
-    }
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
+                <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                @Html.EditDetailDeleteFor(modelItem => item.ID)
+            </tr>
+        }
     </tbody>
 </table>
 

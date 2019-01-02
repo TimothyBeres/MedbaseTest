@@ -96,5 +96,21 @@ namespace Open.Sentry1.Extensions
             };
             return new HtmlContentBuilder(htmlStrings);
         }
+        public static IHtmlContent DetailFor<TModel, TResult>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
+        {
+            string edit = "Edit";
+            string details = "Details";
+            string delete = "Delete";
+            var index = htmlHelper.ValueFor(expression);
+            var htmlStrings = new List<object>
+            {
+                new HtmlString("<th>"),
+                htmlHelper.ActionLink("Toimeained ravimis", details, new {id = index}),
+                new HtmlString("</th>")
+            };
+            return new HtmlContentBuilder(htmlStrings);
+        }
     }
 }
