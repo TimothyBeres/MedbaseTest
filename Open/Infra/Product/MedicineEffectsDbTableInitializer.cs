@@ -11,8 +11,8 @@ namespace Open.Infra.Product
             c.Database.EnsureCreated();
             if (c.MedicineEffects.Any()) return;
 
-            c.SaveChanges();
-            /*foreach (var a in c.Medicines)
+            
+            foreach (var a in c.Medicines)
             {
                 foreach (var p in c.Effects)
                 {
@@ -25,7 +25,7 @@ namespace Open.Infra.Product
                 }
 
             }
-            c.SaveChanges();*/
+            c.SaveChanges();
 
         }
     }
