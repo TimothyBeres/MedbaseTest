@@ -11,7 +11,7 @@ namespace Open.Infra.Product
         {
             c.Database.EnsureCreated();
             if (c.Effects.Any()) return;
-            //initEffects(c);
+            initEffects(c);
             c.SaveChanges();
         }
 

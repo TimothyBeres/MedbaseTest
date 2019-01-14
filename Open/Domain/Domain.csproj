@@ -106,7 +106,7 @@
     <Compile Include="Representor\MedicineRepresentorsObject.cs" />
     <Compile Include="Representor\MedicineRepresentorsObjectsList.cs" />
     <Compile Include="Representor\RepresentorObject.cs" />
-    <Compile Include="Representor\RepresentorObjectFacory.cs" />
+    <Compile Include="Representor\RepresentorObjectFactory.cs" />
     <Compile Include="Representor\RepresentorObjectsList.cs" />
   </ItemGroup>
   <ItemGroup>
