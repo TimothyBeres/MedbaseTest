@@ -32,10 +32,10 @@ namespace Open.Tests.Aids
         public void DisplayNameTest()
         {
             Assert.AreEqual("DbRecord", GetMember.DisplayName<CountryObject>(o => o.DbRecord));
-            Assert.AreEqual("Valid From",
+            Assert.AreEqual("Alates",
                 GetMember.DisplayName<CountryViewModel>(o => o.ValidFrom));
             Assert.AreEqual("Name", GetMember.DisplayName<CountryViewModel>(o => o.Name));
-            Assert.AreEqual("ValidTo", GetMember.DisplayName<CountryViewModel>(o => o.ValidTo));
+            Assert.AreEqual("Kuni", GetMember.DisplayName<CountryViewModel>(o => o.ValidTo));
             Assert.AreEqual(string.Empty, GetMember.DisplayName<CountryViewModel>(null));
         }
     }
