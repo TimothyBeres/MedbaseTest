@@ -26,12 +26,12 @@ namespace Open.Tests.Domain.Person
             var person = new PersonObject(r.Person);
             var medicine = new MedicineObject(r.Medicine);
 
-            var o = PersonMedicineObjectFactory.Create(person, medicine, r.SuitableForPerson, r.ValidFrom,
+            var o = PersonMedicineObjectFactory.Create(person, medicine, r.Suitability, r.ValidFrom,
                 r.ValidTo);
 
             Assert.AreEqual(o.DbRecord.ValidFrom, r.ValidFrom);
             Assert.AreEqual(o.DbRecord.ValidTo, r.ValidTo);
-            Assert.AreEqual(o.DbRecord.SuitableForPerson, r.SuitableForPerson);
+            Assert.AreEqual(o.DbRecord.Suitability, r.Suitability);
             Assert.AreEqual(o.Person.DbRecord, r.Person);
             Assert.AreEqual(o.Medicine.DbRecord, r.Medicine);
             Assert.AreEqual(o.DbRecord.PersonID, r.Person.ID);
@@ -43,7 +43,7 @@ namespace Open.Tests.Domain.Person
         [TestMethod]
         public void CreateWithNullArgumentsTest()
         {
-            var o = PersonMedicineObjectFactory.Create(null, null, "Jah");
+            var o = PersonMedicineObjectFactory.Create(null, null, Suitability.Jah);
 
             Assert.AreEqual(o.DbRecord.ValidFrom, DateTime.MinValue);
             Assert.AreEqual(o.DbRecord.ValidTo, DateTime.MaxValue);

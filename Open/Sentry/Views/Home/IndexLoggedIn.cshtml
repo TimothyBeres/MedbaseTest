@@ -4,10 +4,9 @@
     var userName = "";
     var fullName = "";
     var userName_first = UserManager.GetUserName(User).ToString();
-    var index = userName_first.IndexOf('9');
-    userName = userName_first.Substring(0, index);
-    fullName = userName_first.Replace('9', ' ');
-    ViewData["Title"] = "Teretulemast tagasi, " + userName;
+    userName = userName_first;
+    fullName = userName_first;
+    ViewData["Title"] = "Teretulemast tagasi!";
 }
 
 <div class="jumbotron" style="opacity: 0.8">
@@ -22,7 +21,7 @@
 
 <div class="row" style="background: whitesmoke">
     <div class="col-md-4">
-        <h2>@fullName</h2>
+        <h2>Info:</h2>
         <p>
             Viimane sisse logimine: 19:45 16.10.2018<br>
             Isikukood: 39705150293<br>

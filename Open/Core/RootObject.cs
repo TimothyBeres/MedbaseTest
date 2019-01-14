@@ -10,10 +10,6 @@ namespace Open.Core
             if (string.IsNullOrWhiteSpace(field)) field = (value ?? string.Empty).Trim();
             return field;
         }
-        public bool getBool(ref bool field)
-        {
-            return field;
-        }
 
         protected internal T getValue<T>(ref T field) where T : class, new()
         {

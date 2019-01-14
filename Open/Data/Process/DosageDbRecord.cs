@@ -8,9 +8,9 @@ namespace Open.Data.Process
 {
     public class DosageDbRecord : UniqueDbRecord
     {
-        private string typeOfTreatment;
         private string personId;
         private string medicineId;
+        private string description;
 
         public TypeOfTreatment TypeOfTreatment { get; set; }
 
@@ -23,6 +23,11 @@ namespace Open.Data.Process
         {
             get => getString(ref medicineId);
             set => medicineId = value;
+        }
+        public string Description
+        {
+            get { return description;}
+            set { description = value; }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Open.Aids;
+using Open.Core;
 using Open.Data.Common;
 using Open.Data.Product;
 
@@ -8,7 +9,6 @@ namespace Open.Data.Person
     {
         private string personId;
         private string medicineId;
-        private string suitableForPerson;
 
         public string PersonID
         {
@@ -22,11 +22,7 @@ namespace Open.Data.Person
             set => medicineId = value;
         }
 
-        public string SuitableForPerson
-        {
-            get => getString(ref suitableForPerson);
-            set => suitableForPerson = value;
-        }
+        public Suitability Suitability { get; set; }
 
 
         public virtual PersonDbRecord Person { get; set; }
