@@ -178,7 +178,7 @@ namespace Open.Sentry1.Controllers
             var perObj = await persons.GetPersonByIDCode(s.ID);
             var medObj = await medicines.GetObject(medicineId);
             var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate, untilDate);
-            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
+            var scheme = SchemeObjectFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
             var o = await personMedicines.GetObject(medicineId, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
@@ -271,7 +271,7 @@ namespace Open.Sentry1.Controllers
             var perObj = await persons.GetObject(s.ID);
             var medObj = await medicines.GetObject(medicineId);
             var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, s.ID, medicineId, currentDate, untilDate);
-            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
+            var scheme = SchemeObjectFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
             var o = await personMedicines.GetObject(medicineId, s.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {

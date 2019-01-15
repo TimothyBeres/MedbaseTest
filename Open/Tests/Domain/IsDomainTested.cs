@@ -48,5 +48,17 @@ namespace Open.Tests.Domain
         {
             isAllClassesTested(assembly, Namespace("Person"));
         }
+
+        [TestMethod]
+        public void IsRepresentorTested()
+        {
+            isAllClassesTested(assembly, Namespace("Representor"));
+        }
+
+        [TestMethod]
+        public void IsProcessTested()
+        {
+            isAllClassesTested(assembly, Namespace("Process"));
+        }
     }
 }
