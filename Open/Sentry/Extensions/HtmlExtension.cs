@@ -96,8 +96,7 @@ namespace Open.Sentry1.Extensions
             };
             return new HtmlContentBuilder(htmlStrings);
         }
-
-        public static IHtmlContent Toimeained<TModel, TResult>(
+        public static IHtmlContent DetailFor<TModel, TResult>(
             this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TResult>> expression)
         {
@@ -106,7 +105,21 @@ namespace Open.Sentry1.Extensions
             var htmlStrings = new List<object>
             {
                 new HtmlString("<th>"),
-                htmlHelper.ActionLink("Toimeained", details, new {id = index}),
+                htmlHelper.ActionLink("Toimeained ravimis", details, new {id = index}),
+                new HtmlString("</th>")
+            };
+            return new HtmlContentBuilder(htmlStrings);
+        }
+        public static IHtmlContent EditFor<TModel, TResult>(
+            this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression)
+        {
+            string edit = "Edit";
+            var index = htmlHelper.ValueFor(expression);
+            var htmlStrings = new List<object>
+            {
+                new HtmlString("<th>"),
+                htmlHelper.ActionLink("Muuda", edit, expression),
                 new HtmlString("</th>")
             };
             return new HtmlContentBuilder(htmlStrings);

@@ -3,6 +3,7 @@ using Open.Infra.Money;
 using Open.Infra.Person;
 using Open.Infra.Process;
 using Open.Infra.Product;
+using Open.Infra.Representor;
 
 namespace Open.Infra
 {
@@ -21,6 +22,8 @@ namespace Open.Infra
             PersonMedicineDbTableInitializer.Initialize(dbContext);
             DosageDbTableInitializer.Initialize(dbContext);
             SchemeDbTableInitializer.Initialize(dbContext);
+            RepresentorsDbTableInitializer.Initialize(dbContext);
+
         }
     }
 }

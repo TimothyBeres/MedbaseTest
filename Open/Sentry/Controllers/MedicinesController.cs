@@ -179,7 +179,7 @@ namespace Open.Sentry1.Controllers
                 {
                     MailMessage msg = new MailMessage();
                     msg.From = new MailAddress(vm.Email);
-                    msg.To.Add("kevinkoppel98@gmail.com");//Where mail will be sent 
+                    msg.To.Add("kevinkoppel98@gmail.com"); 
                     msg.Subject = vm.Subject;
                     msg.Body = "Nimi: " + vm.Name + "\n" + "Email: " + vm.Email + "\n" + "Küsimus: " + vm.Message;
                     SmtpClient smtp = new SmtpClient();
@@ -196,7 +196,7 @@ namespace Open.Sentry1.Controllers
                     smtp.Send(msg);
 
                     ModelState.Clear();
-                    ViewBag.Message = "Tänan küsimuse eest, vastame esimesel võimalusel?";
+                    ViewBag.Message = "Tänan küsimuse eest, vastame esimesel võimalusel";
                 }
                 catch (Exception ex)
                 {

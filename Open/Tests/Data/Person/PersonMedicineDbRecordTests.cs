@@ -28,9 +28,9 @@ namespace Open.Tests.Data.Person
         }
 
         [TestMethod]
-        public void SuitableForPersonTest()
+        public void SuitabilityTest()
         {
-            testReadWriteProperty(() => obj.SuitableForPerson, x => obj.SuitableForPerson = x);
+            testReadWriteProperty(() => obj.Suitability, x => obj.Suitability = x);
             // testNullEmptyAndWhitespaceCases(() => obj.SuitableForPerson, x => obj.SuitableForPerson = x, () => Constants.Unspecified);
         }
 

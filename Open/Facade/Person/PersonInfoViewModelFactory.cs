@@ -15,9 +15,10 @@ namespace Open.Facade.Person
                 ID = d?.DbRecord.PersonID,
                 MedicineID = m.DbRecord.ID,
                 DosageID = d.DbRecord.ID,
-                Suitable = pm?.DbRecord.SuitableForPerson,
-                MedicineName = m?.DbRecord.Name,
-                FormOfInjection = m?.DbRecord.FormOfInjection
+                Suitability = pm.DbRecord.Suitability,
+                MedicineName = m.DbRecord.Name,
+                FormOfInjection = m.DbRecord.FormOfInjection,
+                Description = d.DbRecord.Description
             };
             if (d is null) return v;
             v.ValidFrom = setNullIfExtremum(d.DbRecord.ValidFrom);

@@ -148,7 +148,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("MedicineID");
 
-                    b.Property<string>("SuitableForPerson");
+                    b.Property<int>("Suitability");
 
                     b.Property<DateTime>("ValidFrom");
 
@@ -165,6 +165,8 @@ namespace Open.Infra.Migrations
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("MedicineID");
 
@@ -272,6 +274,41 @@ namespace Open.Infra.Migrations
                     b.ToTable("MedicineEffects");
                 });
 
+            modelBuilder.Entity("Open.Data.Representor.MedicineRepresentorDbRecord", b =>
+                {
+                    b.Property<string>("RepresentorID");
+
+                    b.Property<string>("MedicineID");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("RepresentorID", "MedicineID");
+
+                    b.HasIndex("MedicineID");
+
+                    b.ToTable("MedicineRepresentors");
+                });
+
+            modelBuilder.Entity("Open.Data.Representor.RepresentorDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Representor");
+                });
+
             modelBuilder.Entity("Open.Data.Location.EmailAddressDbRecord", b =>
                 {
                     b.HasBaseType("Open.Data.Location.AddressDbRecord");
@@ -367,6 +404,19 @@ namespace Open.Infra.Migrations
                     b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
                         .WithMany()
                         .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Representor.MedicineRepresentorDbRecord", b =>
+                {
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Open.Data.Representor.RepresentorDbRecord", "Representor")
+                        .WithMany()
+                        .HasForeignKey("RepresentorID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

@@ -1,0 +1,59 @@
+﻿@using Open.Sentry1.Extensions
+@model Open.Facade.Person.PersonInfoViewModel
+
+@{
+    ViewBag.Title = "Muuda";
+    ViewBag.Button = "Salvesta";
+    Layout = "_EditPartial";
+}
+<style>
+    .pop-outer {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pop-inner {
+        background-color: #fff;
+        width: 500px;
+        height: 300px;
+        padding: 25px;
+        margin: 15% auto;
+    }
+</style>
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".open").click(function () {
+            $('.pop-outer').fadeIn('slow');
+        });
+        $(".close").click(function () {
+            $('.pop-outer').fadeOut('slow');
+        });
+    });
+</script>
+<button class="open"> Click to open popup</button>
+<div style="display: none;" class="pop-outer">
+    <div class="pop-inner">
+        <button class="close"> X</button>
+        <h2>NÄIDE</h2>
+        <p>Seee on content!!</p>
+    </div>
+</div>
+<body>
+    @Html.ViewingControlsFor(model => model.ValidFrom)
+    @Html.ViewingControlsFor(model => model.ValidTo)
+    @Html.ViewingControlsFor(model => model.MedicineName)
+    @Html.ViewingControlsFor(model => model.FormOfInjection)
+    @Html.EditingControlsForEnum(model => model.Suitability)
+    @Html.EditingControlsFor(model => model.Description)
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.MedicineID)
+    @Html.HiddenFor(model => model.DosageID)
+</body>
+
+@section Actions
+    {@Html.ActionLink("Tagasi", "PatientInfo", new { id = Model.ID })}

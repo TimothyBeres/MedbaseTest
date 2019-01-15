@@ -3,10 +3,9 @@
 
 @{
     ViewData["Title"] = "Patsiendile kirjutatud soovitused";
+    Layout = "_Layout";
 }
-
 <h2>Patsiendile kirjutatud soovitused</h2>
-
 @Html.ViewingControlsFor(model => model.IDCode)
 @Html.ViewingControlsFor(model => model.FirstName)
 @Html.ViewingControlsFor(model => model.LastName)
@@ -16,11 +15,69 @@
 @Html.ViewingControlsFor(model => model.PhoneNumber)
 @Html.ViewingControlsFor(model => model.GetMedicineInfo)
 <br />
+@section Scripts{ 
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".open").click(function () {
+                $('.pop-outer').fadeIn('slow');
+            });
+            $(".close").click(function () {
+                $('.pop-outer').fadeOut('slow');
+            });
+        });
+    </script>
+}
+<style>
+    .pop-outer {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pop-inner {
+        background-color: #fff;
+        width: 500px;
+        height: 300px;
+        padding: 25px;
+        margin: 15% auto;
+    }
+</style>
+
+<button class="open"> Click to open popup</button>
+<div style="display: none;" class="pop-outer">
+    <div class="pop-inner">
+        <button class="close"> X</button>
+        <h2>NÄIDE</h2>
+        <p>Seee on content!!</p>
+    </div>
+</div>
+
 
 <P style="font-size:130%;">&nbsp;</P>
 <div align="right">
     <button class="btn btn-primary" onclick="location.href='@Url.Action("DosageScheme", "Suggestions", new { id = Model.IDCode })'">Lisa uus soovitus</button>
 </div>
+<style type="text/css">
+    .grey {
+        background-color: grey;
+    }
+
+    .Jah {
+        background-color: green;
+    }
+
+    .Ei {
+        background-color: red;
+    }
+
+    .Teadmata {
+        background-color: yellow;
+    }
+</style>
 <table class="table">
     @{ var dummy = Model.SuggestionsMade.FirstOrDefault();}
     <thead>
@@ -28,7 +85,7 @@
             @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.EmptyHeader)
             @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.MedicineName)
             @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
-            @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.Suitable)
+            @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.Suitability)
             @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
             @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
             <th></th>
@@ -37,27 +94,36 @@
     <tbody>
         @foreach (var item in Model.SuggestionsMade)
         {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("medId", item.MedicineID);
+            dict.Add("perId", item.ID);
+            dict.Add("dosId", item.DosageID);
             <tr>
                 <td>
                     @using (Html.BeginForm("SendEmail", "Suggestions", item))
                     {
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Saada info e-mailile" class="btn btn-default" />
+                                <input type="submit" value="Saada info e-mailile" class="btn btn-primary" />
                             </div>
                         </div>
                     }
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.MedicineName)</td>
                 <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
-                <td>@Html.DisplayFor(modelItem => item.Suitable)</td>
+                <td class="@item.Suitability">@Html.DisplayFor(modelItem => item.Suitability)</td>
                 <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
                 <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
-                @Html.EditDetailDeleteFor(modelItem => item.ID)
+                <td>
+                    @Html.ActionLink("Muuda", "Edit", dict)
+                </td>
             </tr>
+
         }
     </tbody>
 </table>
+
+
 
 
 

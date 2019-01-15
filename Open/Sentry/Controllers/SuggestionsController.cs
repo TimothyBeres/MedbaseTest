@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -31,6 +32,9 @@ namespace Open.Sentry1.Controllers
         internal const string sugProperties =
             "ID, MedicineID, TypeOfTreatment, Length, Amount, Times, TimeOfDay, UsedMedicine, ValidFrom, ValidTo";
 
+        internal const string patientInfoProperties =
+            "ID, MedicineID, DosageID, Suitability, MedicineName, FormOfInjection";
+
         public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IMedicineObjectsRepository m,
             IDosageObjectsRepository d, ISchemeObjectsRepository s)
         {
@@ -50,7 +54,16 @@ namespace Open.Sentry1.Controllers
             var idCode = model.IDCode;
             try
             {
-                var persona = await persons.GetPersonByIDCode(idCode);
+                PersonObject persona;
+                if (model.ID != Constants.Unspecified)
+                {
+                    persona = await persons.GetObject(model.ID);
+                }
+                else
+                {
+                    persona = await persons.GetPersonByIDCode(idCode);
+                }
+                
 
                 await personMedicines.LoadMedicines(persona);
                 var personView = PersonViewModelFactory.Create(persona);
@@ -104,6 +117,34 @@ namespace Open.Sentry1.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Edit(Dictionary<string, string> d)
+        {
+            var personMed = await personMedicines.GetObject(d["medId"], d["perId"]);
+            var dosage = await dosages.GetObject(d["dosId"]);
+            var medicine = await medicines.GetObject(d["medId"]);
+            return View(PersonInfoViewModelFactory.Create(dosage, personMed, medicine));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind(patientInfoProperties)] PersonInfoViewModel c)
+        {
+            var currentDate = DateTime.Now;
+            if (!ModelState.IsValid) return View(c);
+            var personMed = await personMedicines.GetObject(c.MedicineID, c.ID);
+            var perObj = await persons.GetObject(c.ID);
+            var dosObj = await dosages.GetObject(c.DosageID);
+            dosObj.DbRecord.Description = c.Description;
+            
+            if (personMed.DbRecord.Suitability != c.Suitability)
+            {
+                await personMedicines.DeleteObject(personMed);
+                var medObj = await medicines.GetObject(c.MedicineID);
+                await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, c.Suitability, currentDate));
+            }
+            //await dosages.UpdateObject(dosObj);
+            return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
+        }
         private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
@@ -122,7 +163,7 @@ namespace Open.Sentry1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
         {
-            string suitable;
+            Suitability suitable;
             if (!ModelState.IsValid) return View(s);
             if (medicineId.Length == 11)
             {
@@ -141,11 +182,11 @@ namespace Open.Sentry1.Controllers
             var o = await personMedicines.GetObject(medicineId, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
-                suitable = "Teadmata";
+                suitable = Suitability.Teadmata;
             }
             else
             {
-                suitable = "Jah";
+                suitable = Suitability.Jah;
                 await personMedicines.DeleteObject(o);
             }
             await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));
@@ -217,7 +258,7 @@ namespace Open.Sentry1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DosageSchemeMed([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
         {
-            string suitable;
+            Suitability suitable;
             if (!ModelState.IsValid) return View(s);
             var tempId = medicineId;
             medicineId = s.ID;
@@ -234,11 +275,11 @@ namespace Open.Sentry1.Controllers
             var o = await personMedicines.GetObject(medicineId, s.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
-                suitable = "Teadmata";
+                suitable = Suitability.Teadmata;
             }
             else
             {
-                suitable = "Jah";
+                suitable = Suitability.Jah;
                 await personMedicines.DeleteObject(o);
             }
             await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));

@@ -4,38 +4,76 @@
     ViewBag.Title = "Countries";
     Layout = "_IndexPartial";
 }
+<style>
+    .pop-outer {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pop-inner {
+        background-color: #fff;
+        width: 500px;
+        height: 300px;
+        padding: 25px;
+        margin: 15% auto;
+    }
+</style>
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".open").click(function () {
+            $('.pop-outer').fadeIn('slow');
+        });
+        $(".close").click(function () {
+            $('.pop-outer').fadeOut('slow');
+        });
+    });
+</script>
+<button class="open"> Click to open popup</button>
+<div style="display: none;" class="pop-outer">
+    <div class="pop-inner">
+        <button class="close"> X</button>
+        <h2>NÄIDE</h2>
+        <p>Seee on content!!</p>
+    </div>
+</div>
+
 
 @section Create{
     <a asp-action=Create>Create New</a>
-    }
+}
 
-    <body>
-        <table class="table">
-            @{ var dummy = Model.FirstOrDefault();}
-            <thead>
+<body>
+    <table class="table">
+        @{ var dummy = Model.FirstOrDefault();}
+        <thead>
+            <tr>
+
+                @Html.SortColumnHeaderFor(ViewData["SortAlpha3"], model => dummy.Alpha3Code)
+                @Html.SortColumnHeaderFor(ViewData["SortAlpha2"], model => dummy.Alpha2Code)
+                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
+                @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-
-                    @Html.SortColumnHeaderFor(ViewData["SortAlpha3"], model => dummy.Alpha3Code)
-                    @Html.SortColumnHeaderFor(ViewData["SortAlpha2"], model => dummy.Alpha2Code)
-                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                    @Html.SortColumnHeaderFor(ViewData["SortValidFrom"], model => dummy.ValidFrom)
-                    @Html.SortColumnHeaderFor(ViewData["SortValidTo"], model => dummy.ValidTo)
-                    <th></th>
+                    <td>@Html.DisplayFor(modelItem => item.Alpha3Code)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Alpha2Code)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+                    @Html.EditDetailDeleteFor(modelItem => item.Alpha3Code)
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Alpha3Code)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Alpha2Code)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
-                        @Html.EditDetailDeleteFor(modelItem => item.Alpha3Code)
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </body>
+            }
+        </tbody>
+    </table>
+</body>
 

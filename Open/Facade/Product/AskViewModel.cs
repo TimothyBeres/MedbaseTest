@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Open.Facade.Common;
 
 namespace Open.Facade.Product
 {
-    public class AskViewModel
+    public class AskViewModel : UniqueEntityViewModel
     {
         [Required]
         [StringLength(20, MinimumLength = 5)]

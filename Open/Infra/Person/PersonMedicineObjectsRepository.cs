@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 using Open.Data.Person;
 using Open.Domain.Person;
@@ -77,11 +78,24 @@ namespace Open.Infra.Person
             //medicine.EffectsInMedicine(new PersonObject(c.Person));
         }*/
 
-        public async Task<PersonMedicineObject> GetObject(string medicine, string person)
+        public async Task<PersonMedicineObject> GetObject(string medicineId, string personId)
         {
             var o = await dbSet.FirstOrDefaultAsync(
-                x => x.PersonID == person && x.MedicineID == medicine);
+                x => x.PersonID == personId && x.MedicineID == medicineId);
             return new PersonMedicineObject(o);
+        }
+
+        public async Task<bool> CanUseMedicine(string medicine, string person)
+        {
+            var o = await dbSet.FirstOrDefaultAsync(x => x.PersonID == person && x.MedicineID == medicine);
+            if (o.Suitability == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
