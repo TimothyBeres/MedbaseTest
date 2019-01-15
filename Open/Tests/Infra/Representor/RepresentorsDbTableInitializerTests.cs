@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Open.Infra.Representor;
 
 namespace Open.Tests.Infra.Representor
 {
@@ -12,7 +13,7 @@ namespace Open.Tests.Infra.Representor
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(RepresentorsDbTableInitializerTests);
+            type = typeof(RepresentorsDbTableInitializer);
         }
 
         [TestMethod]

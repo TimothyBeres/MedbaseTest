@@ -18,7 +18,7 @@ namespace Open.Facade.Person
         private string address;
         private string email;
         private string phone_number;
-        public string nameError = "Nimi võib sisaldada ainult tähti!";
+        private string nameError = "Nimi võib sisaldada ainult tähti!";
 
         [Required(ErrorMessage = Constants.FieldRequired)]
         [DisplayName("Isikukood")]

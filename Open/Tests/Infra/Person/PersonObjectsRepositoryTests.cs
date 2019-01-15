@@ -30,5 +30,11 @@ namespace Open.Tests.Infra.Person
         {
             Assert.Inconclusive();
         }
+
+        [TestMethod]
+        public void GetPersonByIDCodeTest()
+        {
+            Assert.Inconclusive();
+        }
     }
 }
