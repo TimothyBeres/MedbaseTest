@@ -36,5 +36,25 @@ namespace Open.Tests.Data.Person
         {
             testReadWriteProperty(() => obj.LastName, x => obj.LastName = x);
         }
+        [TestMethod]
+        public void AddressTest()
+        {
+            testReadWriteProperty(() => obj.Address, x => obj.Address = x);
+        }
+        [TestMethod]
+        public void EmailTest()
+        {
+            testReadWriteProperty(() => obj.Email, x => obj.Email = x);
+        }
+        [TestMethod]
+        public void PhoneNumberTest()
+        {
+            testReadWriteProperty(() => obj.PhoneNumber, x => obj.PhoneNumber = x);
+        }
+        [TestMethod]
+        public void GetMedicineInfoTest()
+        {
+            testReadWriteProperty(() => obj.GetMedicineInfo, x => obj.GetMedicineInfo = x);
+        }
     }
 }

@@ -83,7 +83,7 @@
     <Compile Include="Process\IDosageObjectsRepository.cs" />
     <Compile Include="Process\ISchemeObjectsrepository.cs" />
     <Compile Include="Process\SchemeObject.cs" />
-    <Compile Include="Process\SchemeObjectsFactory.cs" />
+    <Compile Include="Process\SchemeObjectFactory.cs" />
     <Compile Include="Process\SchemeObjectsList.cs" />
     <Compile Include="Product\IMedicineObjectsRepository.cs" />
     <Compile Include="Product\IMedicineEffectsObjectsRepository.cs" />

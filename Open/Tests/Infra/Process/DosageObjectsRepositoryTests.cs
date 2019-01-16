@@ -1,22 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Open.Infra.Person;
+using Open.Infra.Process;
 
-namespace Open.Tests.Infra.Person
+namespace Open.Tests.Infra.Process
 {
     [TestClass]
-    public class PersonObjectsRepositoryTests : BaseTests
+    public class DosageObjectsRepositoryTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(PersonObjectsRepository);
-        }
-
-        [TestMethod]
-        public void CanCreate()
-        {
-            Assert.IsNotNull(new PersonObjectsRepository(null));
+            type = typeof(DosageObjectsRepository);
         }
 
         [TestMethod]
@@ -32,7 +26,7 @@ namespace Open.Tests.Infra.Person
         }
 
         [TestMethod]
-        public void GetPersonByIDCodeTest()
+        public void GetAllDosagesTest()
         {
             Assert.Inconclusive();
         }

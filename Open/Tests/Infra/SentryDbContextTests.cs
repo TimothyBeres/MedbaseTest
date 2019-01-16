@@ -9,6 +9,7 @@ using Open.Data.Location;
 using Open.Data.Money;
 using Open.Data.Person;
 using Open.Data.Product;
+using Open.Data.Representor;
 using Open.Infra;
 using Open.Tests.Infra.Location;
 
@@ -115,6 +116,30 @@ namespace Open.Tests.Infra
         }
 
         [TestMethod]
+        public void DosagesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void SchemesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void RepresentorsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void MedicineRepresentorsTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
         public void CreateAddressTableTest()
         {
             var set = new ConventionSet();
@@ -157,6 +182,15 @@ namespace Open.Tests.Infra
             var mb = new ModelBuilder(set);
             SentryDbContext.CreatePersonMedicinesTable(mb);
             testHasPersonMedicinesEntities(mb);
+        }
+
+        [TestMethod]
+        public void CreateMedicineRepresentorsTableTest()
+        {
+            var set = new ConventionSet();
+            var mb = new ModelBuilder(set);
+            SentryDbContext.CreateMedicineRepresentorsTable(mb);
+            testHasMedicineRepresentorsEntities(mb);
         }
 
         [TestMethod]
@@ -221,6 +255,18 @@ namespace Open.Tests.Infra
             testPrimaryKey(entity, personID, medicineID);
             testForeignKey(entity, personID, typeof(PersonDbRecord));
             testForeignKey(entity, medicineID, typeof(MedicineDbRecord));
+        }
+
+        private static void testHasMedicineRepresentorsEntities(ModelBuilder mb)
+        {
+            testEntity<MedicineDbRecord>(mb);
+            testEntity<RepresentorDbRecord>(mb);
+            var entity = testEntity<MedicineRepresentorDbRecord>(mb, true, 2);
+            var medicineID = GetMember.Name<MedicineRepresentorDbRecord>(x => x.MedicineID);
+            var representorID = GetMember.Name<MedicineRepresentorDbRecord>(x => x.RepresentorID);
+            testPrimaryKey(entity, medicineID, representorID);
+            testForeignKey(entity, medicineID, typeof(MedicineDbRecord));
+            testForeignKey(entity, representorID, typeof(RepresentorDbRecord));
         }
 
         private static void testHasAddressEntities(ModelBuilder mb)

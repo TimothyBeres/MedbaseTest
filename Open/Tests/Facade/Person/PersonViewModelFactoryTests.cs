@@ -26,6 +26,10 @@ namespace Open.Tests.Facade.Person
             Assert.AreEqual(v.IDCode, o.DbRecord.IDCode);
             Assert.AreEqual(v.FirstName, o.DbRecord.FirstName);
             Assert.AreEqual(v.LastName, o.DbRecord.LastName);
+            Assert.AreEqual(v.Address, o.DbRecord.Address);
+            Assert.AreEqual(v.Email, o.DbRecord.Email);
+            Assert.AreEqual(v.PhoneNumber, o.DbRecord.PhoneNumber);
+            Assert.AreEqual(v.GetMedicineInfo, o.DbRecord.GetMedicineInfo);
             Assert.AreEqual(v.ValidFrom, o.DbRecord.ValidFrom);
             Assert.AreEqual(v.ValidTo, o.DbRecord.ValidTo);
         }
@@ -38,6 +42,10 @@ namespace Open.Tests.Facade.Person
             Assert.AreEqual(v.IDCode, Constants.Unspecified);
             Assert.AreEqual(v.FirstName, Constants.Unspecified);
             Assert.AreEqual(v.LastName, Constants.Unspecified);
+            Assert.AreEqual(v.Address, Constants.Unspecified);
+            Assert.AreEqual(v.Email, Constants.Unspecified);
+            Assert.AreEqual(v.PhoneNumber, Constants.Unspecified);
+            Assert.AreEqual(v.GetMedicineInfo, GetMedicineInfo.Teadmata);
             Assert.AreEqual(v.ValidFrom, null);
             Assert.AreEqual(v.ValidTo, null);
         }
@@ -52,6 +60,10 @@ namespace Open.Tests.Facade.Person
             Assert.AreEqual(v.IDCode, o.DbRecord.IDCode);
             Assert.AreEqual(v.FirstName, o.DbRecord.FirstName);
             Assert.AreEqual(v.LastName, o.DbRecord.LastName);
+            Assert.AreEqual(v.Address, o.DbRecord.Address);
+            Assert.AreEqual(v.Email, o.DbRecord.Email);
+            Assert.AreEqual(v.PhoneNumber, o.DbRecord.PhoneNumber);
+            Assert.AreEqual(v.GetMedicineInfo, o.DbRecord.GetMedicineInfo);
             Assert.AreEqual(v.ValidFrom, null);
             Assert.AreEqual(v.ValidTo, null);
         }

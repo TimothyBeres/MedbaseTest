@@ -1,22 +1,22 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Open.Infra.Person;
+using Open.Infra.Process;
 
-namespace Open.Tests.Infra.Person
+namespace Open.Tests.Infra.Process
 {
     [TestClass]
-    public class PersonObjectsRepositoryTests : BaseTests
+    public class SchemeObjectsRepositoryTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(PersonObjectsRepository);
+            type = typeof(SchemeObjectsRepository);
         }
 
         [TestMethod]
         public void CanCreate()
         {
-            Assert.IsNotNull(new PersonObjectsRepository(null));
+            Assert.IsNotNull(new SchemeObjectsRepository(null));
         }
 
         [TestMethod]
@@ -32,7 +32,13 @@ namespace Open.Tests.Infra.Person
         }
 
         [TestMethod]
-        public void GetPersonByIDCodeTest()
+        public void LoadSchemesTest()
+        {
+            Assert.Inconclusive();
+        }
+
+        [TestMethod]
+        public void GetSchemesByDosageIDTest()
         {
             Assert.Inconclusive();
         }

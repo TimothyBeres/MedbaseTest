@@ -30,5 +30,14 @@ namespace Open.Tests.Infra.Person
 
         [TestMethod]
         public void LoadCurrenciesTest() { Assert.Inconclusive(); }
+
+        [TestMethod]
+        public void FindObjectsTest() { Assert.Inconclusive(); }
+
+        [TestMethod]
+        public void LoadMedicinesTest() { Assert.Inconclusive(); }
+
+        [TestMethod]
+        public void CanUseMedicineTest() { Assert.Inconclusive(); }
     }
 }

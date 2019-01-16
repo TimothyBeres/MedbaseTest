@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Open.Infra.Representor;
+using Open.Core;
 
-namespace Open.Tests.Infra.Representor
+namespace Open.Tests.Core
 {
     [TestClass]
-    public class RepresentorsDbTableInitializerTests : BaseTests
+    public class EmailSenderTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(RepresentorsDbTableInitializer);
+            type = typeof(EmailSender);
         }
 
         [TestMethod]
-        public void InitializeTest()
+        public void SendTest()
         {
             Assert.Inconclusive();
         }

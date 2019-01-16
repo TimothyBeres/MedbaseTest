@@ -30,5 +30,11 @@ namespace Open.Tests.Infra.Product
         {
             Assert.Inconclusive();
         }
+
+        [TestMethod]
+        public void GetMedicineTest()
+        {
+            Assert.Inconclusive();
+        }
     }
 }

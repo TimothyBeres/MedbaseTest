@@ -69,6 +69,12 @@ namespace Open.Tests.Facade.Product
         }
 
         [TestMethod]
+        public void EmptyHeaderTest()
+        {
+            testReadWriteProperty(() => obj.EmptyHeader, x => obj.EmptyHeader = x);
+        }
+
+        [TestMethod]
         public void EffectsInMedicineTest()
         {
             Assert.IsInstanceOfType(obj.EffectsInMedicine, typeof(List<EffectViewModel>));

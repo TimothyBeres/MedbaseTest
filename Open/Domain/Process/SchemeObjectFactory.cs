@@ -3,7 +3,7 @@ using Open.Data.Process;
 
 namespace Open.Domain.Process
 {
-    public static class SchemeObjectsFactory
+    public static class SchemeObjectFactory
     {
         public static SchemeObject Create(string id, string dosageId, string queueNr, string length, 
             string amount, string times, string timeOfDay, DateTime? validFrom = null,

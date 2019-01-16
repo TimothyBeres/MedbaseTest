@@ -2,22 +2,28 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Open.Infra.Representor;
+using Open.Aids;
+using Open.Facade.Person;
 
-namespace Open.Tests.Infra.Representor
+namespace Open.Tests.Facade.Person
 {
     [TestClass]
-    public class RepresentorsDbTableInitializerTests : BaseTests
+    public class PersonInfoViewModelFactoryTests : BaseTests
     {
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            type = typeof(RepresentorsDbTableInitializer);
+            type = typeof(PersonInfoViewModelFactory);
         }
 
         [TestMethod]
-        public void InitializeTest()
+        public void CreateTest()
+        {
+            Assert.Inconclusive();
+        }
+        [TestMethod]
+        public void SetNullIfExtremumTest()
         {
             Assert.Inconclusive();
         }
