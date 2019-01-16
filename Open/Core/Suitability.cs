@@ -2,8 +2,8 @@
 {
     public enum Suitability
     {
-        Ei = 0,
+        Teadmata = 0,
         Jah = 1,
-        Teadmata = 2
+        Ei = 2
     }
 }

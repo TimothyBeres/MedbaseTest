@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Azure.KeyVault.Models;
 using Open.Core;
 using Open.Data.Product;
 using Open.Data.Person;
@@ -28,6 +31,8 @@ namespace Open.Sentry1.Controllers
         private readonly IPersonMedicineObjectsRepository personMedicines;
         private readonly IDosageObjectsRepository dosages;
         private readonly ISchemeObjectsRepository schemes;
+        private readonly IEffectObjectsRepository effects;
+        private readonly IMedicineEffectsObjectsRepository medEffects;
         public const string properties = "ID, IDCode, FirstName, LastName, ValidFrom, ValidTo";
         internal const string sugProperties =
             "ID, MedicineID, TypeOfTreatment, Length, Amount, Times, TimeOfDay, UsedMedicine, ValidFrom, ValidTo";
@@ -36,13 +41,15 @@ namespace Open.Sentry1.Controllers
             "ID, MedicineID, DosageID, Suitability, MedicineName, FormOfInjection";
 
         public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IMedicineObjectsRepository m,
-            IDosageObjectsRepository d, ISchemeObjectsRepository s)
+            IDosageObjectsRepository d, ISchemeObjectsRepository s, IEffectObjectsRepository e, IMedicineEffectsObjectsRepository me)
         {
             persons = p;
             personMedicines = pm;
             medicines = m;
             dosages = d;
             schemes = s;
+            effects = e;
+            medEffects = me;
         }
 
         public IActionResult Index()
@@ -145,7 +152,7 @@ namespace Open.Sentry1.Controllers
             //await dosages.UpdateObject(dosObj);
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
         }
-        private Func<MedicineDbRecord, object> getSortFunction(string sortOrder)
+        private Func<MedicineDbRecord, object> getSortFunctionMedicine(string sortOrder)
         {
             if (string.IsNullOrWhiteSpace(sortOrder)) return x => x.Name;
             if (sortOrder.StartsWith("validTo")) return x => x.ValidTo;
@@ -161,10 +168,24 @@ namespace Open.Sentry1.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
+        public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s, string medicineId, string button)
         {
             Suitability suitable;
+            var perObj = await persons.GetPersonByIDCode(s.ID);
+            if (button!="prior")
+            {
+                bool suitableMed = await CheckMedicineSuitability(perObj.DbRecord.ID, s.MedicineID);
+                if (!suitableMed)
+                {
+                    var messageContent = await FindConflict(perObj.DbRecord.ID, s.MedicineID);
+                    ViewBag.Dictionary = messageContent;
+                    ModelState.AddModelError(string.Empty, "");
+                    ViewBag.AfterError = true;
+                    await SetPropertiesMedicine(s.ID);
+                }
+            }          
             if (!ModelState.IsValid) return View(s);
+            
             if (medicineId.Length == 11)
             {
                 var tempId = medicineId;
@@ -175,7 +196,7 @@ namespace Open.Sentry1.Controllers
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
-            var perObj = await persons.GetPersonByIDCode(s.ID);
+            
             var medObj = await medicines.GetObject(medicineId);
             var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate, untilDate);
             var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
@@ -192,6 +213,7 @@ namespace Open.Sentry1.Controllers
             await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));
             await dosages.AddObject(dosage);
             await schemes.AddObject(scheme);
+            
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
         }
         public async Task<IActionResult> DosageScheme(string id,
@@ -206,27 +228,21 @@ namespace Open.Sentry1.Controllers
             medicines.SearchString = searchString;
             medicines.PageIndex = page ?? 1;
             medicines.PageSize = 1000000;
-            var meds = new MedicineViewModelsList(null);
-            if (!string.IsNullOrWhiteSpace(searchString))
-                meds = new MedicineViewModelsList(await medicines.GetObjectsList());
-            var dosagesSch = SuggestionViewModelFactory.Create(id);
-            if (medId != null)
-            {
-                dosagesSch.UsedMedicine = MedicineViewModelFactory.Create(await medicines.GetObject(medId));
-                meds.RemoveAll(x => x.ID == medId);
-                dosagesSch.MedicineID = medId;
-            }
+            //var meds = new MedicineViewModelsList(null);
+            //if (!string.IsNullOrWhiteSpace(searchString))
+            //    meds = new MedicineViewModelsList(await medicines.GetObjectsList());
             
-            var l = await medicines.GetObjectsList();
-            //ViewBag.Medicines = meds;
-            ViewBag.Medicines = l.Select(x => new SelectListItem {
-                Value = x.DbRecord.ID,
-                Text = x.DbRecord.Name
-            }).ToList();
-
+            //if (medId != null)
+            //{
+            //    dosagesSch.UsedMedicine = MedicineViewModelFactory.Create(await medicines.GetObject(medId));
+            //    meds.RemoveAll(x => x.ID == medId);
+            //    dosagesSch.MedicineID = medId;
+            //}
+            var dosagesSch = SuggestionViewModelFactory.Create(id);
+            await SetPropertiesMedicine(id);
+            ViewBag.AfterError = false;
             return View(dosagesSch);
         }
-
         public async Task<IActionResult> DosageSchemeMed(string id,
             string currentFilter = null,
             string searchString = null,
@@ -243,36 +259,39 @@ namespace Open.Sentry1.Controllers
             if (!string.IsNullOrWhiteSpace(searchString))
                 pers = new PersonViewModelsList(l);
             var dosagesSch = SuggestionViewModelFactory.Create(id);
-            var medicine = await medicines.GetObject(id);
-            ViewBag.MedicineName = medicine.DbRecord.Name;
-            //ViewBag.Medicines = meds;
-            ViewBag.Persons = l.Select(x => new SelectListItem
-            {
-                Value = x.DbRecord.ID,
-                Text = x.DbRecord.IDCode
-            }).ToList();
-
+            await SetPropertiesPerson(id);
+            ViewBag.AfterError = false;
             return View(dosagesSch);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DosageSchemeMed([Bind(sugProperties)]SuggestionViewModel s, string medicineId)
+        public async Task<IActionResult> DosageSchemeMed([Bind(sugProperties)]SuggestionViewModel s, string personId, string button)
         {
             Suitability suitable;
+            var medicineId = s.ID;
+            var perObj = await persons.GetObject(personId);
+            if (button != "prior")
+            {
+                bool suitableMed = await CheckMedicineSuitability(personId, medicineId);
+                if (!suitableMed)
+                {
+                    var messageContent = await FindConflict(personId, medicineId);
+                    ViewBag.Dictionary = messageContent;
+                    ModelState.AddModelError(string.Empty, "");
+                    ViewBag.AfterError = true;
+                    await SetPropertiesPerson(medicineId);
+                }
+            }
             if (!ModelState.IsValid) return View(s);
-            var tempId = medicineId;
-            medicineId = s.ID;
-            s.ID = tempId;
             
             var currentDate = DateTime.Now;
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
-            var perObj = await persons.GetObject(s.ID);
             var medObj = await medicines.GetObject(medicineId);
-            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, s.ID, medicineId, currentDate, untilDate);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, personId, medicineId, currentDate, untilDate);
             var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
-            var o = await personMedicines.GetObject(medicineId, s.ID);
+            var o = await personMedicines.GetObject(medicineId, personId);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
                 suitable = Suitability.Teadmata;
@@ -327,14 +346,67 @@ namespace Open.Sentry1.Controllers
             EmailSender.Send(person.DbRecord.Email,finalMessage);
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(person));
         }
-        public async Task<IActionResult> RemoveMedicine(string personId, string medicineId)
+
+        public async Task SetPropertiesMedicine(string personIdCode)
         {
-            return RedirectToAction("DosageScheme", new { id = personId });
+            var l = await medicines.GetObjectsList();
+            ViewBag.Medicines = l.Select(x => new SelectListItem
+            {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.Name + ", " + x.DbRecord.FormOfInjection + ", " + x.DbRecord.Strength
+            }).ToList();
+            var perObj = await persons.GetPersonByIDCode(personIdCode);
+            ViewBag.PatientName = perObj.DbRecord.FirstName + " " + perObj.DbRecord.LastName;
         }
 
-        public async Task<IActionResult> AddMedicine(string personId, string medicineId)
+        public async Task SetPropertiesPerson(string medicineId)
         {
-            return RedirectToAction("DosageScheme", new { id = personId, medId = medicineId });
+            var l = await persons.GetObjectsList();
+            ViewBag.Persons = l.Select(x => new SelectListItem
+            {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.IDCode + ", " + x.DbRecord.FirstName + " " + x.DbRecord.LastName
+            }).ToList();
+            var medicine = await medicines.GetObject(medicineId);
+            ViewBag.MedicineName = medicine.DbRecord.Name;
+        }
+
+        public async Task<bool> CheckMedicineSuitability(string personId, string medicineId)
+        {
+            try
+            {
+                var personMed = await personMedicines.GetObject(medicineId, personId);
+                if (personMed.DbRecord.Suitability == Suitability.Ei)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return true;
+            }
+        }
+        public async Task<Dictionary<string,string>> FindConflict(string personId, string medicineId)
+        {
+            Dictionary<string,string> dict = new Dictionary<string, string>();
+            var personMed = await personMedicines.GetObject(medicineId, personId);
+            var validFrom = personMed.DbRecord.ValidFrom;
+            var medicine = await medicines.GetObject(medicineId);
+            await medEffects.LoadEffects(medicine);
+            string effectsInMed = "";
+            effectsInMed += medicine.EffectsInMedicines[0].DbRecord.Name;
+            if (medicine.EffectsInMedicines.Count > 1)
+            {
+                for (int i = 1; i < medicine.EffectsInMedicines.Count; i++)
+                {
+                    effectsInMed += ", " + medicine.EffectsInMedicines[i].DbRecord.Name;
+                }
+            }
+            dict["MedicineName"] = medicine.DbRecord.Name;
+            dict["Effects"] = effectsInMed;
+            dict["DateAssigned"] = validFrom.ToString();
+            return dict;
         }
     }
 }

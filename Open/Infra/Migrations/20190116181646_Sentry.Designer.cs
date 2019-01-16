@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-
+using Open.Infra;
 
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20190102194053_Medicines")]
-    partial class Medicines
+    [Migration("20190116181646_Sentry")]
+    partial class Sentry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,7 +150,7 @@ namespace Open.Infra.Migrations
 
                     b.Property<string>("MedicineID");
 
-                    b.Property<string>("SuitableForPerson");
+                    b.Property<int>("Suitability");
 
                     b.Property<DateTime>("ValidFrom");
 
@@ -167,6 +167,8 @@ namespace Open.Infra.Migrations
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("MedicineID");
 

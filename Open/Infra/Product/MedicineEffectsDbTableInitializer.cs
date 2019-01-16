@@ -12,19 +12,19 @@ namespace Open.Infra.Product
             if (c.MedicineEffects.Any()) return;
 
             
-            foreach (var a in c.Medicines)
-            {
-                foreach (var p in c.Effects)
-                {
-                    var x = new MedicineEffectsDbRecord()
-                    {
-                        EffectID = p.ID,
-                        MedicineID = a.ID,
-                    };
-                    c.MedicineEffects.Add(x);
-                }
+            //foreach (var a in c.Medicines)
+            //{
+            //    foreach (var p in c.Effects)
+            //    {
+            //        var x = new MedicineEffectsDbRecord()
+            //        {
+            //            EffectID = p.ID,
+            //            MedicineID = a.ID,
+            //        };
+            //        c.MedicineEffects.Add(x);
+            //    }
 
-            }
+            //}
             c.SaveChanges();
 
         }

@@ -138,10 +138,11 @@ namespace Sentry1.Services
             else
             {
                 string newQuery = "SELECT ID FROM[Effect] WHERE([Name] = @Name)";
-                using (SqlCommand get_effect = new SqlCommand(query, connection))
+                using (SqlCommand get_effect = new SqlCommand(newQuery, connection))
                 {
-                    get_effect.Parameters.AddWithValue("@Name", med.Effects.Replace("\"", ""));
-                    Guid returnedId = (Guid)get_effect.ExecuteScalar();
+                    get_effect.Parameters.AddWithValue("@Name", name);
+                    var stringId = get_effect.ExecuteScalar().ToString();
+                    Guid returnedId = Guid.Parse(stringId);
                     return returnedId;
                 }
             }

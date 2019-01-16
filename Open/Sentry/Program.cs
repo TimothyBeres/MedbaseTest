@@ -29,8 +29,7 @@ namespace Open.Sentry1
 
                     DbTablesInitializer.Initialize(dbContext);
                     //CsvImporter.ClearMedicinesAndEffects();
-                    //EmailSender.Send("beres.timothy@gmail.com", "saki tulli");
-                   // CsvImporter.Importer(dbContext);
+                    CsvImporter.Importer(dbContext);
 
                 }
                 catch (Exception ex)

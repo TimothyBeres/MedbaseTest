@@ -1,21 +1,50 @@
 ﻿@model Open.Facade.Process.SuggestionViewModel
 @using System.Collections
+@using Open.Core
 @using Open.Facade.Product
+@using Open.Sentry1.Controllers
 @using Open.Sentry1.Extensions
 @{
     ViewBag.Title = "Lisa soovitus";
     ViewBag.Button = "Lisa";
     Layout = "_EditPartial";
+    string medicineName = "", dateAssigned = "", effects = "";
+    Dictionary<string, string> dict = ViewBag.Dictionary;
+    var afterError = ViewBag.AfterError;
+    var modalHeader = "Teadaolevad vastunäidistused puuduvad";
+    var suitability = "Suitable";
+    var priority=false;
+
+    if (afterError)
+    {
+        suitability = "NotSuitable";
+        modalHeader = "Hoiatus!";
+        medicineName = dict["MedicineName"];
+        dateAssigned = dict["DateAssigned"];
+        effects = dict["Effects"];
+
+    }
     var medicines = ViewBag.Medicines as IEnumerable<SelectListItem>;
-    //var medicines = ViewBag.Medicines as MedicineViewModelsList ?? new MedicineViewModelsList(null);
     //var prevDisabled = !medicines.HasPreviousPage ? "disabled" : "";
     //var nextDisabled = !medicines.HasNextPage ? "disabled" : "";
 }
 <div align="center">
     <b>
-        Soovitus patsiendile isikukoodiga: @Model.ID
+        Soovitus patsiendile: @ViewBag.PatientName
     </b>
 </div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@if (afterError)
+{
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#loginModal').modal('show');
+        });
+    </script>
+}
+
 
 <body>
     <div class="form-group">
@@ -23,55 +52,8 @@
             <div class="form-horizontal" align="right">
                 <b>Lisa ravim: </b>@Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class = "selectpicker" })
             </div>
-
-            @*<table class="table">
-                    @{ var r = Model.UsedMedicine; }
-                    <thead>
-                        <tr>
-                            <th>@Html.LabelFor(x => r.Name)</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (r != null)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(x => r.Name)</td>
-                                <td>@Html.ActionLink("Remove", "RemoveMedicine")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="form-horizontal">
-                    <p>
-                        <a asp-action="DosageScheme"
-                           asp-route-page="@(medicines.PageIndex - 1)"
-                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="btn btn-default @prevDisabled"><</a>
-                        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" formmethod="get" />
-                        <input type="submit" value="Find" class="btn btn-default" formmethod="get" />
-                        <a asp-action="DosageScheme"
-                           asp-route-page="@(medicines.PageIndex + 1)"
-                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                           class="btn btn-default @nextDisabled">></a>
-                    </p>
-                </div>
-                    <table class="table">
-                    <tbody>
-                        @foreach (var item in medicines)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(x => item.Name)</td>
-                                <td>@Html.ActionLink("Add", "AddMedicine", new { personId = Model.ID, medicineId = item.ID })</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>*@
         </div>
     </div>
-
-
-
 
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.MedicineID)
@@ -84,7 +66,67 @@
     @Html.EditingControlsFor(model => model.ValidTo)
 </body>
 @section Actions
-    {@Html.ActionLink("Tagasi", "Index")}
+    {@Html.ActionLink("Tagasi", "PatientInfo", new {IDCode = Model.ID})}
 
+
+
+<style type="text/css">
+    .Suitable {
+        color: green;
+    }
+
+    .NotSuitable {
+        color: red;
+    }
+</style>
+
+<div>
+    <fieldset>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    @*<button id="btnShowModal" type="button"
+                            class="btn btn-sm btn-default pull-left col-lg-11 button button4">
+                        Ava modal
+                    </button>*@
+                    <div class="modal fade" tabindex="-1" id="loginModal"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        ×
+                                    </button>
+                                    <h4 class="modal-title @suitability" class="">@modalHeader</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @{
+                                        if (afterError)
+                                        {
+                                            <p>Antud ravim ei pruugi sellele patsiendile sobida eelneva probleemi tõttu:</p>
+                                            <p>Ravimi nimi: @medicineName</p>
+                                            <p>Tomeained ravimis: @effects</p>
+                                            <p>Soovituse tegemise kuupäev: @dateAssigned</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Võite jätkata soovituse kinnitamisega</p>
+                                        }
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="sumbit" name="button" value="prior" class="btn btn-primary button button4">Kinnita soovitus</button>
+                                    <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                                        Katkesta
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
 
 

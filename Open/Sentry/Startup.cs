@@ -41,6 +41,7 @@ namespace Open.Sentry1
             setAuthentication(services);
             services.AddTransient<IEmailSender, EmailSender>();
             setMvcWithAntyFoggeryToken(services);
+            services.AddNodeServices();
             services.AddScoped<ICountryObjectsRepository, CountryObjectsRepository>();
             services.AddScoped<ICurrencyObjectsRepository, CurrencyObjectsRepository>();
             services.AddScoped<ICountryCurrencyObjectsRepository, CountryCurrencyObjectsRepository>();
@@ -86,6 +87,7 @@ namespace Open.Sentry1
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
 
         protected virtual void setErrorPage(IApplicationBuilder app, IHostingEnvironment env)

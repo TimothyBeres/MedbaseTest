@@ -125,7 +125,10 @@ namespace Open.Sentry1.Controllers
         {
             return (await repository.GetObject(id))?.DbRecord?.ID == id;
         }
-
+        public ActionResult ModalPopUp()
+        {
+            return View();
+        }
         private static string idIsInUseMessage(string id)
         {
             var name = GetMember.DisplayName<CountryViewModel>(c => c.Alpha3Code);
