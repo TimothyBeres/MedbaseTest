@@ -290,7 +290,7 @@ namespace Open.Sentry1.Controllers
             var schemeId = Guid.NewGuid().ToString();
             var medObj = await medicines.GetObject(medicineId);
             var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, personId, medicineId, currentDate, untilDate);
-            var scheme = SchemeObjectsFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
+            var scheme = SchemeObjectFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
             var o = await personMedicines.GetObject(medicineId, personId);
             if (o.DbRecord.MedicineID == "Unspecified")
             {
