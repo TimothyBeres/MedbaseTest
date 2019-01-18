@@ -228,16 +228,6 @@ namespace Open.Sentry1.Controllers
             medicines.SearchString = searchString;
             medicines.PageIndex = page ?? 1;
             medicines.PageSize = 1000000;
-            //var meds = new MedicineViewModelsList(null);
-            //if (!string.IsNullOrWhiteSpace(searchString))
-            //    meds = new MedicineViewModelsList(await medicines.GetObjectsList());
-            
-            //if (medId != null)
-            //{
-            //    dosagesSch.UsedMedicine = MedicineViewModelFactory.Create(await medicines.GetObject(medId));
-            //    meds.RemoveAll(x => x.ID == medId);
-            //    dosagesSch.MedicineID = medId;
-            //}
             var dosagesSch = SuggestionViewModelFactory.Create(id);
             await SetPropertiesMedicine(id);
             ViewBag.AfterError = false;
