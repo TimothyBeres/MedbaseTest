@@ -70,7 +70,7 @@ namespace Open.Sentry1.Controllers
                 {
                     persona = await persons.GetPersonByIDCode(idCode);
                 }
-                
+
 
                 await personMedicines.LoadMedicines(persona);
                 var personView = PersonViewModelFactory.Create(persona);
@@ -142,7 +142,7 @@ namespace Open.Sentry1.Controllers
             var perObj = await persons.GetObject(c.ID);
             var dosObj = await dosages.GetObject(c.DosageID);
             dosObj.DbRecord.Description = c.Description;
-            
+
             if (personMed.DbRecord.Suitability != c.Suitability)
             {
                 await personMedicines.DeleteObject(personMed);
@@ -172,20 +172,21 @@ namespace Open.Sentry1.Controllers
         {
             Suitability suitable;
             var perObj = await persons.GetPersonByIDCode(s.ID);
-            if (button!="prior")
+            if (button != "prior")
             {
-                bool suitableMed = await CheckMedicineSuitability(perObj.DbRecord.ID, s.MedicineID);
+                bool suitableMed = await CheckMedicineSuitability(perObj.DbRecord.ID, medicineId);
                 if (!suitableMed)
                 {
-                    var messageContent = await FindConflict(perObj.DbRecord.ID, s.MedicineID);
+                    var messageContent = await FindConflict(perObj.DbRecord.ID, medicineId);
                     ViewBag.Dictionary = messageContent;
                     ModelState.AddModelError(string.Empty, "");
                     ViewBag.AfterError = true;
                     await SetPropertiesMedicine(s.ID);
+                    ViewBag.DefaultMedicine = s.MedicineID;
                 }
-            }          
+            }
             if (!ModelState.IsValid) return View(s);
-            
+
             if (medicineId.Length == 11)
             {
                 var tempId = medicineId;
@@ -196,9 +197,9 @@ namespace Open.Sentry1.Controllers
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
-            
+
             var medObj = await medicines.GetObject(medicineId);
-            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID,s.MedicineID, currentDate, untilDate);
+            var dosage = DosageObjectFactory.Create(dosageId, s.TypeOfTreatment, perObj.DbRecord.ID, s.MedicineID, currentDate, untilDate);
             var scheme = SchemeObjectFactory.Create(schemeId, dosageId, "1", s.Length, s.Amount, s.Times, s.TimeOfDay, currentDate, untilDate);
             var o = await personMedicines.GetObject(medicineId, perObj.DbRecord.ID);
             if (o.DbRecord.MedicineID == "Unspecified")
@@ -213,7 +214,7 @@ namespace Open.Sentry1.Controllers
             await personMedicines.AddObject(PersonMedicineObjectFactory.Create(perObj, medObj, suitable, currentDate));
             await dosages.AddObject(dosage);
             await schemes.AddObject(scheme);
-            
+
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
         }
         public async Task<IActionResult> DosageScheme(string id,
@@ -227,7 +228,16 @@ namespace Open.Sentry1.Controllers
             ViewData["CurrentFilter"] = searchString;
             medicines.SearchString = searchString;
             medicines.PageIndex = page ?? 1;
-            medicines.PageSize = 1000000;
+            //var meds = new MedicineViewModelsList(null);
+            //if (!string.IsNullOrWhiteSpace(searchString))
+            //    meds = new MedicineViewModelsList(await medicines.GetObjectsList());
+
+            //if (medId != null)
+            //{
+            //    dosagesSch.UsedMedicine = MedicineViewModelFactory.Create(await medicines.GetObject(medId));
+            //    meds.RemoveAll(x => x.ID == medId);
+            //    dosagesSch.MedicineID = medId;
+            //}
             var dosagesSch = SuggestionViewModelFactory.Create(id);
             await SetPropertiesMedicine(id);
             ViewBag.AfterError = false;
@@ -273,7 +283,7 @@ namespace Open.Sentry1.Controllers
                 }
             }
             if (!ModelState.IsValid) return View(s);
-            
+
             var currentDate = DateTime.Now;
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
@@ -305,7 +315,7 @@ namespace Open.Sentry1.Controllers
             await schemes.LoadSchemes(dosage);
             var schems = dosage.SchemesInUse;
             var scheme = schems[0];
-            char[] males = new[] {'1', '3', '5', '7', '9'};
+            char[] males = new[] { '1', '3', '5', '7', '9' };
             char[] females = new[] { '2', '4', '6', '8', '0' };
             string sex;
             if (males.Contains(person.DbRecord.IDCode[0]))
@@ -317,9 +327,9 @@ namespace Open.Sentry1.Controllers
                 sex = "preili/proua";
             }
 
-            string header = "Tervist lp " + sex + " " + person.DbRecord.LastName+"@"+"@";
+            string header = "Tervist lp " + sex + " " + person.DbRecord.LastName + "@" + "@";
             string suggestion = "Siin on teile kirjutatud soovitus Dr. Mardna poolt kuupäeval: " + c.ValidFrom +
-                                "@" +"Isikukood : "+ person.DbRecord.IDCode +
+                                "@" + "Isikukood : " + person.DbRecord.IDCode +
                                 "@" + "Eesnimi : " + person.DbRecord.FirstName +
                                 "@" + "Perekonnanimi : " + person.DbRecord.LastName +
                                 "@" + "Ravimi nimi : " + medicine.DbRecord.Name +
@@ -333,12 +343,14 @@ namespace Open.Sentry1.Controllers
                                 "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay;
             string finalMessage = header + suggestion;
             finalMessage = finalMessage.Replace("@", System.Environment.NewLine);
-            EmailSender.Send(person.DbRecord.Email,finalMessage);
+            EmailSender.Send(person.DbRecord.Email, finalMessage);
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(person));
         }
 
         public async Task SetPropertiesMedicine(string personIdCode)
         {
+
+            medicines.PageSize = 1000000;
             var l = await medicines.GetObjectsList();
             ViewBag.Medicines = l.Select(x => new SelectListItem
             {
@@ -377,9 +389,9 @@ namespace Open.Sentry1.Controllers
                 return true;
             }
         }
-        public async Task<Dictionary<string,string>> FindConflict(string personId, string medicineId)
+        public async Task<Dictionary<string, string>> FindConflict(string personId, string medicineId)
         {
-            Dictionary<string,string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
             var personMed = await personMedicines.GetObject(medicineId, personId);
             var validFrom = personMed.DbRecord.ValidFrom;
             var medicine = await medicines.GetObject(medicineId);
