@@ -31,6 +31,7 @@ namespace Open.Infra.Process
         }
         public async Task<List<DosageObject>> GetAllDosages(string personId)
         {
+
             var allDosages = await GetObjectsList();
             var dosages = allDosages.Where(x => x.DbRecord.PersonID == personId);
             var list = new List<DosageDbRecord>();

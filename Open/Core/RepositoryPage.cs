@@ -4,7 +4,7 @@ namespace Open.Core
 {
     public class RepositoryPage
     {
-        public const int DefaultSize = 10;
+        public const int DefaultSize = 1000000;
 
         public RepositoryPage(int itemsCount, int? pageIndex = null, int? pageSize = null)
         {
