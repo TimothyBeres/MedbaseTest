@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Open.Data.Common.TemporalDbRecord">
+    <Position X="3" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAACAAAAAgAAA=</HashCode>
+      <FileName>Common\TemporalDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Core.RootObject" Collapsed="true">
+    <Position X="4.75" Y="1" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Open.Data.Product.MedicineEffectsDbRecord">
+    <Position X="0.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAACAAgAAAAAAAAAAAAAAAAAAAAAAQAAAAAACAA=</HashCode>
+      <FileName>Product\MedicineEffectsDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

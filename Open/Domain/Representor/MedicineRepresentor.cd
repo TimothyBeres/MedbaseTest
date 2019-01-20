@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Open.Domain.Common.TemporalObject&lt;T&gt;" Collapsed="true">
+    <Position X="2" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\TemporalObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Core.RootObject" Collapsed="true">
+    <Position X="2" Y="0.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Open.Core.PaginatedList&lt;T&gt;" Collapsed="true">
+    <Position X="5" Y="1.5" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Open.Domain.Representor.MedicineRepresentorsObject" Collapsed="true">
+    <Position X="1.5" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Representor\MedicineRepresentorsObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Representor.MedicineRepresentorsObjectFactory" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Representor\MedicineRepresentorsObjectFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Representor.MedicineRepresentorsObjectsList" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Representor\MedicineRepresentorsObjectsList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Open.Domain.Representor.IMedicineRepresentorsObjectsRepository" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAIAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Representor\IMedicineRepresentorObjectsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

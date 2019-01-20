@@ -96,7 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Person\Person.cd" />
+    <None Include="Person\PersonInfo.cd" />
+    <None Include="Process\Suggestion.cd" />
     <None Include="Product.cd" />
+    <None Include="Product\Ask.cd" />
+    <None Include="Product\Effect.cd" />
+    <None Include="Product\Medicine.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
