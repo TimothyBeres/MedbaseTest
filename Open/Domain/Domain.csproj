@@ -111,10 +111,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BaseClasses.cd" />
+    <None Include="Person\Person.cd" />
+    <None Include="Person\PersonMedicine.cd" />
+    <None Include="Process\Dosage.cd" />
+    <None Include="Process\Scheme.cd" />
     <None Include="Product.cd" />
     <None Include="Location.cd" />
     <None Include="Money\MoneyPattern.cd" />
     <None Include="ProductCatalogue.cd" />
+    <None Include="Product\Effect.cd" />
+    <None Include="Product\Medicine.cd" />
+    <None Include="Product\MedicineEffect.cd" />
+    <None Include="Representor\MedicineRepresentor.cd" />
+    <None Include="Representor\Representor.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Inventory\" />

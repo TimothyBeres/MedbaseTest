@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Open.Domain.Product.EffectObject" Collapsed="true">
+    <Position X="1.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Product\EffectObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Product.EffectObjectFactory" Collapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Product\EffectObjectFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Product.EffectObjectsList" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Product\EffectObjectsList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Common.TemporalObject&lt;T&gt;" Collapsed="true">
+    <Position X="3.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\TemporalObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Domain.Common.UniqueObject&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\UniqueObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Core.PaginatedList&lt;T&gt;" Collapsed="true">
+    <Position X="5.75" Y="1.25" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Open.Core.RootObject" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="Open.Domain.Product.IEffectObjectsRepository" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Product\IEffectObjectsRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
