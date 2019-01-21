@@ -328,6 +328,15 @@ namespace Open.Sentry1.Controllers
                 sex = "preili/proua";
             }
 
+            string link;
+            if (medicine.DbRecord.Spc.Contains("http"))
+            {
+                link = medicine.DbRecord.Spc;
+            }
+            else
+            {
+                link= "http://ravimiregister.ravimiamet.ee/Data/SPC/" + medicine.DbRecord.Spc;
+            }
             string header = "Tervist lp " + sex + " " + person.DbRecord.LastName + "@" + "@";
             string suggestion = "Siin on teile kirjutatud soovitus Dr. Mardna poolt kuupäeval: " + c.ValidFrom +
                                 "@" + "Isikukood : " + person.DbRecord.IDCode +
@@ -341,7 +350,8 @@ namespace Open.Sentry1.Controllers
                                 "@" + "Ravikuuri pikkus : " + scheme.DbRecord.Length +
                                 "@" + "Ravimit manustada ühe korraga : " + scheme.DbRecord.Amount +
                                 "@" + "Ravimit manustada kordi päevas : " + scheme.DbRecord.Times +
-                                "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay;
+                                "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay +
+                                "@" + "Lisainfot ravimi kohta leiad: " + link;
             string finalMessage = header + suggestion;
             finalMessage = finalMessage.Replace("@", System.Environment.NewLine);
             EmailSender.Send(person.DbRecord.Email, finalMessage);
