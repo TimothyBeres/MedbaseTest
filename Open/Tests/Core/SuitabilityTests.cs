@@ -12,7 +12,7 @@ namespace Open.Tests.Core
         [TestMethod]
         public void EiTest()
         {
-            Assert.AreEqual(0, (int)Suitability.Ei);
+            Assert.AreEqual(2, (int)Suitability.Ei);
         }
         [TestMethod]
         public void JahTest()
@@ -22,7 +22,7 @@ namespace Open.Tests.Core
         [TestMethod]
         public void TeadmataTest()
         {
-            Assert.AreEqual(2, (int)Suitability.Teadmata);
+            Assert.AreEqual(0, (int)Suitability.Teadmata);
         }
     }
 }
