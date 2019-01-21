@@ -12,7 +12,7 @@
     <a asp-action=Create><button class="btn btn-primary">Lisa uus patsient</button></a>
     <br>
     <br>
-    <br><strong>Otsi patsienti isikukoodi järgi:</strong>
+    <br><strong>Otsi patsienti:</strong>
 }
 
 <body>
@@ -31,40 +31,18 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td><button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { IDCode=item.IDCode})'">Soovitused</button></td>
-                    <td>@Html.DisplayFor(modelItem => item.IDCode)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-                    @Html.EditDetailDeleteFor(modelItem => item.ID)
-                    <td><a href="javascript:void(0);" class="anchorDetail" data-id="@item.ID">Details</a></td>
-                </tr>
+            <tr>
+                <td><button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { IDCode=item.IDCode})'">Soovitused</button></td>
+                <td>@Html.DisplayFor(modelItem => item.IDCode)</td>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
+                @Html.EditFor(moelItem => item.ID)
+                @Html.DetailForPerson(modelItem=>item.ID)
+            </tr>
             }
         </tbody>
     </table>
 </body>
 
-@*<form asp-action=@ViewBag.ActionIndex method="get">
-        <div class="form-horizontal">
-            <p>
-                Search for patient (ID Code): <input type="text" name="SearchString" />
-                <br />
-                <button type="button" onclick="location.href='@Url.Action("PatientInfo","Suggestions", new { id_code=Model.IDCode})'">Search</button>
-            </p>
-        </div>
-    </form>*@
-@*<div class="text-danger" style="font-size: large">
-        @ViewBag.Message
-    </div>
 
-    @Html.ValidationMessageFor(model => model.IDCode)
-    @using (Html.BeginForm("Patientinfo", "Suggestions", FormMethod.Post))
-    {
-
-        @Html.TextBoxFor(model => model.IDCode)
-
-        <button type="submit">Otsi</button><br />
-        <br />
-        <button type="button" onclick="location.href='@Url.Action("Create","Persons")'">Lisa patsient</button>
-    }*@

@@ -1,119 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Open.Core.RootObject" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="1.75" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Class Name="Open.Data.Common.TemporalDbRecord">
-    <Position X="5.75" Y="1.5" Width="1.5" />
+    <Position X="9.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAACAAAAAgAAA=</HashCode>
       <FileName>Common\TemporalDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Open.Data.Common.UniqueDbRecord">
-    <Position X="20.25" Y="4.25" Width="1.5" />
+    <Position X="8.25" Y="5.5" Width="1.5" />
+    <InheritanceLine Type="Open.Data.Common.TemporalDbRecord" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="4.819" />
+        <Point X="10.25" Y="5.125" />
+        <Point X="9.125" Y="5.125" />
+        <Point X="9.125" Y="5.5" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Common\UniqueDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Open.Data.Common.IdentifiedDbRecord">
-    <Position X="8.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAgAAQAIAAEAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Common\IdentifiedDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Location.CountryDbRecord" Collapsed="true">
-    <Position X="1" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Location\CountryDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Common.MetricDbRecord" Collapsed="true">
-    <Position X="3.25" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Common\MetricDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Money.CurrencyDbRecord" Collapsed="true">
-    <Position X="1.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Money\CurrencyDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Quantity.MeasureDbRecord" Collapsed="true">
-    <Position X="3.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Quantity\MeasureDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Quantity.UnitDbRecord" Collapsed="true">
-    <Position X="5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Quantity\UnitDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Location.AddressDbRecord" Collapsed="true">
-    <Position X="11" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAIAAQAAAAAAAIAUAACAAAAAAAAAAE=</HashCode>
-      <FileName>Location\AddressDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Open.Data.Person.PersonDbRecord">
-    <Position X="13.25" Y="4" Width="1.5" />
+    <Position X="7" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAFAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAQAg=</HashCode>
+      <HashCode>AAAAAFAAACAAAQCgAAAAQAAAAQIAAAACAAACAAAAQAg=</HashCode>
       <FileName>Person\PersonDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Open.Data.Product.EffectDbRecord">
-    <Position X="15.5" Y="4" Width="1.5" />
+    <Position X="9" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Product\EffectDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Open.Data.Product.MedicineDbRecord">
-    <Position X="17.75" Y="4" Width="1.5" />
+    <Position X="11.25" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAIAAAAAQYAAAACAAQANABEAACAQgAAgAAAAYA=</HashCode>
       <FileName>Product\MedicineDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Open.Data.Location.TelecomDeviceRegistrationDbRecord" Collapsed="true">
-    <Position X="22.5" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAAAABAAAgAAAAAAAAAAAAAAAAACAAAAEEAAAAA=</HashCode>
-      <FileName>Location\TelecomDeviceRegistrationDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Open.Data.Money.CountryCurrencyDbRecord" Collapsed="true">
-    <Position X="24.75" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAABAACAIQAAAAAAAAAAAAAgA=</HashCode>
-      <FileName>Money\CountryCurrencyDbRecord.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Open.Data.Person.PersonMedicineDbRecord">
-    <Position X="27" Y="4.25" Width="1.5" />
+    <Position X="12.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QIAAAAACAAAAAAgAAAAAAAAAAAAAAAAEACAAAAAACAA=</HashCode>
+      <HashCode>QKAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
       <FileName>Person\PersonMedicineDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Open.Data.Product.MedicineEffectsDbRecord">
-    <Position X="29.25" Y="4.25" Width="1.5" />
+    <Position X="14.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAACAAgAAAAAAAAAAAAAAAAAAAAAAQAAAAAACAA=</HashCode>
       <FileName>Product\MedicineEffectsDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Data.Representor.MedicineRepresentorDbRecord">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAABAAAAAAAQAAEAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Representor\MedicineRepresentorDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Data.Representor.RepresentorDbRecord">
+    <Position X="5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAgAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Representor\RepresentorDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Data.Process.DosageDbRecord">
+    <Position X="13.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAACAAAgAAAAIAAAAAAAAAAACAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Process\DosageDbRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Open.Data.Process.SchemeDbRecord">
+    <Position X="15.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAQAAAAEEAAAEDAQgAAgAIAAAAAAEAAAAA=</HashCode>
+      <FileName>Process\SchemeDbRecord.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

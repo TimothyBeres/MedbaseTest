@@ -12,6 +12,7 @@
     var modalHeader = "Teadaolevad vastunäidistused puuduvad";
     var suitability = "Suitable";
     var priority = false;
+    string defaultPerson = ViewBag.DefaultPerson;
 
     if (afterError)
     {
@@ -46,7 +47,7 @@
     <div class="form-group">
         <div class="col-md-4" style="margin-top: 10px">
             <div class="form-horizontal">
-                <b>Lisa patsient(isikukoodi järgi): </b>@Html.DropDownList("personId", new SelectList(persons, "Value", "Text"), new { @class = "selectpicker" })
+                <b>Lisa patsient(isikukoodi järgi): </b>@Html.DropDownList("personId", new SelectList(persons, "Value", "Text",defaultPerson), new { @class = "selectpicker" })
             </div>
         </div>
     </div>
@@ -81,10 +82,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    @*<button id="btnShowModal" type="button"
-                                class="btn btn-sm btn-default pull-left col-lg-11 button button4">
-                            Ava modal
-                        </button>*@
                     <div class="modal fade" tabindex="-1" id="loginModal"
                          data-keyboard="false" data-backdrop="static">
                         <div class="modal-dialog modal-lg">

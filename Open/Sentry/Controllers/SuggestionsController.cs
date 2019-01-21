@@ -280,6 +280,7 @@ namespace Open.Sentry1.Controllers
                     ModelState.AddModelError(string.Empty, "");
                     ViewBag.AfterError = true;
                     await SetPropertiesPerson(medicineId);
+                    ViewBag.DefaultPerson = personId;
                 }
             }
             if (!ModelState.IsValid) return View(s);

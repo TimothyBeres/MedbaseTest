@@ -1,15 +1,17 @@
-﻿@using Open.Sentry1.Extensions
+﻿@using Open.Core
+@using Open.Sentry1.Extensions
 @model Open.Core.IPaginatedList<Open.Facade.Product.MedicineViewModel>
 @{
     ViewBag.Title = "Ravimid";
     Layout = "_IndexPartial";
+    string spcLink="";
 }
 
 @section Create{
     <a asp-action=Create><button class="btn btn-primary">Lisa uus Ravim</button></a>
     <br>
     <br>
-    <br><strong>Otsi ravimit nime järgi:</strong>
+    <br><strong>Otsi ravimit:</strong>
 }
 
 <body>
@@ -34,20 +36,40 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><button type="button" onclick="location.href='@Url.Action("DosageSchemeMed","Suggestions", new { id=item.ID})'">Lisa soovitus</button></td>
+                <td><button type="button" onclick="location.href='@Url.Action("DosageSchemeMed","Suggestions", new { id=item.ID})'">Soovita ravimit</button></td>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 @*<td>@Html.DisplayFor(modelItem => item.AtcCode)</td>*@
                 <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
                 <td>@Html.DisplayFor(modelItem => item.Strength)</td>
                 <td>@Html.DisplayFor(modelItem => item.Manufacturer)</td>
                 <td>@Html.DisplayFor(modelItem => item.LegalStatus)</td>
-                <td>@Html.DisplayFor(modelItem => item.Reimbursement)</td>
-                <td>@Html.DisplayFor(modelItem => item.Spc)</td>
-                <td>@Html.DisplayFor(modelItem => item.Pil)</td>
+                <td>
+                    @if (item.Reimbursement == Constants.Unspecified)
+                    {
+
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Reimbursement)
+                    }
+                </td>
+                <td>
+                    @if (item.Spc.Contains("http"))
+                    {
+                        spcLink = item.Spc;
+                    }
+                    else if(item.Spc.Contains("SPC"))
+                    {
+                        spcLink = "http://ravimiregister.ravimiamet.ee/Data/SPC/" + item.Spc;
+                    }
+                    <a href="@spcLink">Ravimi omaduste kokkuvõte</a>
+                </td>
+                <td></td>
+                @Html.DetailForMedicine(modelItem => item.ID)
+
                 @*<td>@Html.DisplayFor(modelItem => item.ValidFrom)</td>
-                <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>*@
-                @Html.DetailFor(modelItem => item.ID)
-                @*@Html.EditDetailDeleteFor(modelItem => item.ID)*@
+        <td>@Html.DisplayFor(modelItem => item.ValidTo)</td>
+        @Html.EditDetailDeleteFor(modelItem => item.ID)*@
             </tr>
         }
         </tbody>

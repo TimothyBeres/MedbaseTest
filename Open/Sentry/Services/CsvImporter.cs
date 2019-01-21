@@ -15,7 +15,7 @@ namespace Sentry1.Services
     {
         public static void Importer(SentryDbContext c)
         {
-
+            var legalRequirement = "R";
             var engine = new DelimitedFileEngine<MedicineTemplate>();
             //var res = engine.ReadFile("C:\\Users\\ACER\\Desktop\\projekt_ravim\\ravimid_3.csv");
             var res = engine.ReadFile("est_med.csv");
@@ -24,6 +24,11 @@ namespace Sentry1.Services
             foreach (MedicineTemplate med in res)
             {
                 med.ValidFrom = DateTime.Today;
+                //Valmisprogrammis ravimite lisamiseks:
+                //if (med.LegalStatus != legalRequirement)
+                //{
+                //    meds.Add(med);
+                //}
                 meds.Add(med);
             }
             AddMedicines(meds);
