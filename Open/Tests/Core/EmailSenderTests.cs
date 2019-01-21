@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Open.Core;
@@ -19,7 +20,12 @@ namespace Open.Tests.Core
         [TestMethod]
         public void SendTest()
         {
-            Assert.Inconclusive();
+            string email = "test@email.com";
+            string body = "testBody";
+            string subject = "testSubject";
+            MailMessage send = EmailSender.Send(email, body, subject);
+            Assert.IsTrue(send.Body == body);
+            Assert.IsTrue(send.Subject==subject);
         }
     }
 }

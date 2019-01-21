@@ -5,7 +5,7 @@ namespace Open.Core
 {
     public static class EmailSender
     {
-        public static void Send(string address, string body, string subject="Soovitus")
+        public static MailMessage Send(string address, string body, string subject="Soovitus")
         {
             string username = "medbasetest@gmail.com";
             string password = "Qwerty1!123";
@@ -22,6 +22,7 @@ namespace Open.Core
             mailMessage.Body = body;
             mailMessage.Subject = subject;
             client.Send(mailMessage);
+            return mailMessage;
         }
 
         
