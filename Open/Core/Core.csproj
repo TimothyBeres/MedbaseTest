@@ -52,11 +52,13 @@
     <Compile Include="PaginatedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryPage.cs" />
+    <Compile Include="RoleExtensions.cs" />
     <Compile Include="RootObject.cs" />
     <Compile Include="SortOrder.cs" />
     <Compile Include="Suitability.cs" />
     <Compile Include="TelecomDevice.cs" />
     <Compile Include="TypeOfTreatment.cs" />
+    <Compile Include="UserRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aids\Aids.csproj">

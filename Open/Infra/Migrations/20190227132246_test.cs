@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Open.Infra.Migrations
 {
-    public partial class Sentry : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,6 +224,26 @@ namespace Open.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Portfolios",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    MedicineID = table.Column<string>(nullable: false),
+                    UserID = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Portfolios", x => new { x.MedicineID, x.UserID });
+                    table.ForeignKey(
+                        name: "FK_Portfolios_Medicine_MedicineID",
+                        column: x => x.MedicineID,
+                        principalTable: "Medicine",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonMedicines",
                 columns: table => new
                 {
@@ -351,6 +371,9 @@ namespace Open.Infra.Migrations
                 name: "PersonMedicines");
 
             migrationBuilder.DropTable(
+                name: "Portfolios");
+
+            migrationBuilder.DropTable(
                 name: "Scheme");
 
             migrationBuilder.DropTable(
@@ -366,10 +389,10 @@ namespace Open.Infra.Migrations
                 name: "Representor");
 
             migrationBuilder.DropTable(
-                name: "Medicine");
+                name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "Medicine");
 
             migrationBuilder.DropTable(
                 name: "Address");

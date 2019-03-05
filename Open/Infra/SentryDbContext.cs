@@ -40,6 +40,7 @@ namespace Open.Infra
         public DbSet<RepresentorDbRecord> Representors { get; set; }
 
         public DbSet<MedicineRepresentorDbRecord> MedicineRepresentors { get; set; }
+        public DbSet<PortfolioDbRecord> Portfolios { get; set; }
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -57,8 +58,14 @@ namespace Open.Infra
             CreateMedicineEffectsTable(b);
             CreatePersonMedicinesTable(b);
             CreateMedicineRepresentorsTable(b);
+            CreatePortfoliosTable(b);
         }
-
+        public static void CreatePortfoliosTable(ModelBuilder b)
+        {
+            const string table = "Portfolios";
+            createPrimaryKey<PortfolioDbRecord>(b, table, a => new { a.MedicineID, a.UserID });
+            createForeignKey<PortfolioDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
+        }
         public static void CreateCountryCurrencyTable(ModelBuilder b)
         {
             const string table = "CountryCurrency";

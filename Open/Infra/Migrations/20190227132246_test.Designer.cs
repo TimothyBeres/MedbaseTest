@@ -9,8 +9,8 @@ using Open.Infra;
 namespace Open.Infra.Migrations
 {
     [DbContext(typeof(SentryDbContext))]
-    [Migration("20190116205607_Sentry")]
-    partial class Sentry
+    [Migration("20190227132246_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -276,6 +276,21 @@ namespace Open.Infra.Migrations
                     b.ToTable("MedicineEffects");
                 });
 
+            modelBuilder.Entity("Open.Data.Product.PortfolioDbRecord", b =>
+                {
+                    b.Property<string>("MedicineID");
+
+                    b.Property<string>("UserID");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("MedicineID", "UserID");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("Open.Data.Representor.MedicineRepresentorDbRecord", b =>
                 {
                     b.Property<string>("RepresentorID");
@@ -403,6 +418,14 @@ namespace Open.Infra.Migrations
                         .HasForeignKey("EffectID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Product.PortfolioDbRecord", b =>
+                {
                     b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
                         .WithMany()
                         .HasForeignKey("MedicineID")

@@ -88,6 +88,7 @@
     <Compile Include="Product\IMedicineObjectsRepository.cs" />
     <Compile Include="Product\IMedicineEffectsObjectsRepository.cs" />
     <Compile Include="Product\IEffectObjectsRepository.cs" />
+    <Compile Include="Product\IPortfolioObjectsRepository.cs" />
     <Compile Include="Product\MedicineObject.cs" />
     <Compile Include="Product\MedicineObjectFactory.cs" />
     <Compile Include="Product\MedicineObjectsList.cs" />
@@ -97,6 +98,9 @@
     <Compile Include="Product\EffectObject.cs" />
     <Compile Include="Product\EffectObjectFactory.cs" />
     <Compile Include="Product\EffectObjectsList.cs" />
+    <Compile Include="Product\PortfolioObject.cs" />
+    <Compile Include="Product\PortfolioObjectFactory.cs" />
+    <Compile Include="Product\PortfolioObjectsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quantity\MeasureObject.cs" />
     <Compile Include="Quantity\UnitObject.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Representor\RepresentorObject.cs" />
     <Compile Include="Representor\RepresentorObjectFactory.cs" />
     <Compile Include="Representor\RepresentorObjectsList.cs" />
+    <Compile Include="User\IIdentityUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BaseClasses.cd" />

@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using Open.Infra;
 using Open.Infra.Product;
 using Open.Sentry1;
+using PdfToText;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Sentry1.Services
 {
@@ -33,7 +36,23 @@ namespace Sentry1.Services
             }
             AddMedicines(meds);
         }
+        public static void ParsePdf()
+        {
+            PDFParser pdfParser = new PDFParser();
+            string address = @"http://ec.europa.eu/health/documents/community-register/html/h_direct_anx.htm#412_et";
+            string outfile = "outfile.txt";
+            bool result = pdfParser.ExtractText(address, outfile);
+        }   
+        public async static Task DownloadPdf()
+        {
+            //var wc = new System.Net.WebClient();
+            //string url = @"http://ravimiregister.ravimiamet.ee/Data/PIL/PIL_1249006.pdf";
+            //wc.DownloadFile(url, @"c:\Users\ACER\Desktop\myfile2.txt");
 
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("http://ravimiregister.ravimiamet.ee/Data/PIL/PIL_1249006.pdf");
+            var pageContents = await response.Content.ReadAsStringAsync();
+        }
         public static List<string> GetMedicineEffects(MedicineTemplate med)
         {
             List<string> effectsList = new List<string>();

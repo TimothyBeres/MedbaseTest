@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Web;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Azure.KeyVault.Models;
 using Open.Core;
 using Open.Data.Product;
-using Open.Data.Person;
-using Open.Domain.Location;
 using Open.Domain.Person;
 using Open.Domain.Process;
 using Open.Domain.Product;
-using Open.Facade.Location;
-using Open.Facade.Product;
 using Open.Facade.Person;
 using Open.Facade.Process;
 using Sentry1.Models;
@@ -33,6 +26,8 @@ namespace Open.Sentry1.Controllers
         private readonly ISchemeObjectsRepository schemes;
         private readonly IEffectObjectsRepository effects;
         private readonly IMedicineEffectsObjectsRepository medEffects;
+        private readonly IPortfolioObjectsRepository portfolio;
+        private readonly UserManager<ApplicationUser> manager;
         public const string properties = "ID, IDCode, FirstName, LastName, ValidFrom, ValidTo";
         internal const string sugProperties =
             "ID, MedicineID, TypeOfTreatment, Length, Amount, Times, TimeOfDay, UsedMedicine, ValidFrom, ValidTo";
@@ -41,7 +36,8 @@ namespace Open.Sentry1.Controllers
             "ID, MedicineID, DosageID, Suitability, MedicineName, FormOfInjection";
 
         public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IMedicineObjectsRepository m,
-            IDosageObjectsRepository d, ISchemeObjectsRepository s, IEffectObjectsRepository e, IMedicineEffectsObjectsRepository me)
+            IDosageObjectsRepository d, ISchemeObjectsRepository s, IEffectObjectsRepository e, IMedicineEffectsObjectsRepository me,
+            IPortfolioObjectsRepository port, UserManager<ApplicationUser> man)
         {
             persons = p;
             personMedicines = pm;
@@ -50,6 +46,8 @@ namespace Open.Sentry1.Controllers
             schemes = s;
             effects = e;
             medEffects = me;
+            portfolio = port;
+            manager = man;
         }
 
         public IActionResult Index()
@@ -243,6 +241,7 @@ namespace Open.Sentry1.Controllers
             ViewBag.AfterError = false;
             return View(dosagesSch);
         }
+       
         public async Task<IActionResult> DosageSchemeMed(string id,
             string currentFilter = null,
             string searchString = null,
@@ -306,6 +305,14 @@ namespace Open.Sentry1.Controllers
             await dosages.AddObject(dosage);
             await schemes.AddObject(scheme);
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
+        }
+        public async Task<IActionResult> AddMedicineToPortfolio(string id)
+        {
+            var user = await GetCurrentUser();
+
+            var m = await medicines.GetObject(id);
+            await portfolio.AddObject(PortfolioObjectFactory.Create(m, user.Id, DateTime.Now));
+            return View("DosageSchemeMed");
         }
         [HttpPost]
         public async Task<IActionResult> SendEmail(PersonInfoViewModel c)
@@ -420,6 +427,11 @@ namespace Open.Sentry1.Controllers
             dict["Effects"] = effectsInMed;
             dict["DateAssigned"] = validFrom.ToString();
             return dict;
+        }
+
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            return await manager.GetUserAsync(HttpContext.User);
         }
     }
 }

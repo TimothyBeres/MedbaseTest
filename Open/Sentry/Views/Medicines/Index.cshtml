@@ -19,16 +19,17 @@
         @{ var dummy = Model.FirstOrDefault();}
         <thead>
             <tr>
-                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.EmptyHeader)
-                @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
-                @*@Html.SortColumnHeaderFor(ViewData["SortAtcCode"], model => dummy.AtcCode)*@
-                @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
-                @Html.SortColumnHeaderFor(ViewData["SortStrength"], model => dummy.Strength)
-                @Html.SortColumnHeaderFor(ViewData["SortManufacturer"], model => dummy.Manufacturer)
-                @Html.SortColumnHeaderFor(ViewData["SortLegalStatus"], model => dummy.LegalStatus)
-                @Html.SortColumnHeaderFor(ViewData["SortReimbursement"], model => dummy.Reimbursement)
-                @Html.SortColumnHeaderFor(ViewData["SortSpc"], model => dummy.Spc)
-                @Html.SortColumnHeaderFor(ViewData["SortPil"], model => dummy.Pil)
+                <td></td>
+                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.EmptyHeader)
+                    @Html.SortColumnHeaderFor(ViewData["SortName"], model => dummy.Name)
+                    @*@Html.SortColumnHeaderFor(ViewData["SortAtcCode"], model => dummy.AtcCode)*@
+                    @Html.SortColumnHeaderFor(ViewData["SortFormOfInjection"], model => dummy.FormOfInjection)
+                    @Html.SortColumnHeaderFor(ViewData["SortStrength"], model => dummy.Strength)
+                    @Html.SortColumnHeaderFor(ViewData["SortManufacturer"], model => dummy.Manufacturer)
+                    @Html.SortColumnHeaderFor(ViewData["SortLegalStatus"], model => dummy.LegalStatus)
+                    @Html.SortColumnHeaderFor(ViewData["SortReimbursement"], model => dummy.Reimbursement)
+                    @Html.SortColumnHeaderFor(ViewData["SortSpc"], model => dummy.Spc)
+                    @Html.SortColumnHeaderFor(ViewData["SortPil"], model => dummy.Pil)
                 <th></th>
             </tr>
         </thead>
@@ -36,7 +37,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><button type="button" onclick="location.href='@Url.Action("DosageSchemeMed","Suggestions", new { id=item.ID})'">Soovita ravimit</button></td>
+                <td><input type="checkbox" name ="inPortfolio" checked="checked" value="false"></td>
+                <td><button type="button" onclick="location.href = '@Url.Action("DosageSchemeMed", "Suggestions", new {id = item.ID})'">Soovita ravimit</button></td>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 @*<td>@Html.DisplayFor(modelItem => item.AtcCode)</td>*@
                 <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
@@ -58,7 +60,7 @@
                     {
                         spcLink = item.Spc;
                     }
-                    else if(item.Spc.Contains("SPC"))
+                    else if (item.Spc.Contains("SPC"))
                     {
                         spcLink = "http://ravimiregister.ravimiamet.ee/Data/SPC/" + item.Spc;
                     }
