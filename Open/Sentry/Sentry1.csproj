@@ -49,7 +49,6 @@
   <ItemGroup>
     <Folder Include="Scripts\" />
     <Folder Include="Pages\" />
-    <Folder Include="Views\Portfolios\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -55,9 +55,11 @@
         <li><a asp-area="" asp-controller="Currencies" asp-action="Index">Currencies</a></li>
         <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a></li>
                 <li><a asp-area="" asp-controller="Effects" asp-action="Index">Toimeained</a></li>*@
-                <li><a asp-area="" asp-controller="Medicines" asp-action="Index">Ravimid</a></li>
-                @*<li><a asp-area="" asp-controller="Suggestions" asp-action="Index">Soovitused</a></li>*@
                 <li><a asp-area="" asp-controller="Persons" asp-action="Index">Patsiendid</a></li>
+                <li><a asp-area="" asp-controller="Medicines" asp-action="Index">Ravimid</a></li>
+                <li><a asp-area="" asp-controller="Portfolios" asp-action="Index">Isiklik portfell</a></li>
+                @*<li><a asp-area="" asp-controller="Suggestions" asp-action="Index">Soovitused</a></li>*@
+
 
             </ul>
             @await Html.PartialAsync("_LoginPartial")

@@ -14,10 +14,12 @@ namespace Open.Infra.Product
     {
         private readonly DbSet<PortfolioDbRecord> dbSet;
         private readonly DbContext db;
+        private readonly DbSet<MedicineDbRecord> dbSetMedicines;
         public PortfolioObjectsRepository(SentryDbContext c)
         {
             db = c;
             dbSet = c?.Portfolios;
+            dbSetMedicines = c?.Medicines;
         }
         public Task<PortfolioObject> GetObject(string id)
         {
@@ -44,15 +46,26 @@ namespace Open.Infra.Product
             dbSet.Remove(r);
             await db.SaveChangesAsync();
         }
-        public async Task LoadMedicines(IIdentityUser user)
-        {
 
-            //if (effect is null) return;
-            //var id = effect.DbRecord?.ID ?? string.Empty;
-            //var medicines = await dbSet.Include(x => x.Medicine).Where(x => x.UserID == id)
-            //    .AsNoTracking().ToListAsync();
-            //foreach (var c in medicines)
-            //    effect.UsedInMedicine(new MedicineObject(c.Medicine));
+        public async Task<PortfolioObject> GetObject(string medicineId, string userId)
+        {
+            var o = await dbSet.FirstOrDefaultAsync(
+                x => x.MedicineID == medicineId && x.UserID == userId);
+            return new PortfolioObject(o);
+        }
+        public async Task<List<MedicineObject>> GetMedicines(string userId)
+        {
+            if (userId is null)return null;
+            var portfolioObjects = await dbSet.Include(x => x.Medicine).Where(x => x.UserID == userId)
+                .AsNoTracking().ToListAsync();
+            List<MedicineObject> medicines = new List<MedicineObject>();
+            foreach (var m in portfolioObjects)
+            {
+                var mdb = await dbSetMedicines.FirstOrDefaultAsync(x => x.ID == m.MedicineID);
+                medicines.Add(MedicineObjectFactory.Create(mdb.ID, mdb.Name, mdb.AtcCode, mdb.FormOfInjection, mdb.Strength,
+                    mdb.Manufacturer, mdb.LegalStatus, mdb.Reimbursement, mdb.Spc, mdb.Pil, mdb.ValidFrom, mdb.ValidTo));
+            }
+            return medicines;
         }
     }
 }

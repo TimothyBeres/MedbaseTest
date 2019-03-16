@@ -74,6 +74,8 @@
     <Compile Include="Product\EffectViewModel.cs" />
     <Compile Include="Product\EffectViewModelFactory.cs" />
     <Compile Include="Product\EffectViewModelsList.cs" />
+    <Compile Include="Product\PortfolioViewModel.cs" />
+    <Compile Include="Product\PortfolioViewModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

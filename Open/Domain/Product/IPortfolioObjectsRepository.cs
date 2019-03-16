@@ -9,6 +9,7 @@ namespace Open.Domain.Product
 {
     public interface IPortfolioObjectsRepository : ICrudRepository<PortfolioObject>
     {
-
+        Task<List<MedicineObject>> GetMedicines(string userId);
+        Task<PortfolioObject> GetObject(string medicineId, string userId);
     }
 }

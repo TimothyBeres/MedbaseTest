@@ -306,14 +306,6 @@ namespace Open.Sentry1.Controllers
             await schemes.AddObject(scheme);
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
         }
-        public async Task<IActionResult> AddMedicineToPortfolio(string id)
-        {
-            var user = await GetCurrentUser();
-
-            var m = await medicines.GetObject(id);
-            await portfolio.AddObject(PortfolioObjectFactory.Create(m, user.Id, DateTime.Now));
-            return View("DosageSchemeMed");
-        }
         [HttpPost]
         public async Task<IActionResult> SendEmail(PersonInfoViewModel c)
         {

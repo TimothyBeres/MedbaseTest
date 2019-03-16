@@ -6736,6 +6736,13 @@ button.close {
 .visible-print-block {
   display: none !important;
 }
+.portfolio-object {
+    margin-top: 10px;
+    border: #cdcdcd medium solid;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
 @media print {
   .visible-print-block {
     display: block !important;
