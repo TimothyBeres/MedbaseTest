@@ -61,6 +61,8 @@
     <Compile Include="Person\PersonMedicineDbRecord.cs" />
     <Compile Include="Process\DosageDbRecord.cs" />
     <Compile Include="Process\SchemeDbRecord.cs" />
+    <Compile Include="Product\CategoryDbRecord.cs" />
+    <Compile Include="Product\CategoryMedicineDbRecord.cs" />
     <Compile Include="Product\MedicineEffectsDbRecord.cs" />
     <Compile Include="Product\EffectDbRecord.cs" />
     <Compile Include="Product\MedicineDbRecord.cs" />

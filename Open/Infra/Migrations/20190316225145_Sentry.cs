@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Open.Infra.Migrations
 {
-    public partial class test : Migration
+    public partial class Sentry : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
+                    CategoryName = table.Column<string>(nullable: true),
+                    UserID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Country",
                 columns: table => new
@@ -198,6 +213,32 @@ namespace Open.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CategoryMedicine",
+                columns: table => new
+                {
+                    ValidFrom = table.Column<DateTime>(nullable: false),
+                    ValidTo = table.Column<DateTime>(nullable: false),
+                    MedicineID = table.Column<string>(nullable: false),
+                    CategoryID = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryMedicine", x => new { x.CategoryID, x.MedicineID });
+                    table.ForeignKey(
+                        name: "FK_CategoryMedicine_Category_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Category",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CategoryMedicine_Medicine_MedicineID",
+                        column: x => x.MedicineID,
+                        principalTable: "Medicine",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MedicineEffects",
                 columns: table => new
                 {
@@ -328,6 +369,11 @@ namespace Open.Infra.Migrations
                 column: "CountryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CategoryMedicine_MedicineID",
+                table: "CategoryMedicine",
+                column: "MedicineID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CountryCurrency_CurrencyID",
                 table: "CountryCurrency",
                 column: "CurrencyID");
@@ -356,6 +402,9 @@ namespace Open.Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CategoryMedicine");
+
+            migrationBuilder.DropTable(
                 name: "CountryCurrency");
 
             migrationBuilder.DropTable(
@@ -378,6 +427,9 @@ namespace Open.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "TelecomDeviceRegistration");
+
+            migrationBuilder.DropTable(
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Currency");

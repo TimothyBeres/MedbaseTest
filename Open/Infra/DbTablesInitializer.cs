@@ -23,6 +23,8 @@ namespace Open.Infra
             DosageDbTableInitializer.Initialize(dbContext);
             SchemeDbTableInitializer.Initialize(dbContext);
             RepresentorsDbTableInitializer.Initialize(dbContext);
+            CategoriesDbTableInitializer.Initialize(dbContext);
+            CategoryMedicineDbTableInitializer.Initialize(dbContext);
 
         }
     }

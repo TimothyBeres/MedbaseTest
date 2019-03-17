@@ -7,6 +7,7 @@
     Layout = "_IndexPartial";
     string spcLink="";
     var header = "";
+    var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
 }
 
 @section Create{
@@ -33,37 +34,6 @@
         color: white;
     } 
 </style>
-@*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-<script type="text/javascript">
-    $('#exampleModal').on('show.bs.modal',
-        function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var recipient = button.data('whatever'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this);
-            modal.find('.modal-title').text('New message to ' + recipient);
-            modal.find('.modal-body input').val(recipient);
-        });
-</script>
-@*
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('button[class^="next"]').click(function () {
-            $('#medicineId').val($(this).data('id'));
-            
-            $("#confirmationModal").modal('show');
-        });
-
-        $(".proovikas").click(function () {
-            $("#confirmationModal").modal('hide');
-        });
-
-
-    });
-</script>*@
 
 <body>
 <table class="table">
@@ -89,10 +59,10 @@
         <tr>
             @*<td><button type="button" class="button1" onclick="location.href =
     '@Url.Action("AddMedicineToPortfolio", "Portfolios", new {id = item.ID})'">Lisa portfelli</button></td>*@
-            @*<td><button type="button" class="next button1" data-toggle="modal" data-target="#confirmationModal" data-whatever="TYRA" >Vajuta!</button></td>*@
-            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="TYRA">Open modal for mdo</button></td>
+            <td><button type="button" class="button1" data-toggle="modal" 
+                        data-target="#confirmationModalAdd" data-id=@item.ID data-name=@item.Name>Lisa Portfelli</button></td>
             <td><button type="button" onclick="location.href =
-    '@Url.Action("DosageSchemeMed", "Suggestions", new {id = item.ID})'">Soovita ravimit</button></td>
+                        '@Url.Action("DosageSchemeMed", "Suggestions", new {id = item.ID})'">Soovita ravimit</button></td>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.FormOfInjection)</td>
             <td>@Html.DisplayFor(modelItem => item.Strength)</td>
@@ -127,72 +97,29 @@
 </table>
 </body>
 
-
-
-
-
-
-@*<div>
-    <fieldset>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="modal fade" tabindex="-1" id="confirmationModal"
-                         data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        ×
-                                    </button>
-                                    <h4 class="modal-title" id="exampleModalLabel">New message </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                            <input type="text" class="form-control" id="recipient-name">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" name="button" value="prior" class="btn btn-primary button button4">Kinnita soovitus</button>
-                                    <button type="button" id="btnHideConfirmation" class="btn btn-primary button button4">
-                                        Katkesta
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </fieldset>
-</div>*@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationModalAdd" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h4 class="modal-title" style="font-weight:bold"></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                @using (Html.BeginForm("AddMedicineToPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
+                {
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label" style="font-weight:100">Choose the category for the selected medicine:</label>
+                        @Html.DropDownList("categoryId", new SelectList(categories, "Value", "Text"), new { @class = "selectpicker" })
+
+                        <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
+                }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+                <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
             </div>
         </div>
     </div>

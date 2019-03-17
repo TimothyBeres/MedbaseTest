@@ -55,6 +55,8 @@ namespace Open.Sentry1
             services.AddScoped<IDosageObjectsRepository, DosageObjectsRepository>();
             services.AddScoped<ISchemeObjectsRepository, SchemeObjectsRepository>();
             services.AddScoped<IPortfolioObjectsRepository, PortfolioObjectsRepository>();
+            services.AddScoped<ICategoryObjectsRepository, CategoryObjectsRepository>();
+            services.AddScoped<ICategoryMedicineObjectsRepository, CategoryMedicineObjectsRepository>();
         }
 
         protected virtual void setMvcWithAntyFoggeryToken(IServiceCollection services)

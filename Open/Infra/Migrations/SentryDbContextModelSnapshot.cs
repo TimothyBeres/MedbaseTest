@@ -209,6 +209,41 @@ namespace Open.Infra.Migrations
                     b.ToTable("Scheme");
                 });
 
+            modelBuilder.Entity("Open.Data.Product.CategoryDbRecord", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CategoryName");
+
+                    b.Property<string>("UserID");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("Open.Data.Product.CategoryMedicineDbRecord", b =>
+                {
+                    b.Property<string>("CategoryID");
+
+                    b.Property<string>("MedicineID");
+
+                    b.Property<DateTime>("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo");
+
+                    b.HasKey("CategoryID", "MedicineID");
+
+                    b.HasIndex("MedicineID");
+
+                    b.ToTable("CategoryMedicine");
+                });
+
             modelBuilder.Entity("Open.Data.Product.EffectDbRecord", b =>
                 {
                     b.Property<string>("ID")
@@ -406,6 +441,19 @@ namespace Open.Infra.Migrations
                     b.HasOne("Open.Data.Person.PersonDbRecord", "Person")
                         .WithMany()
                         .HasForeignKey("PersonID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Open.Data.Product.CategoryMedicineDbRecord", b =>
+                {
+                    b.HasOne("Open.Data.Product.CategoryDbRecord", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Open.Data.Product.MedicineDbRecord", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

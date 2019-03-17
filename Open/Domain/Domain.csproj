@@ -85,6 +85,14 @@
     <Compile Include="Process\SchemeObject.cs" />
     <Compile Include="Process\SchemeObjectFactory.cs" />
     <Compile Include="Process\SchemeObjectsList.cs" />
+    <Compile Include="Product\CategoryMedicineObject.cs" />
+    <Compile Include="Product\CategoryMedicineObjectFactory.cs" />
+    <Compile Include="Product\CategoryMedicineObjectsList.cs" />
+    <Compile Include="Product\CategoryObject.cs" />
+    <Compile Include="Product\CategoryObjectFactory.cs" />
+    <Compile Include="Product\CategoryObjectsList.cs" />
+    <Compile Include="Product\ICategoryMedicineObjectsRepository.cs" />
+    <Compile Include="Product\ICategoryObjectsRepository.cs" />
     <Compile Include="Product\IMedicineObjectsRepository.cs" />
     <Compile Include="Product\IMedicineEffectsObjectsRepository.cs" />
     <Compile Include="Product\IEffectObjectsRepository.cs" />

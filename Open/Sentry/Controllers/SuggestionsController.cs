@@ -307,9 +307,10 @@ namespace Open.Sentry1.Controllers
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(perObj));
         }
         [HttpPost]
-        public async Task<IActionResult> SendEmail(PersonInfoViewModel c)
+        public async Task<IActionResult> SendInfo(PersonInfoViewModel c)
         {
             var person = await persons.GetObject(c.ID);
+            var informationPreference = person.DbRecord.GetMedicineInfo;
             var medicine = await medicines.GetObject(c.MedicineID);
             var dosage = await dosages.GetObject(c.DosageID);
             await schemes.LoadSchemes(dosage);
@@ -334,7 +335,7 @@ namespace Open.Sentry1.Controllers
             }
             else
             {
-                link= "http://ravimiregister.ravimiamet.ee/Data/SPC/" + medicine.DbRecord.Spc;
+                link = "http://ravimiregister.ravimiamet.ee/Data/SPC/" + medicine.DbRecord.Spc;
             }
             string header = "Tervist lp " + sex + " " + person.DbRecord.LastName + "@" + "@";
             string suggestion = "Siin on teile kirjutatud soovitus Dr. Mardna poolt kuupäeval: " + c.ValidFrom +
@@ -353,8 +354,26 @@ namespace Open.Sentry1.Controllers
                                 "@" + "Lisainfot ravimi kohta leiad: " + link;
             string finalMessage = header + suggestion;
             finalMessage = finalMessage.Replace("@", System.Environment.NewLine);
-            EmailSender.Send(person.DbRecord.Email, finalMessage);
+            if(informationPreference==GetMedicineInfo.Email)
+            {
+                if(person.DbRecord.Email!= null && person.DbRecord.Email.Contains('@'))
+                {
+                    SendEmail(finalMessage, person);
+                }
+            }
+            else if(informationPreference==GetMedicineInfo.SMS)
+            {
+                if(person.DbRecord.PhoneNumber != null)
+                {
+                    //sendSms(finalmessage, person);
+                }
+            }
             return RedirectToAction("PatientInfo", PersonViewModelFactory.Create(person));
+        }
+        public async void SendEmail(string finalMessage, PersonObject person)
+        {
+            EmailSender.Send(person.DbRecord.Email, finalMessage);
+            
         }
 
         public async Task SetPropertiesMedicine(string personIdCode)

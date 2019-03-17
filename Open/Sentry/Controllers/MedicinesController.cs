@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Open.Core;
 using Open.Data.Product;
 using Open.Domain.Product;
 using Open.Facade.Product;
+using Sentry1.Models;
 
 namespace Open.Sentry1.Controllers
 {
@@ -14,15 +18,19 @@ namespace Open.Sentry1.Controllers
         private readonly IMedicineObjectsRepository repository;
         private readonly IMedicineEffectsObjectsRepository medicineEffectsRepository;
         private readonly IEffectObjectsRepository effectsRepository;
+        private readonly ICategoryObjectsRepository categories;
+        private readonly UserManager<ApplicationUser> users;
         public const string properties = "ID, Name, AtcCode, FormOfInjection, Strength" +
                                          ", Manufacturer, LegalStatus, Reimbursement, Spc, Pil, ValidFrom, ValidTo";
 
         public MedicinesController(IMedicineObjectsRepository r,
-            IMedicineEffectsObjectsRepository me, IEffectObjectsRepository e)
+            IMedicineEffectsObjectsRepository me, IEffectObjectsRepository e, ICategoryObjectsRepository c, UserManager<ApplicationUser> u)
         {
             repository = r;
             medicineEffectsRepository = me;
             effectsRepository = e;
+            categories = c;
+            users = u;
         }
 
         public async Task<IActionResult> Index(string sortOrder = null,
@@ -51,6 +59,16 @@ namespace Open.Sentry1.Controllers
             repository.SearchString = searchString;
             repository.PageIndex = page ?? 1;
             var l = await repository.GetObjectsList();
+            var user = await GetCurrentUser();
+
+            categories.PageSize = 1000000;
+            var cats = await categories.GetCategories(user.Id);
+            ViewBag.Categories = cats.Select(x => new SelectListItem
+            {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.CategoryName
+            }).ToList();
+
             return View(new MedicineViewModelsList(l));
         }
 
@@ -211,6 +229,9 @@ namespace Open.Sentry1.Controllers
         {
             return View();
         }
-
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            return await users.GetUserAsync(HttpContext.User);
+        }
     }
 }

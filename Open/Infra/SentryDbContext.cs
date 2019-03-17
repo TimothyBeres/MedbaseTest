@@ -41,6 +41,8 @@ namespace Open.Infra
 
         public DbSet<MedicineRepresentorDbRecord> MedicineRepresentors { get; set; }
         public DbSet<PortfolioDbRecord> Portfolios { get; set; }
+        public DbSet<CategoryDbRecord> Categories { get; set; }
+        public DbSet<CategoryMedicineDbRecord> CategoryMedicines { get; set; }
         protected override void OnModelCreating(ModelBuilder b)
         {
             base.OnModelCreating(b);
@@ -52,6 +54,7 @@ namespace Open.Infra
             b.Entity<DosageDbRecord>().ToTable("Dosage");
             b.Entity<SchemeDbRecord>().ToTable("Scheme");
             b.Entity<RepresentorDbRecord>().ToTable("Representor");
+            b.Entity<CategoryDbRecord>().ToTable("Category");
             CreateAddressTable(b);
             CreateTelecomAddressRegistrationTable(b);
             CreateCountryCurrencyTable(b);
@@ -59,6 +62,14 @@ namespace Open.Infra
             CreatePersonMedicinesTable(b);
             CreateMedicineRepresentorsTable(b);
             CreatePortfoliosTable(b);
+            CreateCategoryMedicinesTable(b);
+        }
+        public static void CreateCategoryMedicinesTable(ModelBuilder b)
+        {
+            const string table = "CategoryMedicine";
+            createPrimaryKey<CategoryMedicineDbRecord>(b, table, a => new { a.CategoryID, a.MedicineID });
+            createForeignKey<CategoryMedicineDbRecord, MedicineDbRecord>(b, table, x => x.MedicineID, x => x.Medicine);
+            createForeignKey<CategoryMedicineDbRecord, CategoryDbRecord>(b, table, x => x.CategoryID, x => x.Category);
         }
         public static void CreatePortfoliosTable(ModelBuilder b)
         {

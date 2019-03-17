@@ -59,11 +59,11 @@
             dict.Add("dosId", item.DosageID);
             <tr>
                 <td>
-                    @using (Html.BeginForm("SendEmail", "Suggestions", item))
+                    @using (Html.BeginForm("SendInfo", "Suggestions", item))
                     {
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Saada info e-mailile" class="btn btn-primary" />
+                                <input type="submit" value="Saada info patsiendile" class="btn btn-primary" />
                             </div>
                         </div>
                     }

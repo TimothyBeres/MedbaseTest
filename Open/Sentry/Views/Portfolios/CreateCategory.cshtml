@@ -1,0 +1,21 @@
+﻿@using Open.Facade.Product
+@using Open.Sentry1.Extensions
+@model Open.Facade.Product.CategoryViewModel
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.SubTitle = "Category";
+    ViewBag.Button = "Create";
+    Layout = "_EditPartial";
+}
+
+<body>
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.UserID)
+    @Html.EditingControlsFor(model => model.CategoryName)
+    @Html.HiddenFor(model => model.ValidFrom)
+    @Html.HiddenFor(model => model.ValidTo)
+</body>
+
+@section Actions
+{@Html.ActionLink("Back to List", "Index")}

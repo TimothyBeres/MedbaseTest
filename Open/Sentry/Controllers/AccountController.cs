@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Open.Domain.Product;
 using Sentry1.Models;
 using Sentry1.Models.AccountViewModels;
 using Sentry1.Services;
@@ -20,17 +21,20 @@ namespace Sentry1.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICategoryObjectsRepository _categories;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ICategoryObjectsRepository categories)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _categories = categories;
         }
 
         [TempData]
@@ -226,7 +230,7 @@ namespace Sentry1.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
+                    await _categories.AddObject(CategoryObjectFactory.Create(Guid.NewGuid().ToString(), user.Id, "Uncategorized"));
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
