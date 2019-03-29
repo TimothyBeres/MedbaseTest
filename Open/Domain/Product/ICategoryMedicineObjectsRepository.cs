@@ -8,5 +8,6 @@ namespace Open.Domain.Product
         Task LoadCategories(MedicineObject medicine);
         Task LoadMedicines(CategoryObject effect);
         Task<CategoryMedicineObject> GetObject(string cat, string med);
+        Task<CategoryObject> GetCategory(MedicineObject medicine);
     }
 }

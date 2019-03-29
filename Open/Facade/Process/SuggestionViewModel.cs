@@ -14,8 +14,6 @@ namespace Open.Facade.Process
         private string amount;
         private string times;
         private string timeOfDay;
-        private MedicineViewModel usedMedicine;
-
         [Required]
         public string MedicineID
         {
@@ -25,40 +23,32 @@ namespace Open.Facade.Process
         [Required]
         [DisplayName("Ravi tüüp")]
         public TypeOfTreatment TypeOfTreatment { get; set; }
-        [Required]
         [DisplayName("Ravikuuri pikkus(päevades)")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Lahter võib sisaldada ainult numbreid")]
         public string Length
         {
-            get => getString(ref length,"");
+            get => getString(ref length, "");
             set => length = value;
         }
-        [Required]
         [DisplayName("Annustamise kogus")]
         public string Amount
         {
-            get => getString(ref amount,"");
+            get => getString(ref amount, "");
             set => amount = value;
         }
-        [Required]
         [DisplayName("Kordi võtta")]
         public string Times
         {
-            get => getString(ref times,"");
+            get => getString(ref times, "");
             set => times = value;
         }
-        [Required]
         [DisplayName("Millal?")]
         public string TimeOfDay
         {
-            get => getString(ref timeOfDay,"");
+            get => getString(ref timeOfDay, "");
             set => timeOfDay = value;
         }
         [DisplayName("Ravim")]
-        public MedicineViewModel UsedMedicine
-        {
-            get { return usedMedicine; }
-            set { usedMedicine = value; }
-        }
+        public MedicineViewModel UsedMedicine { get; set; }
     }
 }

@@ -68,6 +68,15 @@ namespace Open.Infra.Product
             //foreach (var c in effects)
             //    medicine.EffectsInMedicine(new EffectObject(c.Effect));
         }
+
+        public async Task<CategoryObject> GetCategory(MedicineObject medicine)
+        {
+            if (medicine is null) return null;
+            var id = medicine.DbRecord?.ID ?? string.Empty;
+            var category = await dbSet.Include(x => x.Category).Where(x => x.MedicineID == id)
+                .AsNoTracking().ToListAsync();
+            return new CategoryObject(category[0].Category);
+        }
         public async Task<CategoryMedicineObject> GetObject(string category, string medicine)
         {
             var o = await dbSet.FirstOrDefaultAsync(

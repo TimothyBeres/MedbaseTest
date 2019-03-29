@@ -51,16 +51,11 @@
             </div>
         </div>
     </div>
-
-
+<div id="newChildDiv"></div>
+<input id="addNewChildButtonController" type="button" value="Lisa annustamisskeem" class="btn btn-primary" data-url="@Url.Action("GetChildPartialView", "Suggestions", Model)" />
 
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.MedicineID)
-    @Html.EditingControlsForEnum(model => model.TypeOfTreatment)
-    @Html.EditingControlsFor(model => model.Length)
-    @Html.EditingControlsFor(model => model.Amount)
-    @Html.EditingControlsFor(model => model.Times)
-    @Html.EditingControlsFor(model => model.TimeOfDay)
     @Html.EditingControlsFor(model => model.ValidFrom)
     @Html.EditingControlsFor(model => model.ValidTo)
 </body>
@@ -78,46 +73,81 @@
 </style>
 
 <div>
-    <fieldset>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="modal fade" tabindex="-1" id="loginModal"
-                         data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        ×
-                                    </button>
-                                    <h4 class="modal-title @suitability" class="">@modalHeader</h4>
-                                </div>
-                                <div class="modal-body">
-                                    @{
-                                        if (afterError)
-                                        {
-                                            <p>Antud ravim ei pruugi sellele patsiendile sobida eelneva probleemi tõttu:</p>
-                                            <p>Ravimi nimi: @medicineName</p>
-                                            <p>Tomeained ravimis: @effects</p>
-                                            <p>Soovituse tegemise kuupäev: @dateAssigned</p>
-                                        }
-                                        else
-                                        {
-                                            <p>Võite jätkata soovituse kinnitamisega</p>
-                                        }
-                                    }
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="sumbit" name="button" value="prior" class="btn btn-primary button button4">Kinnita soovitus</button>
-                                    <button type="button" id="btnHideModal" class="btn btn-primary button button4">
-                                        Katkesta
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <fieldset>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="modal fade" tabindex="-1" id="loginModal"
+               data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    ×
+                  </button>
+                  <h4 class="modal-title @suitability" class="">@modalHeader</h4>
                 </div>
+                <div class="modal-body">
+                  @{
+                    if (afterError)
+                    {
+                      <p>Antud ravim ei pruugi sellele patsiendile sobida eelneva probleemi tõttu:</p>
+                      <p>Ravimi nimi: @medicineName</p>
+                      <p>Tomeained ravimis: @effects</p>
+                      <p>Soovituse tegemise kuupäev: @dateAssigned</p>
+                    }
+                    else
+                    {
+                      <p>Võite jätkata soovituse kinnitamisega</p>
+                    }
+                  }
+                </div>
+                <div class="modal-footer">
+                  <button type="sumbit" name="button" value="prior" class="btn btn-primary button button4">Kinnita soovitus</button>
+                  <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                    Katkesta
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </fieldset>
+      </div>
+    </div>
+  </fieldset>
 </div>
+  
+<script type="text/javascript">
+  let requestVerificationToken = $("input[name='__RequestVerificationToken']").val();
+
+  $("#addNewChildButtonController").click(function () {
+    console.log("Controller Button clicked");
+    console.log($("#addNewChildButtonController").data("url"));
+
+    $.ajax({
+      type: "GET",
+      url: "/Suggestions/GetChildPartialView",
+      headers: {
+        "RequestVerificationToken": requestVerificationToken
+      }
+    }).done(function (data, statusText, xhdr) {
+      console.log("Done");
+      $("#newChildDiv").after(data);
+      $("#addNewChildButtonController").hide();
+    }).fail(function (xhdr, statusText, errorText) {
+      console.log("Failed");
+      $("#newChildDiv").text(JSON.stringify(xhdr));
+    });
+  });
+
+  $(document).on('click', '.deleteButton', function(e) {
+    e.preventDefault();
+    const elementToRemove = document.getElementById(e.target.id).parentNode;
+
+    // The lower the number, the faster it goes
+    jQuery(elementToRemove).fadeOut('slow', function () {
+      elementToRemove.remove();
+    });
+    $("#addNewChildButtonController").show();
+  });
+</script>

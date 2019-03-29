@@ -35,6 +35,8 @@ namespace Open.Sentry1.Controllers
         internal const string patientInfoProperties =
             "ID, MedicineID, DosageID, Suitability, MedicineName, FormOfInjection";
 
+        internal const string dosageSchemeProperties = "ID, SuggestionID TypeOfTreatment, Length, Amount, Times, TimeOfDay, ValidFrom, ValidTo";
+
         public SuggestionsController(IPersonObjectsRepository p, IPersonMedicineObjectsRepository pm, IMedicineObjectsRepository m,
             IDosageObjectsRepository d, ISchemeObjectsRepository s, IEffectObjectsRepository e, IMedicineEffectsObjectsRepository me,
             IPortfolioObjectsRepository port, UserManager<ApplicationUser> man)
@@ -191,6 +193,7 @@ namespace Open.Sentry1.Controllers
                 medicineId = s.ID;
                 s.ID = tempId;
             }
+
             var currentDate = DateTime.Now;
             var untilDate = currentDate.AddDays(double.Parse(s.Length));
             var dosageId = Guid.NewGuid().ToString();
@@ -309,6 +312,7 @@ namespace Open.Sentry1.Controllers
         [HttpPost]
         public async Task<IActionResult> SendInfo(PersonInfoViewModel c)
         {
+            await Task.Delay(1000);
             var person = await persons.GetObject(c.ID);
             var informationPreference = person.DbRecord.GetMedicineInfo;
             var medicine = await medicines.GetObject(c.MedicineID);
@@ -443,6 +447,11 @@ namespace Open.Sentry1.Controllers
         private async Task<ApplicationUser> GetCurrentUser()
         {
             return await manager.GetUserAsync(HttpContext.User);
+        }
+        public IActionResult GetChildPartialView([Bind(sugProperties)]SuggestionViewModel s)
+        {
+            // This is throwing an error saying it can't resolve _ChildPartialView, but it works fine
+            return PartialView("_DosageSchemePartial", s);
         }
     }
 }

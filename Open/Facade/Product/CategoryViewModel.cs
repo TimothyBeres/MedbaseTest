@@ -13,7 +13,7 @@ namespace Open.Facade.Product
         private string categoryName;
 
         [Required]
-        [DisplayName("Category name")]
+        [DisplayName("Kategooria nimi")]
         public string CategoryName
         {
             get => getString(ref categoryName, Constants.Unspecified);

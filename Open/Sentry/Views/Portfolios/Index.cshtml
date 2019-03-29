@@ -37,12 +37,12 @@
         }
 </style>
 
-<h2>Your personal portfolio</h2>
+<h2>Teie isiklik portfell</h2>
 
-<a asp-action=CreateCategory><button class="btn btn-primary">Add a new category</button></a>
+<a asp-action=CreateCategory><button class="btn btn-primary">Lisa uus kategooria</button></a>
 <br>
 <br>
-<hr />
+
 <!--Loops for displaying as much boxes as there are object in portfolio-->
 @*<body>
 @for (int i = 0; i < rowsCount; i++)
@@ -130,7 +130,7 @@
                             Manustamine: @med.FormOfInjection <br />
                             Soodustus: @med.LegalStatus <br />
                             Tugevuvs: @med.Strength <br />
-                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Remove</button>
+                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
 
                         </p>
                     </div>
@@ -156,7 +156,7 @@
                             Manustamine: @med.FormOfInjection<br />
                             Soodustus: @med.LegalStatus<br />
                             Tugevuvs: @med.Strength <br />
-                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Remove</button>
+                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
                         </p>
                     </div>
                 }
@@ -180,15 +180,15 @@
                 @using (Html.BeginForm("RemoveMedicineFromPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
                 {
                 <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight:100">Are you sure that you want to remove this medicine?</label>
+                    <label for="recipient-name" class="col-form-label" style="font-weight:100">Kas olete kindel, et soovite ravimi eemaldada?</label>
                     <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
                     <input type="text" class="form-control hidden" id="categoryId" name="categoryId">
                 </div>
                 }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="submit" form="myID" class="btn btn-primary" value="Confirm" />
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+                <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
             </div>
         </div>
     </div>

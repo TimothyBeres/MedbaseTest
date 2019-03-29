@@ -47,21 +47,21 @@
 
 
 <body>
-    <div class="form-group">
-        <div class="col-md-4" style="margin-top: 10px">
-            <div class="form-horizontal" align="right">
-                <b>Lisa ravim: </b>@Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text", defaultMedicine), new { @class = "selectpicker" })
-            </div>
-        </div>
+  <div class="form-group">
+    <div class="col-md-4" style="margin-top: 10px">
+      
+      <div class="form-horizontal">
+        <b>Lisa ravim: </b>
+        @Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text", defaultMedicine), new { @class = "selectpicker" })
+      </div>
     </div>
+    
 
+  </div>
+<div id="newChildDiv"></div>
+<input id="addNewChildButtonController" type="button" value="Lisa annustamisskeem" class="btn btn-primary" data-url="@Url.Action("GetChildPartialView", "Suggestions", Model)" />
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.MedicineID)
-    @Html.EditingControlsForEnum(model => model.TypeOfTreatment)
-    @Html.EditingControlsFor(model => model.Length)
-    @Html.EditingControlsFor(model => model.Amount)
-    @Html.EditingControlsFor(model => model.Times)
-    @Html.EditingControlsFor(model => model.TimeOfDay)
     @Html.EditingControlsFor(model => model.ValidFrom)
     @Html.EditingControlsFor(model => model.ValidTo)
 </body>
@@ -130,3 +130,37 @@
 </div>
 
 
+<script type="text/javascript">
+  let requestVerificationToken = $("input[name='__RequestVerificationToken']").val();
+
+  $("#addNewChildButtonController").click(function () {
+    console.log("Controller Button clicked");
+    console.log($("#addNewChildButtonController").data("url"));
+
+    $.ajax({
+      type: "GET",
+      url: "/Suggestions/GetChildPartialView",
+      headers: {
+        "RequestVerificationToken": requestVerificationToken
+      }
+    }).done(function (data, statusText, xhdr) {
+      console.log("Done");
+      $("#newChildDiv").after(data);
+      $("#addNewChildButtonController").hide();
+    }).fail(function (xhdr, statusText, errorText) {
+      console.log("Failed");
+      $("#newChildDiv").text(JSON.stringify(xhdr));
+    });
+  });
+
+  $(document).on('click', '.deleteButton', function(e) {
+    e.preventDefault();
+    const elementToRemove = document.getElementById(e.target.id).parentNode;
+
+    // The lower the number, the faster it goes
+    jQuery(elementToRemove).fadeOut('slow', function () {
+      elementToRemove.remove();
+    });
+    $("#addNewChildButtonController").show();
+  });
+</script>

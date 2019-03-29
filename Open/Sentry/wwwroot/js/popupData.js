@@ -9,7 +9,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-title').text('Removing medicine from portfolio: ' + medicineName);
+            modal.find('.modal-title').text('Eemaldan ravimi portfellist: ' + medicineName);
 
             modal.find('#categoryId').val(categoryId);
             modal.find('#medicineId').val(medicineId);
@@ -23,8 +23,8 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-title').text('Adding medicine to portfolio: ' + medicineName);
-            modal.find('.modal-body input').val(medicineId);
+            modal.find('.modal-title').text('Lisan ravimi portfelli: ' + medicineName);
+            modal.find('#medicineId').val(medicineId);
         });
 });
     

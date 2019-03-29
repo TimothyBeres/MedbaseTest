@@ -49,17 +49,18 @@ namespace Sentry1.Controllers
         {
             return await users.GetUserAsync(HttpContext.User);
         }
-        public async Task<IActionResult> AddMedicineToPortfolio(string medicineId, string categoryId)
+        public async Task<IActionResult> AddMedicineToPortfolio(string medicineId, string categoryId, string medicineViewAdd = "No")
         {
             var user = await GetCurrentUser();
             var medicine = await medicines.GetObject(medicineId);
             var category = await categories.GetObject(categoryId);
             await portfolios.AddObject(PortfolioObjectFactory.Create(medicine, user.Id, DateTime.Now));
             await categoryMedicines.AddObject(CategoryMedicineObjectFactory.Create(category, medicine));
+            if (medicineViewAdd == "Yes") return RedirectToAction("Index", "Medicines");
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> RemoveMedicineFromPortfolio(string medicineId, string categoryId)
+        public async Task<IActionResult> RemoveMedicineFromPortfolio(string medicineId, string categoryId, string medicineView = "No")
         {
             var user = await GetCurrentUser();
 
@@ -70,6 +71,7 @@ namespace Sentry1.Controllers
             var cm = await categoryMedicines.GetObject(categoryId, m.DbRecord.ID);
             await categoryMedicines.DeleteObject(cm);
             
+            if(medicineView=="Yes") return RedirectToAction("Index","Medicines");
             return RedirectToAction("Index");
         }
         public IActionResult CreateCategory()

@@ -1,0 +1,13 @@
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@using Open.Sentry1.Extensions
+
+@model Open.Facade.Process.SuggestionViewModel
+<div id="child-@Model.ID">
+  <button id="deleteChild-@Model.ID" type="button" class="btn btn-danger deleteButton">Eemalda annustamisskeem</button>
+  @Html.EditingControlsForEnum(model => model.TypeOfTreatment)
+  @Html.EditingControlsFor(model => model.Length)
+  @Html.EditingControlsFor(model => model.Amount)
+  @Html.EditingControlsFor(model => model.Times)
+  @Html.EditingControlsFor(model => model.TimeOfDay)
+  </div>
+

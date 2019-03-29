@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -20,17 +21,21 @@ namespace Open.Sentry1.Controllers
         private readonly IEffectObjectsRepository effectsRepository;
         private readonly ICategoryObjectsRepository categories;
         private readonly UserManager<ApplicationUser> users;
+        private readonly IPortfolioObjectsRepository portfolios;
+        private readonly ICategoryMedicineObjectsRepository categoryMedicines;
         public const string properties = "ID, Name, AtcCode, FormOfInjection, Strength" +
                                          ", Manufacturer, LegalStatus, Reimbursement, Spc, Pil, ValidFrom, ValidTo";
 
         public MedicinesController(IMedicineObjectsRepository r,
-            IMedicineEffectsObjectsRepository me, IEffectObjectsRepository e, ICategoryObjectsRepository c, UserManager<ApplicationUser> u)
+            IMedicineEffectsObjectsRepository me, IEffectObjectsRepository e, ICategoryObjectsRepository c, UserManager<ApplicationUser> u, IPortfolioObjectsRepository p, ICategoryMedicineObjectsRepository cm)
         {
             repository = r;
             medicineEffectsRepository = me;
             effectsRepository = e;
             categories = c;
             users = u;
+            portfolios = p;
+            categoryMedicines = cm;
         }
 
         public async Task<IActionResult> Index(string sortOrder = null,
@@ -60,7 +65,7 @@ namespace Open.Sentry1.Controllers
             repository.PageIndex = page ?? 1;
             var l = await repository.GetObjectsList();
             var user = await GetCurrentUser();
-
+            
             categories.PageSize = 1000000;
             var cats = await categories.GetCategories(user.Id);
             ViewBag.Categories = cats.Select(x => new SelectListItem
@@ -69,6 +74,15 @@ namespace Open.Sentry1.Controllers
                 Text = x.DbRecord.CategoryName
             }).ToList();
 
+            var medicinesInPortfolio = await portfolios.GetMedicines(user.Id);
+            Dictionary<string,string> medicineCategoryIds = new Dictionary<string, string>();
+            foreach (var med in medicinesInPortfolio)
+            {
+                var medicineCategory = await categoryMedicines.GetCategory(med);
+                medicineCategoryIds[med.DbRecord.ID] = medicineCategory.DbRecord.ID;
+            } 
+            
+            ViewBag.MedicineCategories = medicineCategoryIds;
             return View(new MedicineViewModelsList(l));
         }
 

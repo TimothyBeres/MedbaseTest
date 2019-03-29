@@ -8,6 +8,7 @@
     string spcLink="";
     var header = "";
     var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
+    Dictionary<string,string> medicineCategories = ViewBag.MedicineCategories;
 }
 
 @section Create{
@@ -57,10 +58,25 @@
     @foreach (var item in Model)
     {
         <tr>
-            @*<td><button type="button" class="button1" onclick="location.href =
-    '@Url.Action("AddMedicineToPortfolio", "Portfolios", new {id = item.ID})'">Lisa portfelli</button></td>*@
-            <td><button type="button" class="button1" data-toggle="modal" 
-                        data-target="#confirmationModalAdd" data-id=@item.ID data-name=@item.Name>Lisa Portfelli</button></td>
+          <td>
+            @{
+              if (medicineCategories.ContainsKey(item.ID))
+              {
+                <button type="button" class="button1" data-toggle="modal"
+                        data-target="#confirmationModalRemove" data-id=@item.ID data-name=@item.Name data-category=@medicineCategories[item.ID]>
+                  Eemalda portfellist
+                </button>
+                
+              }
+              else
+              {
+                <button type="button" class="button1" data-toggle="modal"
+                        data-target="#confirmationModalAdd" data-id=@item.ID data-name=@item.Name>
+                  Lisa Portfelli
+                </button>
+              }
+            }
+          </td>
             <td><button type="button" onclick="location.href =
                         '@Url.Action("DosageSchemeMed", "Suggestions", new {id = item.ID})'">Soovita ravimit</button></td>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -98,29 +114,57 @@
 </body>
 
 <div class="modal fade" id="confirmationModalAdd" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="font-weight:bold"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("AddMedicineToPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
-                {
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label" style="font-weight:100">Choose the category for the selected medicine:</label>
-                        @Html.DropDownList("categoryId", new SelectList(categories, "Value", "Text"), new { @class = "selectpicker" })
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-weight:bold"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("AddMedicineToPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
+        {
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label" style="font-weight:100">Valige kategooria valitud ravimile:</label>
+          @Html.DropDownList("categoryId", new SelectList(categories, "Value", "Text"), new { @class = "selectpicker" })
 
-                        <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
-                <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
-            </div>
+          <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
+          <input type="text" class="form-control hidden" name="medicineViewAdd" value="Yes">
         </div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+        <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
+      </div>
     </div>
+  </div>
+</div>
+<div class="modal fade" id="confirmationModalRemove" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-weight:bold"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("RemoveMedicineFromPortfolio", "Portfolios", FormMethod.Post, new { id = "myIDremove" }))
+        {
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label" style="font-weight:100">Kas olete kindel, et soovite ravimi eemaldada?</label>
+          <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
+          <input type="text" class="form-control hidden" id="categoryId" name="categoryId">
+          <input type="text" class="form-control hidden" name="medicineView" value="Yes">
+        </div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+        <input type="submit" form="myIDremove" class="btn btn-primary" value="Kinnita" />
+      </div>
+    </div>
+  </div>
 </div>
