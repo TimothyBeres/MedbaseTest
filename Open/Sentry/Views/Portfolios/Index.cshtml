@@ -7,34 +7,37 @@
     Layout = "_Layout";
     var cellsPerRow = 4;
     var listOfObjects = Model.MedicinesInUse;
-    var rowsCount = listOfObjects.Count / cellsPerRow; ;
-    if (rowsCount % cellsPerRow != 0 || listOfObjects.Count < cellsPerRow)
-    {
-        rowsCount += 1;
-    }
+    //var rowsCount = listOfObjects.Count / cellsPerRow; ;
+    //if (rowsCount % cellsPerRow != 0 || listOfObjects.Count < cellsPerRow)
+    //{
+    //    rowsCount += 1;
+    //}
+    var rowsCount = 0;
     var cellsRemaining = listOfObjects.Count;
-    List<CategoryViewModel> categories = ViewBag.Categories;
+    var medicines = ViewBag.Medicines as IEnumerable<SelectListItem>;
+    List<CategoryViewModel> categoriesRaw = ViewBag.Categories;
+    List<CategoryViewModel> categories = categoriesRaw.OrderBy(o => o.CategoryName).ToList();
     MedicineViewModel medView = new MedicineViewModel();
 }
 
 <style type="text/css">
-    .button1 {
-        background-color: white; /* Green */
-        color: black;
-        border: 2px solid #f44336;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        -webkit-transition-duration: 0.4s; /* Safari */
-        transition-duration: 0.4s;
-        cursor: pointer;
-        border-radius: 8px;
-    }
+  .button1 {
+    background-color: white; /* Green */
+    color: black;
+    border: 2px solid #f44336;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+  }
 
-        .button1:hover {
-            background-color: #f44336;
-            color: white;
-        }
+    .button1:hover {
+      background-color: #f44336;
+      color: white;
+    }
 </style>
 
 <h2>Teie isiklik portfell</h2>
@@ -42,157 +45,236 @@
 <a asp-action=CreateCategory><button class="btn btn-primary">Lisa uus kategooria</button></a>
 <br>
 <br>
-
 <!--Loops for displaying as much boxes as there are object in portfolio-->
 @*<body>
-@for (int i = 0; i < rowsCount; i++)
-{
+  @for (int i = 0; i < rowsCount; i++)
+  {
+      <div class="row">
+          @if (cellsRemaining >= cellsPerRow)
+          {
+              for (int j = 0; j < cellsPerRow; j++)
+              {
+                  <div class="col-md-2">
+
+                      @{
+                          var index = cellsPerRow * i + j;
+                          var med = listOfObjects[index];}
+                      <h4>@med.Name</h4>
+                      <p>
+                          @Html.HiddenFor(modelItem => med)
+                          ATC: @med.AtcCode <br />
+                          Manustamine: @med.FormOfInjection <br />
+                          Soodustus: @med.LegalStatus <br />
+                          Tugevuvs: @med.Strength <br />
+                          <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-id=@med.ID data-name=@med.Name>Eemalda</button>
+
+                      </p>
+                  </div>
+
+                  cellsRemaining -= 1;
+              }
+          }
+          else
+          {
+              for (int j = 0; j < cellsRemaining; j++)
+              {
+                  <div class="col-md-2">
+
+                      @{
+                          var index = cellsPerRow * i + j;
+                          var med = listOfObjects[index];}
+
+                      <h4>@med.Name</h4>
+
+                      <p>
+                          @Html.HiddenFor(modelItem => med)
+                          ATC: @med.AtcCode <br />
+                          Manustamine: @med.FormOfInjection<br />
+                          Soodustus: @med.LegalStatus<br />
+                          Tugevuvs: @med.Strength <br />
+                          <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-id=@med.ID data-name=@med.Name>Eemalda</button>
+                      </p>
+                  </div>
+              }
+          }
+      </div>
+  }
+  </body>*@
+@*@for (int i = 0; i < categories.Count; i++)
+  {
     <div class="row">
-        @if (cellsRemaining >= cellsPerRow)
-        {
-            for (int j = 0; j < cellsPerRow; j++)
-            {
-                <div class="col-md-2">
-
-                    @{
-                        var index = cellsPerRow * i + j;
-                        var med = listOfObjects[index];}
-                    <h4>@med.Name</h4>
-                    <p>
-                        @Html.HiddenFor(modelItem => med)
-                        ATC: @med.AtcCode <br />
-                        Manustamine: @med.FormOfInjection <br />
-                        Soodustus: @med.LegalStatus <br />
-                        Tugevuvs: @med.Strength <br />
-                        <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-id=@med.ID data-name=@med.Name>Eemalda</button>
-
-                    </p>
-                </div>
-
-                cellsRemaining -= 1;
-            }
-        }
-        else
-        {
-            for (int j = 0; j < cellsRemaining; j++)
-            {
-                <div class="col-md-2">
-
-                    @{
-                        var index = cellsPerRow * i + j;
-                        var med = listOfObjects[index];}
-
-                    <h4>@med.Name</h4>
-
-                    <p>
-                        @Html.HiddenFor(modelItem => med)
-                        ATC: @med.AtcCode <br />
-                        Manustamine: @med.FormOfInjection<br />
-                        Soodustus: @med.LegalStatus<br />
-                        Tugevuvs: @med.Strength <br />
-                        <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-id=@med.ID data-name=@med.Name>Eemalda</button>
-                    </p>
-                </div>
-            }
-        }
-    </div>
-}
-</body>*@
-@for (int i = 0; i < categories.Count; i++)
-{
-<div class="row">
-    <h2>@categories[i].CategoryName</h2>
-    <hr />
-    @{  cellsRemaining = categories[i].MedicinesWithCategory.Count;
+      <h2>@categories[i].CategoryName</h2>
+      <hr />
+      @{ cellsRemaining = categories[i].MedicinesWithCategory.Count;
         rowsCount = categories[i].MedicinesWithCategory.Count / cellsPerRow; ;
         if (rowsCount % cellsPerRow != 0 || categories[i].MedicinesWithCategory.Count < cellsPerRow)
         {
-            rowsCount += 1;
+          rowsCount += 1;
         }
 
-    }
-    @for (int k = 0; k < rowsCount; k++)
-    {
+      }
+      @for (int k = 0; k < rowsCount; k++)
+      {
         <div class="row">
-            @if (cellsRemaining >= cellsPerRow)
+          @if (cellsRemaining >= cellsPerRow)
+          {
+            for (int j = 0; j < cellsPerRow; j++)
             {
-                for (int j = 0; j < cellsPerRow; j++)
-                {
-                    <div class="col-md-2">
+              <div class="col-md-2">
 
-                        @{
-                            var index = cellsPerRow * k + j;
-                            var med = categories[i].MedicinesWithCategory[index];}
-                        <h4>@med.Name</h4>
-                        <p>
-                            @Html.HiddenFor(modelItem => med)
-                            ATC: @med.AtcCode <br />
-                            Manustamine: @med.FormOfInjection <br />
-                            Soodustus: @med.LegalStatus <br />
-                            Tugevuvs: @med.Strength <br />
-                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
+                @{
+                  var index = cellsPerRow * k + j;
+                  var med = categories[i].MedicinesWithCategory[index];}
+                <h4>@med.Name</h4>
+                <p>
+                  @Html.HiddenFor(modelItem => med)
+                  ATC: @med.AtcCode <br />
+                  Manustamine: @med.FormOfInjection <br />
+                  Soodustus: @med.LegalStatus <br />
+                  Tugevuvs: @med.Strength <br />
+                  <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
 
-                        </p>
-                    </div>
+                </p>
+              </div>
 
-                    cellsRemaining -= 1;
-                }
+              cellsRemaining -= 1;
             }
-            else
+          }
+          else
+          {
+            for (int j = 0; j < cellsRemaining; j++)
             {
-                for (int j = 0; j < cellsRemaining; j++)
-                {
-                    <div class="col-md-2">
+              <div class="col-md-2">
 
-                        @{
-                            var index = cellsPerRow * k + j;
-                            var med = categories[i].MedicinesWithCategory[index];}
+                @{
+                  var index = cellsPerRow * k + j;
+                  var med = categories[i].MedicinesWithCategory[index];}
 
-                        <h4>@med.Name</h4>
+                <h4>@med.Name</h4>
 
-                        <p>
-                            @Html.HiddenFor(modelItem => med)
-                            ATC: @med.AtcCode <br />
-                            Manustamine: @med.FormOfInjection<br />
-                            Soodustus: @med.LegalStatus<br />
-                            Tugevuvs: @med.Strength <br />
-                            <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
-                        </p>
-                    </div>
-                }
+                <p>
+                  @Html.HiddenFor(modelItem => med)
+                  ATC: @med.AtcCode <br />
+                  Manustamine: @med.FormOfInjection<br />
+                  Soodustus: @med.LegalStatus<br />
+                  Tugevuvs: @med.Strength <br />
+                  <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
+                </p>
+              </div>
             }
+          }
         </div>
+      }
+    </div>
+  }*@
+<body>
+@for (int i = 0; i < categories.Count; i++)
+{
+  <div class="row">
+    <h2>[@categories[i].CategoryName]</h2>
+    <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalAddFromPortfolio" data-category=@categories[i].ID data-id=@categories[i].ID data-name=@categories[i].CategoryName>Lisa ravim</button>
+  </div>
+
+  <table class="table" >
+    <thead>
+    <tr>
+      <th></th>
+      <th>Ravimi nimetus</th>
+      <th>Manustamisviis</th>
+      <th>Tugevus</th>
+      <th>Toimeained</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody class="hiddenRow">
+    
+    @foreach (var med in categories[i].MedicinesWithCategory)
+    {
+      string effectsListRaw = "";
+      @foreach (var effect in med.EffectsInMedicine)
+       {
+         effectsListRaw += effect.Name +"+";}
+      string effectsList = effectsListRaw.Substring(0, effectsListRaw.Length - 1);
+      <tr>
+        <td><button type="button" onclick="location.href =
+  '@Url.Action("DosageSchemeMed", "Suggestions", new {id = med.ID})'">Soovita ravimit</button></td>
+        <td>
+          @med.Name
+        </td>
+        <td>
+          @med.FormOfInjection
+        </td>
+        <td>
+          @med.Strength
+        </td>
+        <td>
+          @effectsList
+        </td>
+        <td>
+          <button type="button" class="button1" data-toggle="modal" data-target="#confirmationModalRemove" data-category=@categories[i].ID data-id=@med.ID data-name=@med.Name>Eemalda</button>
+        </td>
+      </tr>
     }
-</div>
+    </tbody>
+  </table>
 }
+</body>
+
 
 
 <div class="modal fade" id="confirmationModalRemove" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="font-weight:bold"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("RemoveMedicineFromPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
-                {
-                <div class="form-group">
-                    <label for="recipient-name" class="col-form-label" style="font-weight:100">Kas olete kindel, et soovite ravimi eemaldada?</label>
-                    <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
-                    <input type="text" class="form-control hidden" id="categoryId" name="categoryId">
-                </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
-                <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
-            </div>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-weight:bold"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("RemoveMedicineFromPortfolio", "Portfolios", FormMethod.Post, new { id = "myID" }))
+        {
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label" style="font-weight:100">Kas olete kindel, et soovite ravimi eemaldada?</label>
+            <input type="text" class="form-control hidden" id="medicineId" name="medicineId">
+            <input type="text" class="form-control hidden" id="categoryId" name="categoryId">
+          </div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+        <input type="submit" form="myID" class="btn btn-primary" value="Kinnita" />
+      </div>
     </div>
+  </div>
 </div>
 
+<div class="modal fade" id="confirmationModalAddFromPortfolio" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-weight:bold"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("AddMedicineToPortfolio", "Portfolios", FormMethod.Post, new { id = "myID2" }))
+        {
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label" style="font-weight:100">Valige ravim, mida soovite lisada:</label>
+            @Html.DropDownList("medicineId", new SelectList(medicines, "Value", "Text"), new { @class = "selectpicker" })
 
+            <input type="text" class="form-control hidden" id="categoryId" name="categoryId">
+            <input type="text" class="form-control hidden" name="medicineViewAdd" value="No">
+          </div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sulge</button>
+        <input type="submit" form="myID2" class="btn btn-primary" value="Kinnita" />
+      </div>
+    </div>
+  </div>
+</div>
 

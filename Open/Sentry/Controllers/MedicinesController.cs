@@ -11,6 +11,7 @@ using Open.Data.Product;
 using Open.Domain.Product;
 using Open.Facade.Product;
 using Sentry1.Models;
+using Sentry1.Services;
 
 namespace Open.Sentry1.Controllers
 {
@@ -238,6 +239,12 @@ namespace Open.Sentry1.Controllers
             }
 
             return View();
+        }
+
+        public async Task<IActionResult> Import()
+        {
+            await CsvImporter.Import();
+            return RedirectToAction("Index");
         }
         public IActionResult Error()
         {

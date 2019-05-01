@@ -37,7 +37,7 @@ namespace Open.Sentry1
 
                         DbTablesInitializer.Initialize(dbContext);
                         //CsvImporter.ClearMedicinesAndEffects();
-                        CsvImporter.Importer(dbContext);
+                        //CsvImporter.Import();
                         //CsvImporter.DownloadPdf();
                     }
                     catch (Exception ex)

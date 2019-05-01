@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Open.Core;
 using Open.Domain.Product;
 using Open.Facade.Product;
 using Sentry1.Models;
@@ -14,19 +16,22 @@ namespace Sentry1.Controllers
     {
         private readonly IPortfolioObjectsRepository portfolios;
         private readonly IMedicineObjectsRepository medicines;
+        private readonly IMedicineEffectsObjectsRepository medicineEffects;
         private readonly ICategoryObjectsRepository categories;
         private readonly ICategoryMedicineObjectsRepository categoryMedicines;
         private readonly UserManager<ApplicationUser> users;
         public const string properties = "ID, CategoryName, UserID, ValidFrom, ValidTo";
 
 
-        public PortfoliosController(IPortfolioObjectsRepository p, UserManager<ApplicationUser> u, IMedicineObjectsRepository m, ICategoryObjectsRepository c, ICategoryMedicineObjectsRepository cm)
+        public PortfoliosController(IPortfolioObjectsRepository p, UserManager<ApplicationUser> u, IMedicineObjectsRepository m, ICategoryObjectsRepository c, ICategoryMedicineObjectsRepository cm
+        , IMedicineEffectsObjectsRepository me)
         {
             portfolios = p;
             users = u;
             medicines = m;
             categories = c;
             categoryMedicines = cm;
+            medicineEffects = me;
         }
         public async Task<IActionResult> Index()
         {
@@ -34,12 +39,49 @@ namespace Sentry1.Controllers
             var l = await portfolios.GetMedicines(user.Id);
             var catObjs = await categories.GetCategories(user.Id);
             List<CategoryViewModel> categoryViews = new List<CategoryViewModel>();
+            List<MedicineObject> usedMeds = new List<MedicineObject>();
             foreach (var c in catObjs)
             {
                 await categoryMedicines.LoadMedicines(c);
+                foreach (var med in c.MedicinesWithCategory)
+                {
+                    usedMeds.Add(med);
+                    await medicineEffects.LoadEffects(med);
+                }
                 categoryViews.Add(CategoryViewModelFactory.Create(c));
 
             }
+            
+            var allMeds = await medicines.GetObjectsList();
+            List<string> duplicateIds = new List<string>();
+            for (int i = 0; i < allMeds.Count; i++)
+            {
+                bool contains = usedMeds.Any(x => x.DbRecord.ID == allMeds[i].DbRecord.ID);
+                if (contains)
+                {
+                    duplicateIds.Add(allMeds[i].DbRecord.ID);
+                }
+            }
+
+            foreach (var id in duplicateIds)
+            {
+                var medicine = allMeds.Where(x => x.DbRecord.ID == id).ToList();
+                allMeds.Remove(medicine[0]);
+            }
+            //foreach (var med in allMeds)
+            //{
+            //    int index = usedMeds.FindIndex(x => x.DbRecord.ID == med.DbRecord.ID);
+            //    if (index>=0)
+            //    {
+            //        allMeds.Remove(med);
+            //    }
+            //}
+            
+            ViewBag.Medicines = allMeds.Select(x => new SelectListItem
+            {
+                Value = x.DbRecord.ID,
+                Text = x.DbRecord.Name + ", " + x.DbRecord.FormOfInjection + ", " + x.DbRecord.Strength
+            }).ToList();
 
             ViewBag.Categories = categoryViews;
             return View(PortfolioViewModelFactory.Create(user.Id, l));

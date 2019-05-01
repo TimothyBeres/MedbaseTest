@@ -195,7 +195,11 @@ namespace Open.Sentry1.Controllers
             }
 
             var currentDate = DateTime.Now;
-            var untilDate = currentDate.AddDays(double.Parse(s.Length));
+            DateTime? untilDate = null;
+            if (s.Length != null && s.Length!="")
+            {
+                untilDate = currentDate.AddDays(double.Parse(s.Length));
+            }
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
 
@@ -209,6 +213,10 @@ namespace Open.Sentry1.Controllers
             }
             else
             {
+                if (button == "prior")
+                {
+                    suitable = Suitability.Teadmata;
+                }
                 suitable = Suitability.Jah;
                 await personMedicines.DeleteObject(o);
             }
@@ -288,7 +296,11 @@ namespace Open.Sentry1.Controllers
             if (!ModelState.IsValid) return View(s);
 
             var currentDate = DateTime.Now;
-            var untilDate = currentDate.AddDays(double.Parse(s.Length));
+            DateTime? untilDate = null;
+            if (s.Length != null && s.Length != "")
+            {
+                untilDate = currentDate.AddDays(double.Parse(s.Length));
+            }
             var dosageId = Guid.NewGuid().ToString();
             var schemeId = Guid.NewGuid().ToString();
             var medObj = await medicines.GetObject(medicineId);
@@ -312,7 +324,7 @@ namespace Open.Sentry1.Controllers
         [HttpPost]
         public async Task<IActionResult> SendInfo(PersonInfoViewModel c)
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
             var person = await persons.GetObject(c.ID);
             var informationPreference = person.DbRecord.GetMedicineInfo;
             var medicine = await medicines.GetObject(c.MedicineID);
@@ -348,14 +360,18 @@ namespace Open.Sentry1.Controllers
                                 "@" + "Perekonnanimi : " + person.DbRecord.LastName +
                                 "@" + "Ravimi nimi : " + medicine.DbRecord.Name +
                                 "@" + "Ravimi manustamise viis : " + medicine.DbRecord.FormOfInjection +
-                                "@" + "Ravimi tugevus : " + medicine.DbRecord.Strength +
-                                "@" + "@" + "------ANNUSTAMINE------" +
-                                "@" + "Ravimi manustamise tüüp : " + dosage.DbRecord.TypeOfTreatment +
-                                "@" + "Ravikuuri pikkus : " + scheme.DbRecord.Length +
-                                "@" + "Ravimit manustada ühe korraga : " + scheme.DbRecord.Amount +
-                                "@" + "Ravimit manustada kordi päevas : " + scheme.DbRecord.Times +
-                                "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay +
-                                "@" + "Lisainfot ravimi kohta leiad: " + link;
+                                "@" + "Ravimi tugevus : " + medicine.DbRecord.Strength;
+            if (scheme.DbRecord.Length != Constants.Unspecified)
+            {
+                suggestion += "@" + "@" + "------ANNUSTAMINE------" +
+                              "@" + "Ravimi manustamise tüüp : " + dosage.DbRecord.TypeOfTreatment +
+                              "@" + "Ravikuuri pikkus : " + scheme.DbRecord.Length +
+                              "@" + "Ravimit manustada ühe korraga : " + scheme.DbRecord.Amount +
+                              "@" + "Ravimit manustada kordi päevas : " + scheme.DbRecord.Times +
+                              "@" + "Eelistatud manustamise aeg : " + scheme.DbRecord.TimeOfDay;
+            }
+
+            suggestion += "@" + "Lisainfot ravimi kohta ning annustamise info leiad: " + link + " (annustamine alates peatükk 4.2)";
             string finalMessage = header + suggestion;
             finalMessage = finalMessage.Replace("@", System.Environment.NewLine);
             if(informationPreference==GetMedicineInfo.Email)

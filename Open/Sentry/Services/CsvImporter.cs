@@ -16,12 +16,12 @@ namespace Sentry1.Services
 {
     public static class CsvImporter
     {
-        public static void Importer(SentryDbContext c)
+        public static async Task Import()
         {
             var legalRequirement = "R";
             var engine = new DelimitedFileEngine<MedicineTemplate>();
             //var res = engine.ReadFile("C:\\Users\\ACER\\Desktop\\projekt_ravim\\ravimid_3.csv");
-            var res = engine.ReadFile("est_med.csv");
+            var res = engine.ReadFile("wwwroot\\est_med.csv");
             List<MedicineTemplate> meds = new List<MedicineTemplate>();
             List<string> effectsList = new List<string>();
             foreach (MedicineTemplate med in res)
@@ -85,9 +85,10 @@ namespace Sentry1.Services
         }
         public static void AddMedicines(List<MedicineTemplate> meds)
         {
+            //string _connectionString =
+            //    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            
+                "Server=tcp:pharmastockdbserver.database.windows.net,1433;Initial Catalog=PharmaStock_db;Persist Security Info=False;User ID=john.snow;Password=Qwerty1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -177,8 +178,10 @@ namespace Sentry1.Services
             string query1 = "DELETE FROM dbo.Medicine";
             string query2 = "DELETE FROM dbo.MedicineEffects";
             string query3 = "DELETE FROM dbo.Effect";
+            //string _connectionString =
+            //    "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Sentry;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                "Server=tcp:pharmastockdbserver.database.windows.net,1433;Initial Catalog=PharmaStock_db;Persist Security Info=False;User ID=john.snow;Password=Qwerty1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
 
