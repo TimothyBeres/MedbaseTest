@@ -171,6 +171,7 @@ namespace Open.Sentry1.Controllers
         public async Task<IActionResult> DosageScheme([Bind(sugProperties)]SuggestionViewModel s, string medicineId, string button)
         {
             Suitability suitable;
+            ModelState.Clear();
             var perObj = await persons.GetPersonByIDCode(s.ID);
             if (button != "prior")
             {
@@ -444,9 +445,9 @@ namespace Open.Sentry1.Controllers
             var personMed = await personMedicines.GetObject(medicineId, personId);
             var validFrom = personMed.DbRecord.ValidFrom;
             var medicine = await medicines.GetObject(medicineId);
-            await medEffects.LoadEffects(medicine);
+            //await medEffects.LoadEffects(medicine);
             string effectsInMed = "";
-            effectsInMed += medicine.EffectsInMedicines[0].DbRecord.Name;
+            //effectsInMed += medicine.EffectsInMedicines[0].DbRecord.Name;
             if (medicine.EffectsInMedicines.Count > 1)
             {
                 for (int i = 1; i < medicine.EffectsInMedicines.Count; i++)

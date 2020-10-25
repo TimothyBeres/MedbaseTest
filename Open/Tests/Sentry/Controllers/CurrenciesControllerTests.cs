@@ -7,7 +7,7 @@ using Open.Sentry1.Controllers;
 
 namespace Open.Tests.Sentry.Controllers
 {
-    //[TestClass]
+    [TestClass]
     public class CurrenciesControllerTests : AcceptanceTests
     {
         [TestMethod]

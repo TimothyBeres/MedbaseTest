@@ -96,7 +96,7 @@ namespace Sentry1.Controllers
             var user = await GetCurrentUser();
             var medicine = await medicines.GetObject(medicineId);
             var category = await categories.GetObject(categoryId);
-            await portfolios.AddObject(PortfolioObjectFactory.Create(medicine, user.Id, DateTime.Now));
+            await portfolios.AddObject(PortfolioObjectFactory.Create(medicine, user.Id, DateTime.Today));
             await categoryMedicines.AddObject(CategoryMedicineObjectFactory.Create(category, medicine));
             if (medicineViewAdd == "Yes") return RedirectToAction("Index", "Medicines");
             return RedirectToAction("Index");
