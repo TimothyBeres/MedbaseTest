@@ -30,7 +30,7 @@ namespace Open.Sentry1
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger?.LogError(ex, "An error occured while seeding the database");
+                    logger?.LogError(ex, "An error occured while seeding the database!");
 
                 }
             }
