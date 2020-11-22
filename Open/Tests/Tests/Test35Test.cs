@@ -11,6 +11,8 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using NUnit.Framework;
+using System.IO;
+using System.Reflection;
 [TestFixture]
 public class Test35Test {
   private IWebDriver driver;
@@ -18,7 +20,7 @@ public class Test35Test {
   private IJavaScriptExecutor js;
   [SetUp]
   public void SetUp() {
-    driver = new ChromeDriver();
+    driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
     js = (IJavaScriptExecutor)driver;
     vars = new Dictionary<string, object>();
   }

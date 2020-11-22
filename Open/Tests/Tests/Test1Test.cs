@@ -11,6 +11,10 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using NUnit.Framework;
+using System.IO;
+using System.Reflection;
+
+
 [TestFixture]
 public class Test1Test {
   private IWebDriver driver;
@@ -18,7 +22,7 @@ public class Test1Test {
   private IJavaScriptExecutor js;
   [SetUp]
   public void SetUp() {
-    driver = new ChromeDriver();
+    driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
     js = (IJavaScriptExecutor)driver;
     vars = new Dictionary<string, object>();
   }
@@ -59,6 +63,8 @@ public class Test1Test {
       Actions builder = new Actions(driver);
       builder.DoubleClick(element).Perform();
     }
-    driver.FindElement(By.CssSelector(".btn-sm")).Click();
+    driver.FindElement(By.CssSelector(".btn-sm")).Click();Assert.That(driver.FindElement(By.CssSelector
+        (".form-group:nth-child(4) .field-validation-error")).Text, Is.
+        EqualTo("ID kood võib sisaldada ainult numbreid!"));
   }
 }
